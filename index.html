@@ -23,7 +23,7 @@
             scroll-behavior: smooth;
         }
         .hero-bg {
-            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop');
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a4hd-d19cd819?q=80&w=1974&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
         }
@@ -52,7 +52,7 @@
     <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-black/20">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center space-x-3">
-                <img src="unnamed-removebg-preview.png" alt="Logo Anderson Viagem e Turismo" class="h-12 w-auto">
+                <img src="https://storage.googleapis.com/maker-studio-images/personal-images/unnamed-removebg-preview_2024-06-21-22-38-08.png" alt="Logo Anderson Viagem e Turismo" class="h-12 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x50/111827/FBBF24?text=Logo';">
             </a>
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#proximas-viagens" class="text-gray-300 hover:text-yellow-400 transition duration-300">Próximas Viagens</a>
@@ -60,21 +60,24 @@
                 <a href="#contato" class="text-gray-300 hover:text-yellow-400 transition duration-300">Contato</a>
             </div>
             <a href="#" onclick="window.open(gerarLinkWhatsApp('Geral'), '_blank')" class="hidden md:inline-block bg-yellow-500 text-gray-900 font-bold py-2 px-5 rounded-lg hover:bg-yellow-400 transition duration-300">Fale Conosco</a>
-            <!-- Botão do Menu Hambúrguer --><button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+            <!-- Botão do Menu Hambúrguer -->
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </nav>
     </header>
 
-    <!-- Menu Mobile --><div id="mobile-menu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full z-40 p-6 pt-24 overflow-y-auto">
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full z-40 p-6 pt-24 overflow-y-auto">
         <div class="container mx-auto">
             <a href="#proximas-viagens" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Próximas Viagens</a>
             <a href="#sobre" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Quem Somos</a>
             <a href="#contato" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400">Contato</a>
             <div class="border-t border-gray-700 my-6"></div>
-            <h3 class="text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar por Mês:</h3>
+            <h3 class="text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar por Data:</h3>
             <div id="mobile-filters-container" class="flex flex-col items-center gap-2">
-                <!-- Filtros para mobile serão injetados aqui --></div>
+                <!-- Filtros para mobile serão injetados aqui -->
+            </div>
         </div>
     </div>
 
@@ -97,11 +100,14 @@
                     <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
                 </div>
 
-                <!-- Filtros para Desktop --><div id="filters-container" class="flex flex-wrap justify-center gap-3 mb-10">
-                    <!-- Botões de filtro serão injetados aqui --></div>
+                <!-- Filtros para Desktop -->
+                <div id="filters-container" class="flex flex-wrap justify-center gap-3 mb-10">
+                    <!-- Botões de filtro serão injetados aqui -->
+                </div>
 
                 <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[300px]">
-                    <!-- Conteúdo será inserido pela API --></div>
+                    <!-- Conteúdo será inserido pela API -->
+                </div>
             </div>
         </section>
 
@@ -128,7 +134,7 @@
                     </div>
                      <div class="feature-item">
                         <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
                         <h3 class="text-xl font-bold mt-4">Pontualidade</h3>
                         <p class="text-gray-400 mt-2">Cumprimos rigorosamente nossos horários para você não perder um minuto do seu show.</p>
@@ -159,7 +165,8 @@
         </div>
     </footer>
 
-    <!-- SCRIPT CORRIGIDO --><script>
+    <!-- SCRIPT CORRIGIDO E ATUALIZADO -->
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const eventsGrid = document.getElementById('events-grid');
             const filtersContainer = document.getElementById('filters-container');
@@ -180,15 +187,16 @@
                 }
             });
 
-            const renderEvents = (filterMonth = 'Todos') => {
+            const renderEvents = (filter = 'Todos') => {
                 eventsGrid.innerHTML = ''; 
 
-                const filteredEvents = filterMonth === 'Todos'
+                // A lógica de filtro funciona bem com "Mês Ano" porque .includes() buscará a substring.
+                const filteredEvents = filter === 'Todos'
                     ? allEvents
-                    : allEvents.filter(event => event.date.includes(filterMonth));
+                    : allEvents.filter(event => event.date.includes(filter));
 
                 if (filteredEvents.length === 0) {
-                    eventsGrid.innerHTML = `<p class="text-gray-400 text-center col-span-full">Nenhum evento encontrado para ${filterMonth}.</p>`;
+                    eventsGrid.innerHTML = `<p class="text-gray-400 text-center col-span-full">Nenhum evento encontrado para ${filter.replace(' ', ' / ')}.</p>`;
                     return;
                 }
 
@@ -203,18 +211,18 @@
 
                     const citiesHTML = citiesArray.length > 0
                         ? `<div class="mt-4 flex flex-wrap gap-2 items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            <div class="flex flex-wrap gap-2">
-                                ${citiesArray.map(city => `<kbd class="px-2 py-1 text-xs font-semibold text-yellow-200 bg-gray-700 border border-gray-600 rounded-md">${city}</kbd>`).join('')}
-                            </div>
-                        </div>` : '';
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                               </svg>
+                               <div class="flex flex-wrap gap-2">
+                                   ${citiesArray.map(city => `<kbd class="px-2 py-1 text-xs font-semibold text-yellow-200 bg-gray-700 border border-gray-600 rounded-md">${city}</kbd>`).join('')}
+                               </div>
+                           </div>` : '';
 
                     eventsHTML += `
                         <div class="bg-gray-900 rounded-lg overflow-hidden shadow-2xl shadow-black/30 flex flex-col transform hover:-translate-y-2 transition-transform duration-300">
-                            <img src="${event.image}" alt="${event.alt}" class="w-full h-48 object-cover">
+                            <img src="${event.image}" alt="${event.alt}" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/111827/FBBF24?text=Show';">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-bold text-yellow-400">${event.title}</h3>
                                 <p class="text-gray-400 mt-1">${event.date}</p>
@@ -230,35 +238,59 @@
                 eventsGrid.innerHTML = eventsHTML;
             };
             
+            // --- LÓGICA DE FILTRO ATUALIZADA ---
             const setupFilters = () => {
                 const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-                const eventMonths = new Set();
+                const eventYearMonths = new Set();
+                
+                // Extrai 'Mês Ano' de cada evento
                 allEvents.forEach(event => {
-                    monthNames.forEach(month => {
-                        if (event.date.includes(month)) eventMonths.add(month);
-                    });
+                    const yearMatch = event.date.match(/\d{4}/); // Encontra o primeiro número de 4 dígitos (o ano)
+                    if (yearMatch) {
+                        const year = yearMatch[0];
+                        monthNames.forEach(month => {
+                            if (event.date.includes(month)) {
+                                eventYearMonths.add(`${month} ${year}`);
+                            }
+                        });
+                    }
                 });
 
-                const sortedMonths = [...eventMonths].sort((a, b) => monthNames.indexOf(a) - monthNames.indexOf(b));
+                // Ordena os filtros por ano, e depois por mês
+                const sortedYearMonths = [...eventYearMonths].sort((a, b) => {
+                    const [monthA, yearA] = a.split(' ');
+                    const [monthB, yearB] = b.split(' ');
 
+                    if (yearA !== yearB) {
+                        return parseInt(yearA) - parseInt(yearB);
+                    }
+                    return monthNames.indexOf(monthA) - monthNames.indexOf(monthB);
+                });
+
+                // Cria os botões de filtro para Desktop
                 let filtersHTML = `<button data-filter="Todos" class="filter-btn active-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Todos</button>`;
-                sortedMonths.forEach(month => {
-                    filtersHTML += `<button data-filter="${month}" class="filter-btn inactive-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">${month}</button>`;
+                sortedYearMonths.forEach(yearMonth => {
+                    const buttonText = yearMonth.replace(' ', ' / ');
+                    filtersHTML += `<button data-filter="${yearMonth}" class="filter-btn inactive-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">${buttonText}</button>`;
                 });
                 filtersContainer.innerHTML = filtersHTML;
 
+                // Cria os botões de filtro para Mobile
                 let mobileFiltersHTML = `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">Todas as Viagens</button>`;
-                sortedMonths.forEach(month => {
-                     mobileFiltersHTML += `<button data-filter="${month}" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">${month}</button>`;
+                sortedYearMonths.forEach(yearMonth => {
+                     const buttonText = yearMonth.replace(' ', ' / ');
+                     mobileFiltersHTML += `<button data-filter="${yearMonth}" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">${buttonText}</button>`;
                 });
                 mobileFiltersContainer.innerHTML = mobileFiltersHTML;
 
+                // Aplica o estilo inicial nos botões de desktop
                 document.querySelectorAll('.active-filter').forEach(b => { b.classList.add('bg-yellow-500', 'text-gray-900'); b.classList.remove('inactive-filter'); });
                 document.querySelectorAll('.inactive-filter').forEach(b => { b.classList.add('bg-gray-700', 'hover:bg-yellow-500', 'text-white', 'hover:text-gray-900'); b.classList.remove('active-filter'); });
             };
 
             const handleFilterClick = (filterValue) => {
                 renderEvents(filterValue);
+                // Atualiza os estilos dos botões do desktop
                 document.querySelectorAll('.filter-btn').forEach(btn => {
                     btn.classList.remove('active-filter', 'bg-yellow-500', 'text-gray-900');
                     btn.classList.add('inactive-filter', 'bg-gray-700', 'hover:bg-yellow-500', 'text-white', 'hover:text-gray-900');
@@ -290,9 +322,38 @@
                     return response.json();
                 })
                 .then(events => {
-                    allEvents = events;
+                    // Função para converter a data em PT-BR para um objeto Date
+                    const parsePtBrDate = (dateString) => {
+                        const monthNames = { "janeiro": 0, "fevereiro": 1, "março": 2, "abril": 3, "maio": 4, "junho": 5, "julho": 6, "agosto": 7, "setembro": 8, "outubro": 9, "novembro": 10, "dezembro": 11 };
+                        
+                        // Regex para extrair data de forma mais robusta. Ex: "08 de Novembro 2025"
+                        const regex = /(\d{1,2})\s+de\s+([a-zA-Zç]+)\s+(\d{4})/;
+                        const match = dateString.toLowerCase().match(regex);
+                        
+                        if (match) {
+                            const day = parseInt(match[1], 10);
+                            const month = monthNames[match[2]];
+                            const year = parseInt(match[3], 10);
+                            
+                            if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+                                return new Date(year, month, day);
+                            }
+                        }
+                        
+                        console.warn(`Não foi possível analisar a data: "${dateString}"`);
+                        return null;
+                    };
+                    
+                    // Ordena os eventos: do mais recente para o mais antigo
+                    allEvents = events.sort((a, b) => {
+                        const dateA = parsePtBrDate(a.date);
+                        const dateB = parsePtBrDate(b.date);
+                        if (!dateA) return 1;
+                        if (!dateB) return -1;
+                        return dateB - dateA; // Ordem decrescente
+                    });
 
-                    if (events.length === 0) {
+                    if (allEvents.length === 0) {
                         eventsGrid.innerHTML = `<div class="bg-gray-900 rounded-lg overflow-hidden shadow-2xl shadow-black/30 flex flex-col transform hover:-translate-y-2 transition-transform duration-300 border-2 border-dashed border-gray-700 col-span-full md:col-span-2 lg:col-span-3 mx-auto max-w-md"><div class="p-6 flex flex-col flex-grow items-center justify-center text-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg><h3 class="text-2xl font-bold text-gray-500">Aguarde!</h3><p class="text-gray-600 mt-2">Mais eventos incríveis serão anunciados em breve. Fique de olho!</p></div></div>`;
                         return;
                     }
