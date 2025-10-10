@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Anderson Viagem e Turismo - Excursões para Shows e Eventos</title>
+    <meta name="description" content="Garanta sua vaga nas melhores excursões para shows, festivais e eventos saindo de Araraquara e região. Viagens seguras, confortáveis e com a melhor galera!">
+    <meta name="keywords" content="excursão para shows, viagem para show, ônibus para show, Anderson Turismo, Linkin Park, shows em São Paulo, transporte para eventos, Araraquara">
+    <meta name="author" content="Anderson Viagem e Turismo">
+
+    <link rel="icon" href="https://placehold.co/32x32/ffc700/000000?text=A" type="image/png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .btn-whatsapp {
+            transition: all 0.3s ease;
+        }
+        .btn-whatsapp:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px -10px rgba(45, 212, 191, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <script>
+        // Insira o número de WhatsApp aqui, com o código do país (55 para Brasil) e DDD.
+        const numeroWhatsApp = "5516999999999"; 
+        
+        // Função para gerar o link do WhatsApp
+        function gerarLinkWhatsApp(evento) {
+            const mensagem = encodeURIComponent(`Olá! Tenho interesse na excursão para o evento "${evento}". Gostaria de mais informações.`);
+            return `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensagem}`;
+        }
+    </script>
+
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-black/20">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-3">
+                <img src="image_2b05c1.jpg" alt="Logo Anderson Viagem e Turismo" class="h-12 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/200x50/1a1a1a/ffc700?text=Anderson+Turismo';">
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#proximas-viagens" class="text-gray-300 hover:text-yellow-400 transition duration-300">Próximas Viagens</a>
+                <a href="#sobre" class="text-gray-300 hover:text-yellow-400 transition duration-300">Quem Somos</a>
+                <a href="#contato" class="text-gray-300 hover:text-yellow-400 transition duration-300">Contato</a>
+            </div>
+            <a href="#" onclick="window.open(gerarLinkWhatsApp('Geral'), '_blank')" class="hidden md:inline-block bg-yellow-500 text-gray-900 font-bold py-2 px-5 rounded-lg hover:bg-yellow-400 transition duration-300">Fale Conosco</a>
+            <!-- Botão do Menu Hambúrguer -->
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full z-40 p-6 pt-24 overflow-y-auto">
+        <div class="container mx-auto">
+            <a href="#proximas-viagens" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Próximas Viagens</a>
+            <a href="#sobre" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Quem Somos</a>
+            <a href="#contato" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400">Contato</a>
+            <div class="border-t border-gray-700 my-6"></div>
+            <h3 class="text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar por Mês:</h3>
+            <div id="mobile-filters-container" class="flex flex-col items-center gap-2">
+                <!-- Filtros para mobile serão injetados aqui -->
+            </div>
+        </div>
+    </div>
+
+
+    <main>
+        <section class="hero-bg min-h-[60vh] flex items-center justify-center text-center py-20">
+            <div class="container mx-auto px-6">
+                <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-wider leading-tight">Sua carona oficial<br><span class="text-yellow-400">para os melhores shows</span></h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">Viaje com segurança, conforto e pontualidade. Deixe o transporte com a gente e foque no mais importante: curtir o seu evento!</p>
+                <p class="mt-6 text-lg font-semibold bg-black/50 inline-block px-4 py-2 rounded-lg text-yellow-300 animate-pulse">SAÍDAS DE ARARAQUARA E REGIÃO</p><br>
+                <a href="#proximas-viagens" class="mt-8 inline-block bg-yellow-500 text-gray-900 font-bold text-lg py-4 px-10 rounded-lg hover:bg-yellow-400 transition duration-300 shadow-lg">Ver Próximas Excursões</a>
+            </div>
+        </section>
+
+        <section id="proximas-viagens" class="py-20 bg-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Próximas Viagens Confirmadas</h2>
+                    <p class="text-gray-400 mt-2">Garanta sua vaga! Os melhores eventos estão aqui.</p>
+                    <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
+                </div>
+
+                <!-- Filtros para Desktop -->
+                <div id="filters-container" class="flex flex-wrap justify-center gap-3 mb-10">
+                    <!-- Botões de filtro serão injetados aqui -->
+                </div>
+
+                <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[300px]">
+                    <!-- Conteúdo será inserido pela API -->
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="py-20 bg-gray-900">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-3xl md:text-4xl font-bold text-white">Por que viajar com a gente?</h2>
+                 <p class="text-gray-400 mt-2">Sua única preocupação é se divertir.</p>
+                 <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12 max-w-5xl mx-auto">
+                    <div class="feature-item">
+                        <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mt-4">Segurança Total</h3>
+                        <p class="text-gray-400 mt-2">Veículos novos, motoristas experientes e seguro de viagem para todos os passageiros.</p>
+                    </div>
+                     <div class="feature-item">
+                        <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mt-4">Conforto e Comodidade</h3>
+                        <p class="text-gray-400 mt-2">Ônibus com ar-condicionado, poltronas reclináveis e Wi-Fi. Deixamos você perto do evento.</p>
+                    </div>
+                     <div class="feature-item">
+                        <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h3 class="text-xl font-bold mt-4">Pontualidade</h3>
+                        <p class="text-gray-400 mt-2">Cumprimos rigorosamente nossos horários para você não perder um minuto do seu show.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contato" class="bg-black py-12">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <a href="#" class="flex items-center justify-center space-x-3 mb-4">
+                 <img src="image_2b05c1.jpg" alt="Logo Anderson Viagem e Turismo no rodapé" class="h-14 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/250x60/000000/ffc700?text=Anderson+Viagem+e+Turismo';">
+            </a>
+            <p>Sua melhor escolha para viagens e eventos.</p>
+            <p class="mt-2">Entre em contato e faça um orçamento!</p>
+            <div class="mt-4">
+                <a href="#" onclick="window.open(gerarLinkWhatsApp('Contato Geral'), '_blank')" class="font-bold text-yellow-400 hover:text-yellow-300 text-lg">
+                    WhatsApp: (16) 99999-9999
+                </a>
+            </div>
+            <div class="mt-6">
+                <h4 class="font-bold text-white text-lg">Horário de Atendimento</h4>
+                <p>Segunda a Sábado: 13h às 19h</p>
+                <p>Domingos e Feriados: Fechado</p>
+            </div>
+            <div class="mt-6 border-t border-gray-800 pt-6">
+                <p>&copy; 2025 Anderson Viagem e Turismo. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT CORRIGIDO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const eventsGrid = document.getElementById('events-grid');
+            const filtersContainer = document.getElementById('filters-container');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileFiltersContainer = document.getElementById('mobile-filters-container');
+
+            let allEvents = [];
+
+            // --- Lógica do Menu Mobile ---
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            mobileMenu.addEventListener('click', (e) => {
+                // Fecha o menu se um link ou botão de filtro for clicado
+                if (e.target.classList.contains('mobile-link') || e.target.classList.contains('filter-btn-mobile')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+            const renderEvents = (filterMonth = 'Todos') => {
+                eventsGrid.innerHTML = ''; 
+
+                const filteredEvents = filterMonth === 'Todos'
+                    ? allEvents
+                    : allEvents.filter(event => event.date.includes(filterMonth));
+
+                if (filteredEvents.length === 0) {
+                    eventsGrid.innerHTML = `<p class="text-gray-400 text-center col-span-full">Nenhum evento encontrado para ${filterMonth}.</p>`;
+                    return;
+                }
+
+                let eventsHTML = '';
+                filteredEvents.forEach(event => {
+                    let citiesArray = [];
+                    if (Array.isArray(event.cities)) {
+                        citiesArray = event.cities;
+                    } else if (typeof event.cities === 'string' && event.cities.trim().length > 0) {
+                        citiesArray = event.cities.split(',').map(city => city.trim());
+                    }
+
+                    const citiesHTML = citiesArray.length > 0
+                        ? `<div class="mt-4 flex flex-wrap gap-2 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <div class="flex flex-wrap gap-2">
+                                ${citiesArray.map(city => `<kbd class="px-2 py-1 text-xs font-semibold text-yellow-200 bg-gray-700 border border-gray-600 rounded-md">${city}</kbd>`).join('')}
+                            </div>
+                        </div>` : '';
+
+                    eventsHTML += `
+                        <div class="bg-gray-900 rounded-lg overflow-hidden shadow-2xl shadow-black/30 flex flex-col transform hover:-translate-y-2 transition-transform duration-300">
+                            <img src="${event.image}" alt="${event.alt}" class="w-full h-48 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-bold text-yellow-400">${event.title}</h3>
+                                <p class="text-gray-400 mt-1">${event.date}</p>
+                                ${citiesHTML}
+                                <p class="text-gray-300 mt-4 flex-grow">${event.description}</p>
+                                <button onclick="window.open(gerarLinkWhatsApp('${event.eventName}'), '_blank')" class="btn-whatsapp w-full mt-6 bg-green-500 text-white font-bold py-3 px-6 rounded-lg flex items-center justify-center space-x-2 hover:bg-green-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.003 2.011.564 3.963 1.632 5.686l.244.423-1.075 3.922 4.023-1.056.39.232z"/></svg>
+                                    <span>${event.buttonText}</span>
+                                </button>
+                            </div>
+                        </div>`;
+                });
+                eventsGrid.innerHTML = eventsHTML;
+            };
+            
+            const setupFilters = () => {
+                const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+                const eventMonths = new Set();
+                allEvents.forEach(event => {
+                    monthNames.forEach(month => {
+                        if (event.date.includes(month)) eventMonths.add(month);
+                    });
+                });
+
+                const sortedMonths = [...eventMonths].sort((a, b) => monthNames.indexOf(a) - monthNames.indexOf(b));
+
+                let filtersHTML = `<button data-filter="Todos" class="filter-btn active-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Todos</button>`;
+                sortedMonths.forEach(month => {
+                    filtersHTML += `<button data-filter="${month}" class="filter-btn inactive-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">${month}</button>`;
+                });
+                filtersContainer.innerHTML = filtersHTML;
+
+                let mobileFiltersHTML = `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">Todas as Viagens</button>`;
+                sortedMonths.forEach(month => {
+                     mobileFiltersHTML += `<button data-filter="${month}" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">${month}</button>`;
+                });
+                mobileFiltersContainer.innerHTML = mobileFiltersHTML;
+
+                document.querySelectorAll('.active-filter').forEach(b => { b.classList.add('bg-yellow-500', 'text-gray-900'); b.classList.remove('inactive-filter'); });
+                document.querySelectorAll('.inactive-filter').forEach(b => { b.classList.add('bg-gray-700', 'hover:bg-yellow-500', 'text-white', 'hover:text-gray-900'); b.classList.remove('active-filter'); });
+            };
+
+            const handleFilterClick = (filterValue) => {
+                renderEvents(filterValue);
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active-filter', 'bg-yellow-500', 'text-gray-900');
+                    btn.classList.add('inactive-filter', 'bg-gray-700', 'hover:bg-yellow-500', 'text-white', 'hover:text-gray-900');
+                    if (btn.dataset.filter === filterValue) {
+                        btn.classList.add('active-filter', 'bg-yellow-500', 'text-gray-900');
+                        btn.classList.remove('inactive-filter', 'bg-gray-700', 'hover:bg-yellow-500', 'text-white', 'hover:text-gray-900');
+                    }
+                });
+            };
+
+            filtersContainer.addEventListener('click', e => {
+                if (e.target.classList.contains('filter-btn')) {
+                    handleFilterClick(e.target.dataset.filter);
+                }
+            });
+
+            mobileFiltersContainer.addEventListener('click', e => {
+                if(e.target.classList.contains('filter-btn-mobile')) {
+                    handleFilterClick(e.target.dataset.filter);
+                }
+            });
+
+            // Adiciona um indicador de carregamento
+            eventsGrid.innerHTML = `<div class="col-span-full text-center text-gray-400 flex flex-col items-center justify-center p-10"><svg class="animate-spin -ml-1 mr-3 h-10 w-10 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="mt-4 text-lg">Carregando eventos...</p></div>`;
+
+            fetch('https://anderson-fast-api.onrender.com/api/v1/events')
+                .then(response => {
+                    if (!response.ok) throw new Error('Não foi possível carregar os eventos da API.');
+                    return response.json();
+                })
+                .then(events => {
+                    allEvents = events;
+
+                    if (events.length === 0) {
+                        eventsGrid.innerHTML = `<div class="bg-gray-900 rounded-lg overflow-hidden shadow-2xl shadow-black/30 flex flex-col transform hover:-translate-y-2 transition-transform duration-300 border-2 border-dashed border-gray-700 col-span-full md:col-span-2 lg:col-span-3 mx-auto max-w-md"><div class="p-6 flex flex-col flex-grow items-center justify-center text-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg><h3 class="text-2xl font-bold text-gray-500">Aguarde!</h3><p class="text-gray-600 mt-2">Mais eventos incríveis serão anunciados em breve. Fique de olho!</p></div></div>`;
+                        return;
+                    }
+                    
+                    setupFilters();
+                    renderEvents('Todos'); // Renderização inicial
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar eventos:', error);
+                    eventsGrid.innerHTML = `<p class="text-red-500 text-center col-span-full">Erro ao carregar os eventos. Tente novamente mais tarde.</p>`;
+                });
+        });
+    </script>
+
+</body>
+</html>
+
+    
