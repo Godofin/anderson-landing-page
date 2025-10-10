@@ -23,7 +23,7 @@
             scroll-behavior: smooth;
         }
         .hero-bg {
-            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a4hd-d19cd819?q=80&w=1974&auto=format&fit=crop');
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
         }
@@ -165,7 +165,7 @@
         </div>
     </footer>
 
-    <!-- SCRIPT CORRIGIDO E ATUALIZADO -->
+    <!-- SCRIPT COMPLETO E ATUALIZADO -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const eventsGrid = document.getElementById('events-grid');
@@ -344,13 +344,23 @@
                         return null;
                     };
                     
-                    // Ordena os eventos: do mais recente para o mais antigo
+                    // Ordena os eventos: do mais próximo de hoje para o mais distante
+                    const hoje = new Date();
+                    hoje.setHours(0, 0, 0, 0); // Zera as horas para comparação apenas de data
+                    
                     allEvents = events.sort((a, b) => {
                         const dateA = parsePtBrDate(a.date);
                         const dateB = parsePtBrDate(b.date);
-                        if (!dateA) return 1;
+                        
+                        if (!dateA) return 1; // Eventos sem data vão para o final
                         if (!dateB) return -1;
-                        return dateB - dateA; // Ordem decrescente
+                        
+                        // Calcula a diferença em dias de hoje
+                        const diffA = Math.abs(dateA - hoje);
+                        const diffB = Math.abs(dateB - hoje);
+                        
+                        // Ordena pela diferença: eventos mais próximos primeiro
+                        return diffA - diffB;
                     });
 
                     if (allEvents.length === 0) {
@@ -370,4 +380,3 @@
 
 </body>
 </html>
-
