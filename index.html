@@ -33,13 +33,39 @@
             transform: scale(1.05);
             box-shadow: 0 10px 20px -10px rgba(45, 212, 191, 0.4);
         }
+        /* Remove scrollbar (since it's now a slide-based carousel) */
+        #events-carousel-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        #events-carousel-wrapper {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* Estilo para a transição do acordeão */
+        .accordion-content {
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+            overflow: hidden;
+            max-height: 0;
+            padding: 0 1.5rem; /* px-6 */
+        }
+        .accordion-content.active {
+            max-height: 500px; /* Valor arbitrário grande para caber o conteúdo */
+            padding-top: 1rem; /* pt-4 */
+            padding-bottom: 1.5rem; /* pb-6 */
+        }
+        .accordion-header.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+        .arrow-icon {
+            transition: transform 0.3s;
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white">
 
     <script>
         // Número de WhatsApp oficial
-        const numeroWhatsApp = "5516988332631"; 
+        const numeroWhatsApp = "5516988332631";
         
         // Função para gerar o link do WhatsApp
         function gerarLinkWhatsApp(evento) {
@@ -60,7 +86,9 @@
                 <img src="https://raw.githubusercontent.com/Godofin/anderson-landing-page/refs/heads/main/unnamed-removebg-preview.png" alt="Logo Anderson Viagem e Turismo" class="h-12 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x50/111827/FBBF24?text=Logo';">
             </a>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#proximas-viagens" class="text-gray-300 hover:text-yellow-400 transition duration-300">Próximas Viagens</a>
+                <a href="#destaques" class="text-gray-300 hover:text-yellow-400 transition duration-300">Destaques</a>
+                <a href="#proximas-viagens" class="text-gray-300 hover:text-yellow-400 transition duration-300">Todas as Viagens</a>
+                <a href="#faq" class="text-gray-300 hover:text-yellow-400 transition duration-300">FAQ</a>
                 <a href="#sobre" class="text-gray-300 hover:text-yellow-400 transition duration-300">Quem Somos</a>
                 <a href="#contato" class="text-gray-300 hover:text-yellow-400 transition duration-300">Contato</a>
             </div>
@@ -75,11 +103,13 @@
     <!-- Menu Mobile -->
     <div id="mobile-menu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full z-40 p-6 pt-24 overflow-y-auto">
         <div class="container mx-auto">
-            <a href="#proximas-viagens" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Próximas Viagens</a>
+             <a href="#destaques" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Destaques</a>
+             <a href="#proximas-viagens" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Todas as Viagens</a>
+             <a href="#faq" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">FAQ</a>
             <a href="#sobre" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Quem Somos</a>
             <a href="#contato" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400">Contato</a>
             <div class="border-t border-gray-700 my-6"></div>
-            <h3 class="text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar por Data:</h3>
+            <h3 class="text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar Viagens por Data:</h3>
             <div id="mobile-filters-container" class="flex flex-col items-center gap-2">
                 <!-- Filtros para mobile serão injetados aqui -->
             </div>
@@ -93,15 +123,59 @@
                 <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-wider leading-tight">Sua carona oficial<br><span class="text-yellow-400">para os melhores shows</span></h1>
                 <p class="mt-4 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">Viaje com segurança, conforto e pontualidade. Deixe o transporte com a gente e foque no mais importante: curtir o seu evento!</p>
                 <p class="mt-6 text-lg font-semibold bg-black/50 inline-block px-4 py-2 rounded-lg text-yellow-300 animate-pulse">SAÍDAS DE ARARAQUARA E REGIÃO</p><br>
-                <a href="#proximas-viagens" class="mt-8 inline-block bg-yellow-500 text-gray-900 font-bold text-lg py-4 px-10 rounded-lg hover:bg-yellow-400 transition duration-300 shadow-lg">Ver Próximas Excursões</a>
+                <!-- Alterado o target para o novo carrossel -->
+                <a href="#destaques" class="mt-8 inline-block bg-yellow-500 text-gray-900 font-bold text-lg py-4 px-10 rounded-lg hover:bg-yellow-400 transition duration-300 shadow-lg">Ver Próximas Excursões</a>
             </div>
         </section>
+
+        <!-- CARROSSEL DE EVENTOS DE DESTAQUE (Mês Atual e Próximo) -->
+        <section id="destaques" class="py-16 bg-gray-900 border-b border-gray-700/50">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-extrabold text-yellow-400 mb-8 text-center">🔥 Destaques do Mês! 🔥</h2>
+                <div id="carousel-container" class="relative max-w-4xl mx-auto" data-carousel="static">
+                    <!-- Carousel wrapper (h-96 on mobile, h-[550px] on desktop) -->
+                    <div id="events-carousel-wrapper" class="relative h-96 md:h-[550px] overflow-hidden rounded-xl shadow-2xl shadow-black/40">
+                        <!-- Slides will be injected here via JS -->
+                    </div>
+
+                    <!-- Slider indicators -->
+                    <div id="carousel-indicators" class="absolute z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse bottom-5 left-1/2">
+                        <!-- Indicators will be injected here via JS -->
+                    </div>
+
+                    <!-- Slider controls (Prev) -->
+                    <button id="prev-btn" type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800/70 hover:bg-yellow-500/70 text-white group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-yellow-400 group-focus:outline-none transition">
+                            <svg class="w-4 h-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                            </svg>
+                            <span class="sr-only">Previous</span>
+                        </span>
+                    </button>
+                    <!-- Slider controls (Next) -->
+                    <button id="next-btn" type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800/70 hover:bg-yellow-500/70 text-white group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-yellow-400 group-focus:outline-none transition">
+                            <svg class="w-4 h-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                            </svg>
+                            <span class="sr-only">Next</span>
+                        </span>
+                    </button>
+                </div>
+                <p id="carousel-empty-message" class="text-gray-400 text-center mt-6 hidden">Nenhum evento de destaque neste ou no próximo mês. Veja todas as viagens abaixo!</p>
+                <div class="text-center mt-8">
+                     <a href="#proximas-viagens" class="text-yellow-400 hover:text-yellow-300 transition duration-300 font-semibold underline">Ver a lista completa de viagens</a>
+                </div>
+            </div>
+        </section>
+        <!-- FIM CARROSSEL DE DESTAQUES -->
+
 
         <section id="proximas-viagens" class="py-20 bg-gray-800">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">Próximas Viagens Confirmadas</h2>
-                    <p class="text-gray-400 mt-2">Garanta sua vaga! Os melhores eventos estão aqui.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Todas as Viagens Agendadas</h2>
+                    <p class="text-gray-400 mt-2">Use o filtro para navegar pelas datas.</p>
                     <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
                 </div>
 
@@ -116,23 +190,104 @@
             </div>
         </section>
 
-        <section id="sobre" class="py-20 bg-gray-900">
+        <!-- NOVA SEÇÃO: PERGUNTAS FREQUENTES (FAQ) -->
+        <section id="faq" class="py-20 bg-gray-900 border-t border-gray-700/50">
+             <div class="container mx-auto px-6 max-w-3xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Dúvidas Frequentes (FAQ)</h2>
+                    <p class="text-gray-400 mt-2">Encontre respostas rápidas sobre a sua viagem.</p>
+                    <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
+                </div>
+
+                <!-- Acordeão de Perguntas -->
+                <div id="faq-accordion" class="space-y-4">
+                    <!-- Grupo 1: O que inclui / Veículo -->
+                    <div class="accordion-item bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-700">
+                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg hover:bg-gray-700 transition duration-300" aria-expanded="false">
+                            <span>O que a excursão inclui e qual veículo será usado?</span>
+                            <svg class="arrow-icon w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="text-gray-300">
+                                <strong>O que está incluso:</strong> Transporte de ida e volta e o serviço de um <strong class="text-yellow-300">Guia Credenciado</strong> que dará todo o suporte durante a viagem e no local do evento. Somos uma empresa com <strong class="text-yellow-300">CADASTUR e CNPJ ativo</strong>, atuando há 8 anos no segmento.
+                            </p>
+                             <p class="text-gray-300 mt-4">
+                                <strong>Tipo de veículo:</strong> Pode ser <strong class="text-yellow-300">Van, Micro-ônibus ou Ônibus</strong>, dependendo da lotação. Todos são veículos executivos e licenciados (ARTESP e ANTT).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Grupo 2: Ingressos e Custos -->
+                    <div class="accordion-item bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-700">
+                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg hover:bg-gray-700 transition duration-300" aria-expanded="false">
+                            <span>O ingresso do show/festival está incluso no preço?</span>
+                            <svg class="arrow-icon w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="text-gray-300">
+                                <strong class="text-red-400">Não</strong>. O valor da excursão cobre <strong class="text-yellow-300">apenas o transporte</strong> (viagem de bate e volta). O ingresso para o show ou festival deve ser adquirido separadamente por você.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Grupo 3: Embarque e Desembarque -->
+                    <div class="accordion-item bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-700">
+                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg hover:bg-gray-700 transition duration-300" aria-expanded="false">
+                            <span>Informações de Embarque, Tolerância e Horários de Retorno.</span>
+                            <svg class="arrow-icon w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="text-gray-300 font-bold mb-2">Pontos de Partida:</p>
+                            <p class="text-gray-300">
+                                Os pontos de embarque específicos de cada evento são detalhados <strong class="text-yellow-300">na descrição da viagem</strong>, que você encontra na lista <a href="#proximas-viagens" class="font-bold text-yellow-300 hover:text-yellow-200 underline">Todas as Viagens Agendadas</a> (acima).
+                            </p>
+                            
+                            <p class="text-red-400 font-bold mt-4">Tolerância:</p>
+                            <p class="text-gray-300">Há uma <strong class="text-red-400">tolerância máxima de 10 minutos</strong> no embarque. O transporte seguirá viagem pontualmente, por isso, programe-se para chegar com antecedência!</p>
+                            
+                            <p class="text-gray-300 mt-4"><strong>Retorno:</strong> O retorno é programado para <strong class="text-yellow-300">40 minutos após o término</strong> oficial do evento.</p>
+                            
+                            <p class="text-gray-300 mt-4"><strong class="text-yellow-400">Importante:</strong> Não alteramos pontos de embarque/desembarque ou rotas.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Grupo 4: Reservas e Cancelamento -->
+                    <div class="accordion-item bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-700">
+                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg hover:bg-gray-700 transition duration-300" aria-expanded="false">
+                            <span>Reservas, Desistências e Comprovantes.</span>
+                            <svg class="arrow-icon w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="text-gray-300"><strong>Como reservar:</strong> As reservas são feitas <strong class="text-yellow-300">mediante pagamento</strong>. Entre em contato <strong class="text-yellow-300">exclusivamente pelo <a href="#" onclick="window.open(gerarLinkWhatsApp('Reserva FAQ'), '_blank')" class="hover:underline">WhatsApp: (16) 98833-2631</a></strong>.</p>
+                            <p class="text-gray-300 font-bold mt-4">Em caso de desistência:</p>
+                            <p class="text-gray-300"><strong class="text-red-400">Não fazemos devolução de valores pagos</strong> em caso de desistência ou não comparecimento. A reserva é válida apenas para esta excursão específica.</p>
+                            <p class="text-gray-300 font-bold mt-4">Contrato/Recibo:</p>
+                            <p class="text-gray-300">Não emitimos contrato ou recibo físico para viagens "bate e volta". Seu <strong class="text-yellow-300">comprovante de pagamento</strong> efetuado a nós é válido como seu recibo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FIM SEÇÃO FAQ -->
+
+
+        <section id="sobre" class="py-20 bg-gray-800">
             <div class="container mx-auto px-6 text-center">
-                   <h2 class="text-3xl md:text-4xl font-bold text-white">Por que viajar com a gente?</h2>
-                   <p class="text-gray-400 mt-2">Sua única preocupação é se divertir.</p>
-                   <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Por que viajar com a gente?</h2>
+                    <p class="text-gray-400 mt-2">Sua única preocupação é se divertir.</p>
+                    <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12 max-w-5xl mx-auto">
                     <div class="feature-item">
                         <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                         </div>
                         <h3 class="text-xl font-bold mt-4">Segurança Total</h3>
                         <p class="text-gray-400 mt-2">Veículos novos, motoristas experientes e seguro de viagem para todos os passageiros.</p>
                     </div>
                      <div class="feature-item">
                         <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
                         </div>
                         <h3 class="text-xl font-bold mt-4">Conforto e Comodidade</h3>
                         <p class="text-gray-400 mt-2">Ônibus e Vans com ar-condicionado, poltronas reclináveis. Deixamos você perto do evento.</p>
@@ -172,12 +327,46 @@
 
     <!-- SCRIPT COMPLETO E ATUALIZADO -->
     <script>
+        let currentSlide = 0; // Controla o slide atual do carrossel de destaques
+
+        // --- Lógica do Acordeão (FAQ) ---
+        const setupAccordion = () => {
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const isActive = header.classList.contains('active');
+
+                    // Fecha todos os outros
+                    document.querySelectorAll('.accordion-header').forEach(h => {
+                        if (h !== header) {
+                            h.classList.remove('active');
+                            h.nextElementSibling.classList.remove('active');
+                        }
+                    });
+
+                    // Abre ou fecha o item clicado
+                    if (!isActive) {
+                        header.classList.add('active');
+                        content.classList.add('active');
+                    } else {
+                        header.classList.remove('active');
+                        content.classList.remove('active');
+                    }
+                });
+            });
+        };
+        // --- Fim da Lógica do Acordeão ---
+
+
         document.addEventListener('DOMContentLoaded', () => {
             const eventsGrid = document.getElementById('events-grid');
             const filtersContainer = document.getElementById('filters-container');
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileFiltersContainer = document.getElementById('mobile-filters-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
 
             let allEvents = [];
 
@@ -191,6 +380,179 @@
                     mobileMenu.classList.add('hidden');
                 }
             });
+
+            // Helper function to get the current and next month/year keys (e.g., "Outubro 2025")
+            const getCurrentAndNextMonthKeys = () => {
+                const now = new Date();
+                const currentMonth = now.getMonth() + 1;
+                const currentYear = now.getFullYear();
+                
+                let nextMonth = currentMonth + 1;
+                let nextYear = currentYear;
+                if (nextMonth > 12) {
+                    nextMonth = 1;
+                    nextYear += 1;
+                }
+
+                const currentKey = `${monthMap[currentMonth]} ${currentYear}`;
+                const nextKey = `${monthMap[nextMonth]} ${nextYear}`;
+
+                return [currentKey, nextKey];
+            };
+
+            const showSlide = (n) => {
+                const slides = document.querySelectorAll('.carousel-slide');
+                const indicators = document.querySelectorAll('.carousel-indicator');
+                
+                if (slides.length === 0) return;
+
+                // Handle wrap around
+                if (n >= slides.length) { currentSlide = 0 }
+                else if (n < 0) { currentSlide = slides.length - 1 }
+                else { currentSlide = n }
+
+                slides.forEach((slide, index) => {
+                    // Toggle visibility and transition effect
+                    if (index === currentSlide) {
+                        slide.classList.remove('opacity-0', 'hidden');
+                        slide.classList.add('opacity-100');
+                    } else {
+                        slide.classList.remove('opacity-100');
+                        slide.classList.add('opacity-0', 'hidden');
+                    }
+                });
+
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.remove('bg-yellow-500');
+                    indicator.classList.add('bg-gray-500', 'hover:bg-gray-400');
+                    if (index === currentSlide) {
+                        indicator.classList.remove('bg-gray-500', 'hover:bg-gray-400');
+                        indicator.classList.add('bg-yellow-500');
+                    }
+                });
+            };
+
+
+            const renderCarousel = (events) => {
+                const eventsCarouselWrapper = document.getElementById('events-carousel-wrapper');
+                const carouselIndicators = document.getElementById('carousel-indicators');
+                const emptyMessage = document.getElementById('carousel-empty-message');
+
+                // Reset
+                eventsCarouselWrapper.innerHTML = '';
+                carouselIndicators.innerHTML = '';
+                currentSlide = 0;
+                
+                // Filtering logic remains the same: Current and Next Month
+                const [currentMonthKey, nextMonthKey] = getCurrentAndNextMonthKeys();
+                const highlightEvents = events.filter(event => {
+                    const eventDateStr = event.date_event;
+                    if (!eventDateStr) return false;
+
+                    try {
+                        const [year, month] = eventDateStr.split('-');
+                        const monthName = monthMap[parseInt(month, 10)];
+                        const eventKey = `${monthName} ${year}`;
+                        return eventKey === currentMonthKey || eventKey === nextMonthKey;
+                    } catch (e) {
+                        return false;
+                    }
+                });
+
+                if (highlightEvents.length === 0) {
+                    emptyMessage.classList.remove('hidden');
+                    prevBtn.classList.add('hidden');
+                    nextBtn.classList.add('hidden');
+                    carouselIndicators.classList.add('hidden');
+                    return;
+                }
+
+                emptyMessage.classList.add('hidden');
+                
+                // Show buttons/indicators only if there is more than 1 slide
+                if (highlightEvents.length > 1) {
+                    prevBtn.classList.remove('hidden');
+                    nextBtn.classList.remove('hidden');
+                    carouselIndicators.classList.remove('hidden');
+                } else {
+                    prevBtn.classList.add('hidden');
+                    nextBtn.classList.add('hidden');
+                    carouselIndicators.classList.add('hidden');
+                }
+
+                // Generate Slides and Indicators
+                highlightEvents.forEach((event, index) => {
+                    let citiesArray = [];
+                    if (Array.isArray(event.cities)) {
+                        citiesArray = event.cities;
+                    } else if (typeof event.cities === 'string' && event.cities.trim().length > 0) {
+                        citiesArray = event.cities.split(',').map(city => city.trim());
+                    }
+                    
+                    // Estrutura de Cidades/Local (melhorada para o carrossel)
+                    const citiesHTML = citiesArray.length > 0
+                        ? `<div class="mt-4 flex flex-wrap gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            <div class="flex flex-wrap gap-2">
+                                ${citiesArray.map(city => `<span class="px-3 py-1 text-sm font-bold text-gray-900 bg-yellow-400/80 rounded-full">${city}</span>`).join('')}
+                            </div>
+                           </div>` : '';
+
+                    // Slide HTML (Visual de Cartão sobre Imagem)
+                    eventsCarouselWrapper.innerHTML += `
+                        <div class="carousel-slide absolute inset-0 duration-700 ease-in-out ${index === 0 ? 'opacity-100' : 'opacity-0 hidden'} transition-opacity flex items-center justify-center p-4 md:p-8" data-carousel-item>
+                            
+                            <div class="relative w-full h-full rounded-xl overflow-hidden shadow-2xl group">
+                                <img src="${event.image}" alt="${event.alt}" class="w-full h-full object-cover absolute inset-0 transform group-hover:scale-105 transition duration-700" onerror="this.onerror=null;this.src='https://placehold.co/800x600/1F2937/FBBF24?text=DESTAQUE+${index+1}';">
+                                
+                                <!-- Overlay MAIS ESCURO (bg-black/60) para melhorar a legibilidade -->
+                                <div class="absolute inset-0 bg-black/60 hover:bg-black/70 transition duration-500"></div>
+
+                                <!-- Conteúdo (Título, Data/Local e Botão) -->
+                                <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-10">
+                                    <span class="text-base font-semibold text-red-400 mb-2 uppercase tracking-wider">Próxima Parada</span>
+                                    
+                                    <!-- AUMENTO DO TAMANHO DA FONTE PARA TEXTO MAIS IMPACTANTE (md:text-6xl) -->
+                                    <h3 class="text-4xl md:text-6xl font-black text-yellow-400 leading-tight mb-4">${event.title}</h3>
+                                    
+                                    <!-- AUMENTO DO TAMANHO DA DATA (md:text-3xl) -->
+                                    <p class="text-xl md:text-3xl font-bold text-white mb-4 flex items-center">
+                                        <svg class="w-6 h-6 inline mr-2 align-text-bottom text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        ${event.date}
+                                    </p>
+
+                                    ${citiesHTML}
+                                    
+                                    <button onclick="window.open(gerarLinkWhatsApp('${event.eventName}'), '_blank')" class="btn-whatsapp mt-6 max-w-xs bg-green-500 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center space-x-3 hover:bg-green-600 shadow-lg shadow-green-500/30 transition">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.003 2.011.564 3.963 1.632 5.686l.244.423-1.075 3.922 4.023-1.056.39.232z"/></svg>
+                                        <span>Reservar Vaga</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Indicator HTML
+                    carouselIndicators.innerHTML += `
+                        <button type="button" class="carousel-indicator w-3 h-3 rounded-full ${index === 0 ? 'bg-yellow-500' : 'bg-gray-500 hover:bg-gray-400'}" aria-current="${index === 0}" aria-label="Slide ${index + 1}" data-carousel-slide-to="${index}"></button>
+                    `;
+                });
+
+                // Event Listeners for controls
+                prevBtn.onclick = () => showSlide(currentSlide - 1);
+                nextBtn.onclick = () => showSlide(currentSlide + 1);
+                
+                // Event Listeners for indicators
+                document.querySelectorAll('.carousel-indicator').forEach(indicator => {
+                    indicator.addEventListener('click', (e) => {
+                        const index = parseInt(e.target.dataset.carouselSlideTo);
+                        showSlide(index);
+                    });
+                });
+
+                // Initial display
+                showSlide(0);
+            };
 
             const renderEvents = (filter = 'Todos') => {
                 eventsGrid.innerHTML = ''; 
@@ -234,7 +596,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                </svg>
                                <div class="flex flex-wrap gap-2">
-                                   ${citiesArray.map(city => `<kbd class="px-2 py-1 text-xs font-semibold text-yellow-200 bg-gray-700 border border-gray-600 rounded-md">${city}</kbd>`).join('')}
+                                    ${citiesArray.map(city => `<kbd class="px-2 py-1 text-xs font-semibold text-yellow-200 bg-gray-700 border border-gray-600 rounded-md">${city}</kbd>`).join('')}
                                </div>
                            </div>` : '';
 
@@ -296,7 +658,7 @@
                 mobileFiltersContainer.innerHTML = '';
 
                 // Botão "Todos"
-                const allButton = `<button data-filter="Todos" class="filter-btn active-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Todos</button>`;
+                const allButton = `<button data-filter="Todos" class="filter-btn active-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Todas as Viagens</button>`;
                 filtersContainer.innerHTML += allButton;
                 mobileFiltersContainer.innerHTML += `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">Todas as Viagens</button>`;
 
@@ -365,8 +727,15 @@
                         return;
                     }
                     
+                    // 1. Renderiza o Carrossel de Destaques (Mês Atual e Próximo)
+                    renderCarousel(allEvents); 
+
+                    // 2. Configura os filtros e renderiza a lista completa
                     setupFilters();
-                    renderEvents('Todos'); // Renderização inicial
+                    renderEvents('Todos'); 
+
+                    // 3. Inicializa o Acordeão do FAQ
+                    setupAccordion();
                 })
                 .catch(error => {
                     console.error('Erro ao buscar eventos:', error);
