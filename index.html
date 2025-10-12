@@ -46,6 +46,12 @@
             const mensagem = encodeURIComponent(`Olá! Tenho interesse na excursão para o evento "${evento}". Gostaria de mais informações.`);
             return `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensagem}`;
         }
+        
+        // Mapeamento de meses para conversão
+        const monthMap = {
+            1: "Janeiro", 2: "Fevereiro", 3: "Março", 4: "Abril", 5: "Maio", 6: "Junho",
+            7: "Julho", 8: "Agosto", 9: "Setembro", 10: "Outubro", 11: "Novembro", 12: "Dezembro"
+        };
     </script>
 
     <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-black/20">
@@ -189,10 +195,23 @@
             const renderEvents = (filter = 'Todos') => {
                 eventsGrid.innerHTML = ''; 
 
-                // A lógica de filtro funciona bem com "Mês Ano" porque .includes() buscará a substring.
+                // --- Lógica de filtragem baseada no Mês/Ano do date_event ---
                 const filteredEvents = filter === 'Todos'
                     ? allEvents
-                    : allEvents.filter(event => event.date.includes(filter));
+                    : allEvents.filter(event => {
+                        // O filtro é no formato "Mês Ano" (ex: "Janeiro 2025")
+                        const eventDate = event.date_event; // YYYY-MM-DD
+                        if (!eventDate) return false;
+
+                        // Pega o Mês e Ano do date_event para comparação
+                        const [year, month] = eventDate.split('-');
+                        const monthName = monthMap[parseInt(month)];
+                        const filterKey = `${monthName} ${year}`;
+                        
+                        // Retorna true se a chave do filtro estiver inclusa no nome do filtro
+                        return filter === filterKey;
+                    });
+                // --- Fim da Lógica de filtragem ---
 
                 if (filteredEvents.length === 0) {
                     eventsGrid.innerHTML = `<p class="text-gray-400 text-center col-span-full">Nenhum evento encontrado para ${filter.replace(' ', ' / ')}.</p>`;
@@ -237,52 +256,60 @@
                 eventsGrid.innerHTML = eventsHTML;
             };
             
-            // --- LÓGICA DE FILTRO ATUALIZADA (MESMA LÓGICA) ---
+            // --- LÓGICA DE FILTRO ATUALIZADA ---
             const setupFilters = () => {
-                const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-                const eventYearMonths = new Set();
+                const eventYearMonthsSet = new Set();
+                const eventYearMonthsList = [];
                 
-                // Extrai 'Mês Ano' de cada evento (usando o campo 'date' em português para a interface do filtro)
+                // 1. Extrai Mês e Ano do date_event e cria o Set/Lista
                 allEvents.forEach(event => {
-                    const yearMatch = event.date.match(/\d{4}/); // Encontra o primeiro número de 4 dígitos (o ano)
-                    if (yearMatch) {
-                        const year = yearMatch[0];
-                        monthNames.forEach(month => {
-                            if (event.date.toLowerCase().includes(month.toLowerCase())) {
-                                eventYearMonths.add(`${month} ${year}`);
+                    const eventDate = event.date_event; // Formato YYYY-MM-DD
+                    if (eventDate) {
+                        try {
+                            const [year, month] = eventDate.split('-');
+                            const monthIndex = parseInt(month, 10);
+                            const yearInt = parseInt(year, 10);
+                            const monthName = monthMap[monthIndex];
+                            
+                            const filterKey = `${monthName} ${year}`;
+                            
+                            if (!eventYearMonthsSet.has(filterKey)) {
+                                eventYearMonthsSet.add(filterKey);
+                                eventYearMonthsList.push({ key: filterKey, year: yearInt, monthIndex: monthIndex });
                             }
-                        });
+                        } catch (e) {
+                            console.warn("Erro ao processar data para filtro:", eventDate, e);
+                        }
                     }
                 });
 
-                // Ordena os filtros por ano, e depois por mês
-                const sortedYearMonths = [...eventYearMonths].sort((a, b) => {
-                    const [monthA, yearA] = a.split(' ');
-                    const [monthB, yearB] = b.split(' ');
-
-                    if (yearA !== yearB) {
-                        return parseInt(yearA) - parseInt(yearB);
+                // 2. Ordena a lista de filtros cronologicamente
+                const sortedYearMonths = eventYearMonthsList.sort((a, b) => {
+                    if (a.year !== b.year) {
+                        return a.year - b.year; // Ordena por ano
                     }
-                    return monthNames.indexOf(monthA) - monthNames.indexOf(monthB);
+                    return a.monthIndex - b.monthIndex; // Ordena por mês
+                });
+                
+                // 3. Cria os botões
+                filtersContainer.innerHTML = '';
+                mobileFiltersContainer.innerHTML = '';
+
+                // Botão "Todos"
+                const allButton = `<button data-filter="Todos" class="filter-btn active-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Todos</button>`;
+                filtersContainer.innerHTML += allButton;
+                mobileFiltersContainer.innerHTML += `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">Todas as Viagens</button>`;
+
+
+                sortedYearMonths.forEach(item => {
+                    const buttonText = item.key.replace(' ', ' / ');
+                    const filterButton = `<button data-filter="${item.key}" class="filter-btn inactive-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">${buttonText}</button>`;
+                    
+                    filtersContainer.innerHTML += filterButton;
+                    mobileFiltersContainer.innerHTML += `<button data-filter="${item.key}" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">${buttonText}</button>`;
                 });
 
-                // Cria os botões de filtro para Desktop
-                let filtersHTML = `<button data-filter="Todos" class="filter-btn active-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Todos</button>`;
-                sortedYearMonths.forEach(yearMonth => {
-                    const buttonText = yearMonth.replace(' ', ' / ');
-                    filtersHTML += `<button data-filter="${yearMonth}" class="filter-btn inactive-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">${buttonText}</button>`;
-                });
-                filtersContainer.innerHTML = filtersHTML;
-
-                // Cria os botões de filtro para Mobile
-                let mobileFiltersHTML = `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">Todas as Viagens</button>`;
-                sortedYearMonths.forEach(yearMonth => {
-                       const buttonText = yearMonth.replace(' ', ' / ');
-                       mobileFiltersHTML += `<button data-filter="${yearMonth}" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">${buttonText}</button>`;
-                });
-                mobileFiltersContainer.innerHTML = mobileFiltersHTML;
-
-                // Aplica o estilo inicial nos botões de desktop
+                // 4. Aplica o estilo inicial nos botões de desktop
                 document.querySelectorAll('.active-filter').forEach(b => { b.classList.add('bg-yellow-500', 'text-gray-900'); b.classList.remove('inactive-filter'); });
                 document.querySelectorAll('.inactive-filter').forEach(b => { b.classList.add('bg-gray-700', 'hover:bg-yellow-500', 'text-white', 'hover:text-gray-900'); b.classList.remove('active-filter'); });
             };
@@ -321,21 +348,17 @@
                     return response.json();
                 })
                 .then(events => {
-                    // --- NOVA LÓGICA DE ORDENAÇÃO POR date_event (YYYY-MM-DD) ---
+                    // --- ORDENAÇÃO POR date_event (YYYY-MM-DD) ---
                     allEvents = events.sort((a, b) => {
-                        // Converte a string YYYY-MM-DD em um objeto Date para comparação
                         const dateA = new Date(a.date_event);
                         const dateB = new Date(b.date_event);
                         
-                        // Ordena do mais próximo (menor data) para o mais distante (maior data)
-                        // Se dateA e dateB forem datas válidas, a comparação funciona.
-                        // Eventos sem data válida (NaN) vão para o final.
                         if (isNaN(dateA)) return 1;
                         if (isNaN(dateB)) return -1;
                         
                         return dateA - dateB;
                     });
-                    // --- FIM DA NOVA LÓGICA DE ORDENAÇÃO ---
+                    // --- FIM DA ORDENAÇÃO ---
 
                     if (allEvents.length === 0) {
                         eventsGrid.innerHTML = `<div class="bg-gray-900 rounded-lg overflow-hidden shadow-2xl shadow-black/30 flex flex-col transform hover:-translate-y-2 transition-transform duration-300 border-2 border-dashed border-gray-700 col-span-full md:col-span-2 lg:col-span-3 mx-auto max-w-md"><div class="p-6 flex flex-col flex-grow items-center justify-center text-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg><h3 class="text-2xl font-bold text-gray-500">Aguarde!</h3><p class="text-gray-600 mt-2">Mais eventos incríveis serão anunciados em breve. Fique de olho!</p></div></div>`;
