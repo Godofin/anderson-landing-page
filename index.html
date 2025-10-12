@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Anderson Viagem e Turismo - Excursões para Shows e Eventos</title>
     <meta name="description" content="Garanta sua vaga nas melhores excursões para shows, festivais e eventos saindo de Araraquara e região. Viagens seguras, confortáveis e com a melhor galera!">
     <meta name="keywords" content="excursão para shows, viagem para show, ônibus para show, Anderson Turismo, Linkin Park, shows em São Paulo, transporte para eventos, Araraquara">
@@ -113,9 +112,9 @@
 
         <section id="sobre" class="py-20 bg-gray-900">
             <div class="container mx-auto px-6 text-center">
-                 <h2 class="text-3xl md:text-4xl font-bold text-white">Por que viajar com a gente?</h2>
-                 <p class="text-gray-400 mt-2">Sua única preocupação é se divertir.</p>
-                 <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
+                   <h2 class="text-3xl md:text-4xl font-bold text-white">Por que viajar com a gente?</h2>
+                   <p class="text-gray-400 mt-2">Sua única preocupação é se divertir.</p>
+                   <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12 max-w-5xl mx-auto">
                     <div class="feature-item">
@@ -212,8 +211,8 @@
                     const citiesHTML = citiesArray.length > 0
                         ? `<div class="mt-4 flex flex-wrap gap-2 items-center">
                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                </svg>
                                <div class="flex flex-wrap gap-2">
                                    ${citiesArray.map(city => `<kbd class="px-2 py-1 text-xs font-semibold text-yellow-200 bg-gray-700 border border-gray-600 rounded-md">${city}</kbd>`).join('')}
@@ -238,18 +237,18 @@
                 eventsGrid.innerHTML = eventsHTML;
             };
             
-            // --- LÓGICA DE FILTRO ATUALIZADA ---
+            // --- LÓGICA DE FILTRO ATUALIZADA (MESMA LÓGICA) ---
             const setupFilters = () => {
                 const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
                 const eventYearMonths = new Set();
                 
-                // Extrai 'Mês Ano' de cada evento
+                // Extrai 'Mês Ano' de cada evento (usando o campo 'date' em português para a interface do filtro)
                 allEvents.forEach(event => {
                     const yearMatch = event.date.match(/\d{4}/); // Encontra o primeiro número de 4 dígitos (o ano)
                     if (yearMatch) {
                         const year = yearMatch[0];
                         monthNames.forEach(month => {
-                            if (event.date.includes(month)) {
+                            if (event.date.toLowerCase().includes(month.toLowerCase())) {
                                 eventYearMonths.add(`${month} ${year}`);
                             }
                         });
@@ -278,8 +277,8 @@
                 // Cria os botões de filtro para Mobile
                 let mobileFiltersHTML = `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">Todas as Viagens</button>`;
                 sortedYearMonths.forEach(yearMonth => {
-                     const buttonText = yearMonth.replace(' ', ' / ');
-                     mobileFiltersHTML += `<button data-filter="${yearMonth}" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">${buttonText}</button>`;
+                       const buttonText = yearMonth.replace(' ', ' / ');
+                       mobileFiltersHTML += `<button data-filter="${yearMonth}" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">${buttonText}</button>`;
                 });
                 mobileFiltersContainer.innerHTML = mobileFiltersHTML;
 
@@ -322,46 +321,21 @@
                     return response.json();
                 })
                 .then(events => {
-                    // Função para converter a data em PT-BR para um objeto Date
-                    const parsePtBrDate = (dateString) => {
-                        const monthNames = { "janeiro": 0, "fevereiro": 1, "março": 2, "abril": 3, "maio": 4, "junho": 5, "julho": 6, "agosto": 7, "setembro": 8, "outubro": 9, "novembro": 10, "dezembro": 11 };
-                        
-                        // Regex para extrair data de forma mais robusta. Ex: "08 de Novembro 2025"
-                        const regex = /(\d{1,2})\s+de\s+([a-zA-Zç]+)\s+(\d{4})/;
-                        const match = dateString.toLowerCase().match(regex);
-                        
-                        if (match) {
-                            const day = parseInt(match[1], 10);
-                            const month = monthNames[match[2]];
-                            const year = parseInt(match[3], 10);
-                            
-                            if (!isNaN(day) && month !== undefined && !isNaN(year)) {
-                                return new Date(year, month, day);
-                            }
-                        }
-                        
-                        console.warn(`Não foi possível analisar a data: "${dateString}"`);
-                        return null;
-                    };
-                    
-                    // Ordena os eventos: do mais próximo de hoje para o mais distante
-                    const hoje = new Date();
-                    hoje.setHours(0, 0, 0, 0); // Zera as horas para comparação apenas de data
-                    
+                    // --- NOVA LÓGICA DE ORDENAÇÃO POR date_event (YYYY-MM-DD) ---
                     allEvents = events.sort((a, b) => {
-                        const dateA = parsePtBrDate(a.date);
-                        const dateB = parsePtBrDate(b.date);
+                        // Converte a string YYYY-MM-DD em um objeto Date para comparação
+                        const dateA = new Date(a.date_event);
+                        const dateB = new Date(b.date_event);
                         
-                        if (!dateA) return 1; // Eventos sem data vão para o final
-                        if (!dateB) return -1;
+                        // Ordena do mais próximo (menor data) para o mais distante (maior data)
+                        // Se dateA e dateB forem datas válidas, a comparação funciona.
+                        // Eventos sem data válida (NaN) vão para o final.
+                        if (isNaN(dateA)) return 1;
+                        if (isNaN(dateB)) return -1;
                         
-                        // Calcula a diferença em dias de hoje
-                        const diffA = Math.abs(dateA - hoje);
-                        const diffB = Math.abs(dateB - hoje);
-                        
-                        // Ordena pela diferença: eventos mais próximos primeiro
-                        return diffA - diffB;
+                        return dateA - dateB;
                     });
+                    // --- FIM DA NOVA LÓGICA DE ORDENAÇÃO ---
 
                     if (allEvents.length === 0) {
                         eventsGrid.innerHTML = `<div class="bg-gray-900 rounded-lg overflow-hidden shadow-2xl shadow-black/30 flex flex-col transform hover:-translate-y-2 transition-transform duration-300 border-2 border-dashed border-gray-700 col-span-full md:col-span-2 lg:col-span-3 mx-auto max-w-md"><div class="p-6 flex flex-col flex-grow items-center justify-center text-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg><h3 class="text-2xl font-bold text-gray-500">Aguarde!</h3><p class="text-gray-600 mt-2">Mais eventos incríveis serão anunciados em breve. Fique de olho!</p></div></div>`;
