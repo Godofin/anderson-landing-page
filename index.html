@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<!-- MELHORIA: Removido lang daqui e adicionado 'class' para o script do tema -->
+<html lang="pt-BR" class="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +20,24 @@
     <link rel="icon" href="https://raw.githubusercontent.com/Godofin/anderson-landing-page/refs/heads/main/unnamed-removebg-preview.png" type="image/png">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MELHORIA: Configuração do Tailwind para usar 'class' no modo escuro -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    
+    <!-- MELHORIA: Script para evitar FOUC (Flash of Unstyled Content) do Tema -->
+    <script>
+        // No carregamento da página ou ao trocar de tema, melhor adicionar inline no `head` para evitar FOUC
+        // MELHORIA: Default é 'dark'. Só usa 'light' se estiver salvo no localStorage.
+        if (localStorage.getItem('color-theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark'); // Default to dark
+        }
+    </script>
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,25 +60,27 @@
             transform: scale(1.05);
             box-shadow: 0 10px 20px -10px rgba(45, 212, 191, 0.4);
         }
-        /* Remove scrollbar (since it's now a slide-based carousel) */
-        #events-carousel-wrapper::-webkit-scrollbar {
+        
+        #events-carousel-wrapper {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            display: flex;
+            transition: transform 0.6s ease-in-out;
+        }
+         #events-carousel-wrapper::-webkit-scrollbar {
             display: none;
         }
-        #events-carousel-wrapper {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        /* Estilo para a transição do acordeão */
+
         .accordion-content {
             transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
             overflow: hidden;
             max-height: 0;
-            padding: 0 1.5rem; /* px-6 */
+            padding: 0 1.5rem;
         }
         .accordion-content.active {
-            max-height: 500px; /* Valor arbitrário grande para caber o conteúdo */
-            padding-top: 1rem; /* pt-4 */
-            padding-bottom: 1.5rem; /* pb-6 */
+            max-height: 500px;
+            padding-top: 1rem;
+            padding-bottom: 1.5rem;
         }
         .accordion-header.active .arrow-icon {
             transform: rotate(180deg);
@@ -67,9 +88,24 @@
         .arrow-icon {
             transition: transform 0.3s;
         }
+
+        /* MELHORIA: CSS para o Switch de Tema */
+        /* Cor do 'track' quando 'checked' (Light Mode) */
+        #theme-toggle-input:checked + .theme-toggle-track {
+            background-color: #FDE68A; /* Amarelo claro */
+        }
+        .dark #theme-toggle-input:checked + .theme-toggle-track {
+             background-color: #FBBF24; /* Amarelo mais forte no dark */
+        }
+        
+        /* Movimento do 'thumb' */
+        #theme-toggle-input:checked ~ .theme-toggle-thumb {
+            transform: translateX(20px);
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
+<!-- MELHORIA: Classes de cor padrão (modo claro) + classes 'dark:' -->
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300">
 
     <script>
         // Número de WhatsApp oficial
@@ -88,36 +124,58 @@
         };
     </script>
 
-    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-black/20">
+    <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
+    <header class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm dark:shadow-lg dark:shadow-black/20 border-b border-gray-200 dark:border-transparent">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center space-x-3">
-                <img src="https://raw.githubusercontent.com/Godofin/anderson-landing-page/refs/heads/main/unnamed-removebg-preview.png" alt="Logo Anderson Viagem e Turismo" class="h-12 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x50/111827/FBBF24?text=Logo';">
+                <img src="https://raw.githubusercontent.com/Godofin/anderson-landing-page/refs/heads/main/unnamed-removebg-preview.png" alt="Logo Anderson Viagem e Turismo" class="h-14 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x50/111827/FBBF24?text=Logo';">
             </a>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#destaques" class="text-gray-300 hover:text-yellow-400 transition duration-300">Destaques</a>
-                <a href="#proximas-viagens" class="text-gray-300 hover:text-yellow-400 transition duration-300">Todas as Viagens</a>
-                <a href="#faq" class="text-gray-300 hover:text-yellow-400 transition duration-300">FAQ</a>
-                <a href="#sobre" class="text-gray-300 hover:text-yellow-400 transition duration-300">Quem Somos</a>
-                <a href="#contato" class="text-gray-300 hover:text-yellow-400 transition duration-300">Contato</a>
+                <a href="#destaques" class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition duration-300">Destaques</a>
+                <a href="#proximas-viagens" class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition duration-300">Todas as Viagens</a>
+                <a href="#faq" class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition duration-300">FAQ</a>
+                <a href="#sobre" class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition duration-300">Quem Somos</a>
+                <a href="#contato" class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition duration-300">Contato</a>
             </div>
-            <a href="#" onclick="window.open(gerarLinkWhatsApp('Geral'), '_blank')" class="hidden md:inline-block bg-yellow-500 text-gray-900 font-bold py-2 px-5 rounded-lg hover:bg-yellow-400 transition duration-300">Fale Conosco</a>
-            <!-- Botão do Menu Hambúrguer -->
-            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
+            
+            <div class="flex items-center">
+                <a id="header-whatsapp-link" href="#" target="_blank" rel="noopener noreferrer" class="hidden md:inline-block bg-yellow-500 text-gray-900 font-bold py-2 px-5 rounded-lg hover:bg-yellow-400 transition duration-300">Fale Conosco</a>
+                
+                <!-- MELHORIA: Botão de Toggle de Tema (Estilo Switch) -->
+                <label for="theme-toggle-input" class="relative inline-flex items-center cursor-pointer ml-4">
+                  <input type="checkbox" id="theme-toggle-input" class="sr-only peer">
+                  <!-- O track (trilho) -->
+                  <div class="theme-toggle-track w-11 h-6 bg-gray-300 dark:bg-gray-700 rounded-full peer peer-focus:ring-2 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-500 transition-colors"></div>
+                  <!-- O thumb (círculo) -->
+                  <span class="theme-toggle-thumb absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-300 ease-in-out flex items-center justify-center">
+                    <!-- Ícone de Lua (Mostrado quando NÃO checado - Dark Mode) -->
+                    <svg id="theme-toggle-dark-icon" class="hidden w-3 h-3 text-gray-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <!-- Ícone de Sol (Mostrado quando CHECADO - Light Mode) - NOVO SVG -->
+                    <svg id="theme-toggle-light-icon" class="hidden w-3 h-3 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                        <path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z"></path>
+                    </svg>
+                  </span>
+                </label>
+
+                <!-- Botão do Menu Hambúrguer -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-900 dark:text-white focus:outline-none ml-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
         </nav>
     </header>
 
     <!-- Menu Mobile -->
-    <div id="mobile-menu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full z-40 p-6 pt-24 overflow-y-auto">
+    <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full z-40 p-6 pt-24 overflow-y-auto">
         <div class="container mx-auto">
-             <a href="#destaques" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Destaques</a>
-             <a href="#proximas-viagens" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Todas as Viagens</a>
-             <a href="#faq" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">FAQ</a>
-            <a href="#sobre" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400 border-b border-gray-800">Quem Somos</a>
-            <a href="#contato" class="mobile-link block py-3 text-lg text-center text-gray-300 hover:text-yellow-400">Contato</a>
-            <div class="border-t border-gray-700 my-6"></div>
-            <h3 class="text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar Viagens por Data:</h3>
+             <a href="#destaques" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">Destaques</a>
+             <a href="#proximas-viagens" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">Todas as Viagens</a>
+             <a href="#faq" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">FAQ</a>
+            <a href="#sobre" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">Quem Somos</a>
+            <a href="#contato" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400">Contato</a>
+            <div class="border-t border-gray-200 dark:border-gray-700 my-6"></div>
+            <h3 class="text-yellow-500 dark:text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar Viagens por Data:</h3>
             <div id="mobile-filters-container" class="flex flex-col items-center gap-2">
                 <!-- Filtros para mobile serão injetados aqui -->
             </div>
@@ -126,24 +184,26 @@
 
 
     <main>
+        <!-- Hero - Imagem de fundo com overlay escuro funciona bem em ambos os modos -->
         <section class="hero-bg min-h-[60vh] flex items-center justify-center text-center py-20">
             <div class="container mx-auto px-6">
                 <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-wider leading-tight">Sua excursão oficial<br><span class="text-yellow-400">para os melhores shows</span></h1>
                 <p class="mt-4 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">Viaje com segurança, conforto e pontualidade. Deixe o transporte com a gente e foque no mais importante: curtir o seu evento!</p>
                 <p class="mt-6 text-lg font-semibold bg-black/50 inline-block px-4 py-2 rounded-lg text-yellow-300 animate-pulse">SAÍDAS DE ARARAQUARA E REGIÃO</p><br>
-                <!-- Alterado o target para o novo carrossel -->
-                <a href="#destaques" class="mt-8 inline-block bg-yellow-500 text-gray-900 font-bold text-lg py-4 px-10 rounded-lg hover:bg-yellow-400 transition duration-300 shadow-lg">Ver Próximas Excursões</a>
+                
+                <a href="#proximas-viagens" class="mt-8 inline-block bg-yellow-500 text-gray-900 font-bold text-lg py-4 px-10 rounded-lg hover:bg-yellow-400 transition-all duration-300 shadow-lg shadow-yellow-500/40 transform hover:scale-105">Ver Próximas Excursões</a>
             </div>
         </section>
 
-        <!-- CARROSSEL DE EVENTOS DE DESTAQUE (Mês Atual e Próximo) -->
-        <section id="destaques" class="py-16 bg-gray-900 border-b border-gray-700/50">
+        <!-- CARROSSEL DE EVENTOS DE DESTAQUE -->
+        <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
+        <section id="destaques" class="py-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700/50">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-extrabold text-yellow-400 mb-8 text-center">🔥 Destaques do Mês! 🔥</h2>
-                <div id="carousel-container" class="relative max-w-4xl mx-auto" data-carousel="static">
-                    <!-- Carousel wrapper (h-96 on mobile, h-[550px] on desktop) -->
-                    <!-- A altura foi aumentada para acomodar melhor o conteúdo no mobile também, h-[450px] -->
-                    <div id="events-carousel-wrapper" class="relative h-[450px] md:h-[550px] overflow-hidden rounded-xl shadow-2xl shadow-black/40">
+                <h2 class="text-3xl font-extrabold text-yellow-500 dark:text-yellow-400 mb-8 text-center">🔥 Destaques do Mês! 🔥</h2>
+                
+                <div id="carousel-container" class="relative max-w-4xl mx-auto overflow-hidden rounded-xl shadow-lg dark:shadow-2xl dark:shadow-black/40" data-carousel="static">
+                    
+                    <div id="events-carousel-wrapper" class="relative h-[450px] md:h-[550px] rounded-xl">
                         <!-- Slides will be injected here via JS -->
                     </div>
 
@@ -153,8 +213,9 @@
                     </div>
 
                     <!-- Slider controls (Prev) -->
+                    <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
                     <button id="prev-btn" type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800/70 hover:bg-yellow-500/70 text-white group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-yellow-400 group-focus:outline-none transition">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-yellow-500/70 text-gray-800 dark:text-white group-hover:bg-white dark:group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-gray-400 dark:group-focus:ring-yellow-400 group-focus:outline-none transition">
                             <svg class="w-4 h-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                             </svg>
@@ -162,8 +223,9 @@
                         </span>
                     </button>
                     <!-- Slider controls (Next) -->
+                    <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
                     <button id="next-btn" type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800/70 hover:bg-yellow-500/70 text-white group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-yellow-400 group-focus:outline-none transition">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-yellow-500/70 text-gray-800 dark:text-white group-hover:bg-white dark:group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-gray-400 dark:group-focus:ring-yellow-400 group-focus:outline-none transition">
                             <svg class="w-4 h-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                             </svg>
@@ -171,20 +233,21 @@
                         </span>
                     </button>
                 </div>
-                <p id="carousel-empty-message" class="text-gray-400 text-center mt-6 hidden">Nenhum evento de destaque neste ou no próximo mês. Veja todas as viagens abaixo!</p>
+                <p id="carousel-empty-message" class="text-gray-500 dark:text-gray-400 text-center mt-6 hidden">Nenhum evento de destaque neste ou no próximo mês. Veja todas as viagens abaixo!</p>
                 <div class="text-center mt-8">
-                     <a href="#proximas-viagens" class="text-yellow-400 hover:text-yellow-300 transition duration-300 font-semibold underline">Ver a lista completa de viagens</a>
+                     <a href="#proximas-viagens" class="text-yellow-600 dark:text-yellow-400 hover:text-yellow-500 dark:hover:text-yellow-300 transition duration-300 font-semibold underline">Ver a lista completa de viagens</a>
                 </div>
             </div>
         </section>
         <!-- FIM CARROSSEL DE DESTAQUES -->
 
 
-        <section id="proximas-viagens" class="py-20 bg-gray-800">
+        <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
+        <section id="proximas-viagens" class="py-20 bg-gray-100 dark:bg-gray-800">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">Todas as Viagens Agendadas</h2>
-                    <p class="text-gray-400 mt-2">Use o filtro para navegar pelas datas.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Todas as Viagens Agendadas</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Use o filtro para navegar pelas datas.</p>
                     <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
                 </div>
 
@@ -199,79 +262,80 @@
             </div>
         </section>
 
-        <!-- NOVA SEÇÃO: PERGUNTAS FREQUENTES (FAQ) -->
-        <section id="faq" class="py-20 bg-gray-900 border-t border-gray-700/50">
+        <!-- PERGUNTAS FREQUENTES (FAQ) -->
+        <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
+        <section id="faq" class="py-20 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700/50">
              <div class="container mx-auto px-6 max-w-3xl">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">Dúvidas Frequentes (FAQ)</h2>
-                    <p class="text-gray-400 mt-2">Encontre respostas rápidas sobre a sua viagem.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Dúvidas Frequentes (FAQ)</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Encontre respostas rápidas sobre a sua viagem.</p>
                     <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
                 </div>
 
                 <!-- Acordeão de Perguntas -->
                 <div id="faq-accordion" class="space-y-4">
                     <!-- Grupo 1: O que inclui / Veículo -->
-                    <div class="accordion-item bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-700">
-                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg hover:bg-gray-700 transition duration-300" aria-expanded="false">
+                    <div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300" aria-expanded="false">
                             <span>O que a excursão inclui e qual veículo será usado?</span>
-                            <svg class="arrow-icon w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg class="arrow-icon w-6 h-6 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content">
-                            <p class="text-gray-300">
-                                <strong>O que está incluso:</strong> Transporte de ida e volta e o serviço de um <strong class="text-yellow-300">Guia Credenciado</strong> que dará todo o suporte durante a viagem e no local do evento. Somos uma empresa com <strong class="text-yellow-300">CADASTUR e CNPJ ativo</strong>, atuando há 8 anos no segmento.
+                            <p class="text-gray-700 dark:text-gray-300">
+                                <strong>O que está incluso:</strong> Transporte de ida e volta e o serviço de um <strong class="text-yellow-600 dark:text-yellow-300">Guia Credenciado</strong> que dará todo o suporte durante a viagem e no local do evento. Somos uma empresa com <strong class="text-yellow-600 dark:text-yellow-300">CADASTUR e CNPJ ativo</strong>, atuando há 8 anos no segmento.
                             </p>
-                             <p class="text-gray-300 mt-4">
-                                <strong>Tipo de veículo:</strong> Pode ser <strong class="text-yellow-300">Van, Micro-ônibus ou Ônibus</strong>, dependendo da lotação. Todos são veículos executivos e licenciados (ARTESP e ANTT).
+                             <p class="text-gray-700 dark:text-gray-300 mt-4">
+                                <strong>Tipo de veículo:</strong> Pode ser <strong class="text-yellow-600 dark:text-yellow-300">Van, Micro-ônibus ou Ônibus</strong>, dependendo da lotação. Todos são veículos executivos e licenciados (ARTESP e ANTT).
                             </p>
                         </div>
                     </div>
 
                     <!-- Grupo 2: Ingressos e Custos -->
-                    <div class="accordion-item bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-700">
-                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg hover:bg-gray-700 transition duration-300" aria-expanded="false">
+                    <div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300" aria-expanded="false">
                             <span>O ingresso do show/festival está incluso no preço?</span>
-                            <svg class="arrow-icon w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg class="arrow-icon w-6 h-6 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content">
-                            <p class="text-gray-300">
-                                <strong class="text-red-400">Não</strong>. O valor da excursão cobre <strong class="text-yellow-300">apenas o transporte</strong> (viagem de bate e volta). O ingresso para o show ou festival deve ser adquirido separadamente por você.
+                            <p class="text-gray-700 dark:text-gray-300">
+                                <strong class="text-red-600 dark:text-red-400">Não</strong>. O valor da excursão cobre <strong class="text-yellow-600 dark:text-yellow-300">apenas o transporte</strong> (viagem de bate e volta). O ingresso para o show ou festival deve ser adquirido separadamente por você.
                             </p>
                         </div>
                     </div>
                     
                     <!-- Grupo 3: Embarque e Desembarque -->
-                    <div class="accordion-item bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-700">
-                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg hover:bg-gray-700 transition duration-300" aria-expanded="false">
+                    <div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300" aria-expanded="false">
                             <span>Informações de Embarque, Tolerância e Horários de Retorno.</span>
-                            <svg class="arrow-icon w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg class="arrow-icon w-6 h-6 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content">
-                            <p class="text-gray-300 font-bold mb-2">Pontos de Partida:</p>
-                            <p class="text-gray-300">
-                                Os pontos de embarque específicos de cada evento são detalhados <strong class="text-yellow-300">na descrição da viagem</strong>, que você encontra na lista <a href="#proximas-viagens" class="font-bold text-yellow-300 hover:text-yellow-200 underline">Todas as Viagens Agendadas</a> (acima).
+                            <p class="text-gray-700 dark:text-gray-300 font-bold mb-2">Pontos de Partida:</p>
+                            <p class="text-gray-700 dark:text-gray-300">
+                                Os pontos de embarque específicos de cada evento são detalhados <strong class="text-yellow-600 dark:text-yellow-300">na descrição da viagem</strong>, que você encontra na lista <a href="#proximas-viagens" class="font-bold text-yellow-600 dark:text-yellow-300 hover:text-yellow-500 dark:hover:text-yellow-200 underline">Todas as Viagens Agendadas</a> (acima).
                             </p>
                             
-                            <p class="text-red-400 font-bold mt-4">Tolerância:</p>
-                            <p class="text-gray-300">Há uma <strong class="text-red-400">tolerância máxima de 10 minutos</strong> no embarque. O transporte seguirá viagem pontualmente, por isso, programe-se para chegar com antecedência!</p>
+                            <p class="text-red-600 dark:text-red-400 font-bold mt-4">Tolerância:</p>
+                            <p class="text-gray-700 dark:text-gray-300">Há uma <strong class="text-red-600 dark:text-red-400">tolerância máxima de 10 minutos</strong> no embarque. O transporte seguirá viagem pontualmente, por isso, programe-se para chegar com antecedência!</p>
                             
-                            <p class="text-gray-300 mt-4"><strong>Retorno:</strong> O retorno é programado para <strong class="text-yellow-300">40 minutos após o término</strong> oficial do evento.</p>
+                            <p class="text-gray-700 dark:text-gray-300 mt-4"><strong>Retorno:</strong> O retorno é programado para <strong class="text-yellow-600 dark:text-yellow-300">40 minutos após o término</strong> oficial do evento.</p>
                             
-                            <p class="text-gray-300 mt-4"><strong class="text-yellow-400">Importante:</strong> Não alteramos pontos de embarque/desembarque ou rotas.</p>
+                            <p class="text-gray-700 dark:text-gray-300 mt-4"><strong class="text-yellow-600 dark:text-yellow-400">Importante:</strong> Não alteramos pontos de embarque/desembarque ou rotas.</p>
                         </div>
                     </div>
                     
                     <!-- Grupo 4: Reservas e Cancelamento -->
-                    <div class="accordion-item bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-700">
-                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg hover:bg-gray-700 transition duration-300" aria-expanded="false">
+                    <div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300" aria-expanded="false">
                             <span>Reservas, Desistências e Comprovantes.</span>
-                            <svg class="arrow-icon w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg class="arrow-icon w-6 h-6 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content">
-                            <p class="text-gray-300"><strong>Como reservar:</strong> As reservas são feitas <strong class="text-yellow-300">mediante pagamento</strong>. Entre em contato <strong class="text-yellow-300">exclusivamente pelo <a href="#" onclick="window.open(gerarLinkWhatsApp('Reserva FAQ'), '_blank')" class="hover:underline">WhatsApp: (16) 98833-2631</a></strong>.</p>
-                            <p class="text-gray-300 font-bold mt-4">Em caso de desistência:</p>
-                            <p class="text-gray-300"><strong class="text-red-400">Não fazemos devolução de valores pagos</strong> em caso de desistência ou não comparecimento. A reserva é válida apenas para esta excursão específica.</p>
-                            <p class="text-gray-300 font-bold mt-4">Contrato/Recibo:</p>
-                            <p class="text-gray-300">Não emitimos contrato ou recibo físico para viagens "bate e volta". Seu <strong class="text-yellow-300">comprovante de pagamento</strong> efetuado a nós é válido como seu recibo.</p>
+                            <p class="text-gray-700 dark:text-gray-300"><strong>Como reservar:</strong> As reservas são feitas <strong class="text-yellow-600 dark:text-yellow-300">mediante pagamento</strong>. Entre em contato <strong class="text-yellow-600 dark:text-yellow-300">exclusivamente pelo <a href="#" onclick="window.open(gerarLinkWhatsApp('Reserva FAQ'), '_blank')" class="hover:underline">WhatsApp: (16) 98833-2631</a></strong>.</p>
+                            <p class="text-gray-700 dark:text-gray-300 font-bold mt-4">Em caso de desistência:</p>
+                            <p class="text-gray-700 dark:text-gray-300"><strong class="text-red-600 dark:text-red-400">Não fazemos devolução de valores pagos</strong> em caso de desistência ou não comparecimento. A reserva é válida apenas para esta excursão específica.</p>
+                            <p class="text-gray-700 dark:text-gray-300 font-bold mt-4">Contrato/Recibo:</p>
+                            <p class="text-gray-700 dark:text-gray-300">Não emitimos contrato ou recibo físico para viagens "bate e volta". Seu <strong class="text-yellow-600 dark:text-yellow-300">comprovante de pagamento</strong> efetuado a nós é válido como seu recibo.</p>
                         </div>
                     </div>
                 </div>
@@ -280,10 +344,11 @@
         <!-- FIM SEÇÃO FAQ -->
 
 
-        <section id="sobre" class="py-20 bg-gray-800">
+        <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
+        <section id="sobre" class="py-20 bg-gray-100 dark:bg-gray-800">
             <div class="container mx-auto px-6 text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">Por que viajar com a gente?</h2>
-                    <p class="text-gray-400 mt-2">Sua única preocupação é se divertir.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Por que viajar com a gente?</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Sua única preocupação é se divertir.</p>
                     <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12 max-w-5xl mx-auto">
@@ -291,52 +356,53 @@
                         <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                         </div>
-                        <h3 class="text-xl font-bold mt-4">Segurança Total</h3>
-                        <p class="text-gray-400 mt-2">Veículos novos, motoristas experientes e seguro de viagem para todos os passageiros.</p>
+                        <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Segurança Total</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">Veículos novos, motoristas experientes e seguro de viagem para todos os passageiros.</p>
                     </div>
                      <div class="feature-item">
                         <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
                         </div>
-                        <h3 class="text-xl font-bold mt-4">Conforto e Comodidade</h3>
-                        <p class="text-gray-400 mt-2">Ônibus e Vans com ar-condicionado, poltronas reclináveis. Deixamos você perto do evento.</p>
+                        <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Conforto e Comodidade</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">Ônibus e Vans com ar-condicionado, poltronas reclináveis. Deixamos você perto do evento.</p>
                     </div>
                      <div class="feature-item">
                         <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
-                        <h3 class="text-xl font-bold mt-4">Pontualidade</h3>
-                        <p class="text-gray-400 mt-2">Cumprimos rigorosamente nossos horários para você não perder um minuto do seu show.</p>
+                        <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Pontualidade</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">Cumprimos rigorosamente nossos horários para você não perder um minuto do seu show.</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer id="contato" class="bg-black py-12">
-        <div class="container mx-auto px-6 text-center text-gray-400">
+    <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
+    <footer id="contato" class="bg-gray-200 dark:bg-black py-12">
+        <div class="container mx-auto px-6 text-center text-gray-700 dark:text-gray-400">
             <p>Sua melhor escolha para viagens e eventos.</p>
             <p class="mt-2">Entre em contato e faça um orçamento!</p>
             <div class="mt-4">
-                <a href="#" onclick="window.open(gerarLinkWhatsApp('Contato Geral'), '_blank')" class="font-bold text-yellow-400 hover:text-yellow-300 text-lg">
+                <a href="#" onclick="window.open(gerarLinkWhatsApp('Contato Geral'), '_blank')" class="font-bold text-yellow-600 dark:text-yellow-400 hover:text-yellow-500 dark:hover:text-yellow-300 text-lg">
                     WhatsApp: (16) 98833-2631
                 </a>
             </div>
             <div class="mt-6">
-                <h4 class="font-bold text-white text-lg">Horário de Atendimento</h4>
+                <h4 class="font-bold text-gray-900 dark:text-white text-lg">Horário de Atendimento</h4>
                 <p>Segunda a Sábado: 13h às 19h</p>
                 <p>Domingos e Feriados: Fechado</p>
             </div>
-            <div class="mt-6 border-t border-gray-800 pt-6">
+            <div class="mt-6 border-t border-gray-300 dark:border-gray-800 pt-6">
                 <p>&copy; 2025 Anderson Viagem e Turismo. Todos os direitos reservados.</p>
-                <p class="text-sm mt-2">Desenvolvido por <a href="https://godofin.github.io/portfolio-lavezzo/" target="_blank" rel="noopener noreferrer" class="text-yellow-400 hover:text-yellow-300">Guilherme Lavezzo</a></p>
+                <p class="text-sm mt-2">Desenvolvido por <a href="https://godofin.github.io/portfolio-lavezzo/" target="_blank" rel="noopener noreferrer" class="text-yellow-600 dark:text-yellow-400 hover:text-yellow-500 dark:hover:text-yellow-300">Guilherme Lavezzo</a></p>
             </div>
         </div>
     </footer>
 
     <!-- SCRIPT COMPLETO E ATUALIZADO -->
     <script>
-        let currentSlide = 0; // Controla o slide atual do carrossel de destaques
+        let currentSlide = 0; 
 
         // --- Lógica do Acordeão (FAQ) ---
         const setupAccordion = () => {
@@ -345,7 +411,6 @@
                     const content = header.nextElementSibling;
                     const isActive = header.classList.contains('active');
 
-                    // Fecha todos os outros
                     document.querySelectorAll('.accordion-header').forEach(h => {
                         if (h !== header) {
                             h.classList.remove('active');
@@ -353,7 +418,6 @@
                         }
                     });
 
-                    // Abre ou fecha o item clicado
                     if (!isActive) {
                         header.classList.add('active');
                         content.classList.add('active');
@@ -364,7 +428,6 @@
                 });
             });
         };
-        // --- Fim da Lógica do Acordeão ---
 
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -375,22 +438,61 @@
             const mobileFiltersContainer = document.getElementById('mobile-filters-container');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
+            const headerWhatsAppLink = document.getElementById('header-whatsapp-link');
+            
+            // --- MELHORIA: Script do Botão de Tema (Atualizado para Switch) ---
+            const themeToggleInput = document.getElementById('theme-toggle-input');
+            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
+            // Define o estado inicial do toggle e dos ícones
+            // (Default é 'dark'. 'checked' = light mode)
+            if (localStorage.getItem('color-theme') === 'light') {
+                themeToggleInput.checked = true;
+                themeToggleLightIcon.classList.remove('hidden'); // Mostra Sol
+                themeToggleDarkIcon.classList.add('hidden');    // Esconde Lua
+            } else {
+                themeToggleInput.checked = false;
+                themeToggleLightIcon.classList.add('hidden');     // Esconde Sol
+                themeToggleDarkIcon.classList.remove('hidden'); // Mostra Lua
+            }
+
+            // Adiciona o listener para o evento 'change'
+            themeToggleInput.addEventListener('change', function(e) {
+                // alterna ícones
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+
+                // Se o input está 'checked' (marcado), o tema é 'light'
+                if (e.target.checked) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    // Se não, o tema é 'dark'
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            });
+            // --- Fim do Script de Tema ---
+
+
+            if (headerWhatsAppLink) {
+                headerWhatsAppLink.href = gerarLinkWhatsApp('Geral');
+            }
+            
+            setupAccordion();
 
             let allEvents = [];
 
-            // --- Lógica do Menu Mobile ---
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
             mobileMenu.addEventListener('click', (e) => {
-                // Fecha o menu se um link ou botão de filtro for clicado
                 if (e.target.classList.contains('mobile-link') || e.target.classList.contains('filter-btn-mobile')) {
                     mobileMenu.classList.add('hidden');
                 }
             });
 
-            // Helper function to get the current and next month/year keys (e.g., "Outubro 2025")
             const getCurrentAndNextMonthKeys = () => {
                 const now = new Date();
                 const currentMonth = now.getMonth() + 1;
@@ -412,31 +514,23 @@
             const showSlide = (n) => {
                 const slides = document.querySelectorAll('.carousel-slide');
                 const indicators = document.querySelectorAll('.carousel-indicator');
-                
-                if (slides.length === 0) return;
+                const wrapper = document.getElementById('events-carousel-wrapper');
 
-                // Handle wrap around
-                if (n >= slides.length) { currentSlide = 0 }
-                else if (n < 0) { currentSlide = slides.length - 1 }
-                else { currentSlide = n }
+                if (slides.length === 0 || !wrapper) return;
 
-                slides.forEach((slide, index) => {
-                    // Toggle visibility and transition effect
-                    if (index === currentSlide) {
-                        slide.classList.remove('opacity-0', 'hidden');
-                        slide.classList.add('opacity-100');
-                    } else {
-                        slide.classList.remove('opacity-100');
-                        slide.classList.add('opacity-0', 'hidden');
-                    }
-                });
+                if (n >= slides.length) { currentSlide = 0; }
+                else if (n < 0) { currentSlide = slides.length - 1; }
+                else { currentSlide = n; }
+
+                wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
 
                 indicators.forEach((indicator, index) => {
-                    indicator.classList.remove('bg-yellow-500');
-                    indicator.classList.add('bg-gray-500', 'hover:bg-gray-400');
+                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
+                    indicator.classList.remove('bg-yellow-500', 'dark:bg-yellow-500');
+                    indicator.classList.add('bg-gray-400', 'dark:bg-gray-500', 'hover:bg-gray-500', 'dark:hover:bg-gray-400');
                     if (index === currentSlide) {
-                        indicator.classList.remove('bg-gray-500', 'hover:bg-gray-400');
-                        indicator.classList.add('bg-yellow-500');
+                        indicator.classList.remove('bg-gray-400', 'dark:bg-gray-500', 'hover:bg-gray-500', 'dark:hover:bg-gray-400');
+                        indicator.classList.add('bg-yellow-500', 'dark:bg-yellow-500');
                     }
                 });
             };
@@ -447,12 +541,10 @@
                 const carouselIndicators = document.getElementById('carousel-indicators');
                 const emptyMessage = document.getElementById('carousel-empty-message');
 
-                // Reset
                 eventsCarouselWrapper.innerHTML = '';
                 carouselIndicators.innerHTML = '';
                 currentSlide = 0;
                 
-                // Filtering logic remains the same: Current and Next Month
                 const [currentMonthKey, nextMonthKey] = getCurrentAndNextMonthKeys();
                 const highlightEvents = events.filter(event => {
                     const eventDateStr = event.date_event;
@@ -478,7 +570,6 @@
 
                 emptyMessage.classList.add('hidden');
                 
-                // Show buttons/indicators only if there is more than 1 slide
                 if (highlightEvents.length > 1) {
                     prevBtn.classList.remove('hidden');
                     nextBtn.classList.remove('hidden');
@@ -489,7 +580,6 @@
                     carouselIndicators.classList.add('hidden');
                 }
 
-                // Generate Slides and Indicators
                 highlightEvents.forEach((event, index) => {
                     let citiesArray = [];
                     if (Array.isArray(event.cities)) {
@@ -498,25 +588,21 @@
                         citiesArray = event.cities.split(',').map(city => city.trim());
                     }
                     
-                    // Estrutura de Cidades/Local (melhorada para o carrossel)
                     const citiesHTML = citiesArray.length > 0
                         ? `<div class="mt-4 flex flex-wrap gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-200 dark:text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                 <div class="flex flex-wrap gap-2">
                                     ${citiesArray.map(city => `<span class="px-3 py-1 text-sm font-bold text-gray-900 bg-yellow-400/80 rounded-full">${city}</span>`).join('')}
                                 </div>
-                              </div>` : '';
+                            </div>` : '';
                     
-                    // CÓDIGO CORRIGIDO PARA O CARROSSEL
                     eventsCarouselWrapper.innerHTML += `
-                        <div class="carousel-slide absolute inset-0 duration-700 ease-in-out ${index === 0 ? 'opacity-100' : 'opacity-0 hidden'} transition-opacity flex items-center justify-center" data-carousel-item>
-                            <div class="relative w-full h-full rounded-xl overflow-hidden shadow-2xl group">
+                        <div class="carousel-slide min-w-full flex-shrink-0 flex items-center justify-center" data-carousel-item>
+                            <div class="relative w-full h-full rounded-xl overflow-hidden group">
                                 <img src="${event.image}" alt="${event.alt}" class="w-full h-full object-cover absolute inset-0 transform group-hover:scale-105 transition duration-700" onerror="this.onerror=null;this.src='https://placehold.co/800x600/1F2937/FBBF24?text=DESTAQUE+${index+1}';">
                                 
-                                <!-- Overlay com gradiente para melhor legibilidade -->
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
 
-                                <!-- Conteúdo com fontes e espaçamentos ajustados -->
                                 <div class="absolute inset-0 flex flex-col justify-end p-4 md:p-8">
                                     <span class="text-sm font-semibold text-red-400 mb-1 uppercase tracking-wider">Próxima Parada</span>
                                     
@@ -538,17 +624,15 @@
                         </div>
                     `;
                     
-                    // Indicator HTML
+                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
                     carouselIndicators.innerHTML += `
-                        <button type="button" class="carousel-indicator w-3 h-3 rounded-full ${index === 0 ? 'bg-yellow-500' : 'bg-gray-500 hover:bg-gray-400'}" aria-current="${index === 0}" aria-label="Slide ${index + 1}" data-carousel-slide-to="${index}"></button>
+                        <button type="button" class="carousel-indicator w-3 h-3 rounded-full ${index === 0 ? 'bg-yellow-500' : 'bg-gray-400 dark:bg-gray-500 hover:bg-gray-500 dark:hover:bg-gray-400'}" aria-current="${index === 0}" aria-label="Slide ${index + 1}" data-carousel-slide-to="${index}"></button>
                     `;
                 });
 
-                // Event Listeners for controls
                 prevBtn.onclick = () => showSlide(currentSlide - 1);
                 nextBtn.onclick = () => showSlide(currentSlide + 1);
                 
-                // Event Listeners for indicators
                 document.querySelectorAll('.carousel-indicator').forEach(indicator => {
                     indicator.addEventListener('click', (e) => {
                         const index = parseInt(e.target.dataset.carouselSlideTo);
@@ -556,33 +640,25 @@
                     });
                 });
 
-                // Initial display
                 showSlide(0);
             };
 
             const renderEvents = (filter = 'Todos') => {
                 eventsGrid.innerHTML = ''; 
 
-                // --- Lógica de filtragem baseada no Mês/Ano do date_event ---
                 const filteredEvents = filter === 'Todos'
                     ? allEvents
                     : allEvents.filter(event => {
-                        // O filtro é no formato "Mês Ano" (ex: "Janeiro 2025")
-                        const eventDate = event.date_event; // YYYY-MM-DD
+                        const eventDate = event.date_event;
                         if (!eventDate) return false;
-
-                        // Pega o Mês e Ano do date_event para comparação
                         const [year, month] = eventDate.split('-');
                         const monthName = monthMap[parseInt(month)];
                         const filterKey = `${monthName} ${year}`;
-                        
-                        // Retorna true se a chave do filtro estiver inclusa no nome do filtro
                         return filter === filterKey;
                     });
-                // --- Fim da Lógica de filtragem ---
 
                 if (filteredEvents.length === 0) {
-                    eventsGrid.innerHTML = `<p class="text-gray-400 text-center col-span-full">Nenhum evento encontrado para ${filter.replace(' ', ' / ')}.</p>`;
+                    eventsGrid.innerHTML = `<p class="text-gray-500 dark:text-gray-400 text-center col-span-full">Nenhum evento encontrado para ${filter.replace(' ', ' / ')}.</p>`;
                     return;
                 }
 
@@ -595,25 +671,27 @@
                         citiesArray = event.cities.split(',').map(city => city.trim());
                     }
 
+                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
                     const citiesHTML = citiesArray.length > 0
                         ? `<div class="mt-4 flex flex-wrap gap-2 items-center">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                </svg>
                                <div class="flex flex-wrap gap-2">
-                                   ${citiesArray.map(city => `<kbd class="px-2 py-1 text-xs font-semibold text-yellow-200 bg-gray-700 border border-gray-600 rounded-md">${city}</kbd>`).join('')}
+                                   ${citiesArray.map(city => `<kbd class="px-2 py-1 text-xs font-semibold text-yellow-800 bg-yellow-100 border border-yellow-200 dark:text-yellow-200 dark:bg-gray-700 dark:border-gray-600 rounded-md">${city}</kbd>`).join('')}
                                </div>
                            </div>` : '';
-
+                    
+                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
                     eventsHTML += `
-                        <div class="bg-gray-900 rounded-lg overflow-hidden shadow-2xl shadow-black/30 flex flex-col transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/30 flex flex-col transform hover:-translate-y-2 hover:shadow-xl dark:hover:shadow-lg dark:hover:shadow-yellow-500/20 transition-all duration-300 ease-in-out border border-gray-200 dark:border-transparent">
                             <img src="${event.image}" alt="${event.alt}" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/111827/FBBF24?text=Show';">
                             <div class="p-6 flex flex-col flex-grow">
-                                <h3 class="text-2xl font-bold text-yellow-400">${event.title}</h3>
-                                <p class="text-gray-400 mt-1">${event.date}</p>
+                                <h3 class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">${event.title}</h3>
+                                <p class="text-gray-500 dark:text-gray-400 mt-1">${event.date}</p>
                                 ${citiesHTML}
-                                <p class="text-gray-300 mt-4 flex-grow">${event.description}</p>
+                                <p class="text-gray-700 dark:text-gray-300 mt-4 flex-grow">${event.description}</p>
                                 <button onclick="window.open(gerarLinkWhatsApp('${event.eventName}'), '_blank')" class="btn-whatsapp w-full mt-6 bg-green-500 text-white font-bold py-3 px-6 rounded-lg flex items-center justify-center space-x-2 hover:bg-green-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.003 2.011.564 3.963 1.632 5.686l.244.423-1.075 3.922 4.023-1.056.39.232z"/></svg>
                                     <span>${event.buttonText}</span>
@@ -624,14 +702,12 @@
                 eventsGrid.innerHTML = eventsHTML;
             };
             
-            // --- LÓGICA DE FILTRO ATUALIZADA ---
             const setupFilters = () => {
                 const eventYearMonthsSet = new Set();
                 const eventYearMonthsList = [];
                 
-                // 1. Extrai Mês e Ano do date_event e cria o Set/Lista
                 allEvents.forEach(event => {
-                    const eventDate = event.date_event; // Formato YYYY-MM-DD
+                    const eventDate = event.date_event; 
                     if (eventDate) {
                         try {
                             const [year, month] = eventDate.split('-');
@@ -651,48 +727,56 @@
                     }
                 });
 
-                // 2. Ordena a lista de filtros cronologicamente
                 const sortedYearMonths = eventYearMonthsList.sort((a, b) => {
                     if (a.year !== b.year) {
-                        return a.year - b.year; // Ordena por ano
+                        return a.year - b.year;
                     }
-                    return a.monthIndex - b.monthIndex; // Ordena por mês
+                    return a.monthIndex - b.monthIndex;
                 });
                 
-                // 3. Cria os botões
                 filtersContainer.innerHTML = '';
                 mobileFiltersContainer.innerHTML = '';
 
-                // Botão "Todos"
+                // MELHORIA: Classes de cor atualizadas para modo claro/escuro
                 const allButton = `<button data-filter="Todos" class="filter-btn active-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Todas as Viagens</button>`;
                 filtersContainer.innerHTML += allButton;
-                mobileFiltersContainer.innerHTML += `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">Todas as Viagens</button>`;
+                mobileFiltersContainer.innerHTML += `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 py-2">Todas as Viagens</button>`;
 
 
                 sortedYearMonths.forEach(item => {
                     const buttonText = item.key.replace(' ', ' / ');
+                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
                     const filterButton = `<button data-filter="${item.key}" class="filter-btn inactive-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">${buttonText}</button>`;
                     
                     filtersContainer.innerHTML += filterButton;
-                    mobileFiltersContainer.innerHTML += `<button data-filter="${item.key}" class="filter-btn-mobile text-lg text-gray-300 hover:text-yellow-400 py-2">${buttonText}</button>`;
+                    mobileFiltersContainer.innerHTML += `<button data-filter="${item.key}" class="filter-btn-mobile text-lg text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 py-2">${buttonText}</button>`;
                 });
 
                 // 4. Aplica o estilo inicial nos botões de desktop
-                document.querySelectorAll('.active-filter').forEach(b => { b.classList.add('bg-yellow-500', 'text-gray-900'); b.classList.remove('inactive-filter'); });
-                document.querySelectorAll('.inactive-filter').forEach(b => { b.classList.add('bg-gray-700', 'hover:bg-yellow-500', 'text-white', 'hover:text-gray-900'); b.classList.remove('active-filter'); });
+                updateFilterStyles('Todos');
+            };
+
+            // MELHORIA: Função separada para atualizar estilos de filtro
+            const updateFilterStyles = (filterValue) => {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    // Reset
+                    btn.classList.remove('active-filter', 'bg-yellow-500', 'text-gray-900', 'shadow-md');
+                    btn.classList.add('inactive-filter', 'bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-white', 'hover:bg-gray-200', 'dark:hover:bg-yellow-500', 'dark:hover:text-gray-900', 'shadow-sm');
+                    
+                    if (btn.dataset.filter === filterValue) {
+                        // Aplicar ativo
+                        btn.classList.add('active-filter', 'bg-yellow-500', 'text-gray-900', 'shadow-md');
+                        btn.classList.remove('inactive-filter', 'bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-white', 'hover:bg-gray-200', 'dark:hover:bg-yellow-500', 'dark:hover:text-gray-900', 'shadow-sm');
+                    }
+                });
             };
 
             const handleFilterClick = (filterValue) => {
                 renderEvents(filterValue);
-                // Atualiza os estilos dos botões do desktop
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.remove('active-filter', 'bg-yellow-500', 'text-gray-900');
-                    btn.classList.add('inactive-filter', 'bg-gray-700', 'hover:bg-yellow-500', 'text-white', 'hover:text-gray-900');
-                    if (btn.dataset.filter === filterValue) {
-                        btn.classList.add('active-filter', 'bg-yellow-500', 'text-gray-900');
-                        btn.classList.remove('inactive-filter', 'bg-gray-700', 'hover:bg-yellow-500', 'text-white', 'hover:text-gray-900');
-                    }
-                });
+                
+                document.getElementById('proximas-viagens').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                updateFilterStyles(filterValue);
             };
 
             filtersContainer.addEventListener('click', e => {
@@ -708,7 +792,8 @@
             });
 
             // Adiciona um indicador de carregamento
-            eventsGrid.innerHTML = `<div class="col-span-full text-center text-gray-400 flex flex-col items-center justify-center p-10"><svg class="animate-spin -ml-1 mr-3 h-10 w-10 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="mt-4 text-lg">Carregando eventos...</p></div>`;
+            // MELHORIA: Classes de cor atualizadas para modo claro/escuro
+            eventsGrid.innerHTML = `<div class="col-span-full text-center text-gray-500 dark:text-gray-400 flex flex-col items-center justify-center p-10"><svg class="animate-spin -ml-1 mr-3 h-10 w-10 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="mt-4 text-lg">Carregando eventos...</p></div>`;
 
             fetch('https://anderson-fast-api.onrender.com/api/v1/events')
                 .then(response => {
@@ -716,7 +801,6 @@
                     return response.json();
                 })
                 .then(events => {
-                    // --- ORDENAÇÃO POR date_event (YYYY-MM-DD) ---
                     allEvents = events.sort((a, b) => {
                         const dateA = new Date(a.date_event);
                         const dateB = new Date(b.date_event);
@@ -726,29 +810,25 @@
                         
                         return dateA - dateB;
                     });
-                    // --- FIM DA ORDENAÇÃO ---
 
                     if (allEvents.length === 0) {
-                        eventsGrid.innerHTML = `<div class="bg-gray-900 rounded-lg overflow-hidden shadow-2xl shadow-black/30 flex flex-col transform hover:-translate-y-2 transition-transform duration-300 border-2 border-dashed border-gray-700 col-span-full md:col-span-2 lg:col-span-3 mx-auto max-w-md"><div class="p-6 flex flex-col flex-grow items-center justify-center text-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg><h3 class="text-2xl font-bold text-gray-500">Aguarde!</h3><p class="text-gray-600 mt-2">Mais eventos incríveis serão anunciados em breve. Fique de olho!</p></div></div>`;
+                        // MELHORIA: Classes de cor atualizadas para modo claro/escuro
+                        eventsGrid.innerHTML = `<div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col border-2 border-dashed border-gray-300 dark:border-gray-700 col-span-full md:col-span-2 lg:col-span-3 mx-auto max-w-md"><div class="p-6 flex flex-col flex-grow items-center justify-center text-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 dark:text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg><h3 class="text-2xl font-bold text-gray-500">Aguarde!</h3><p class="text-gray-600 dark:text-gray-500 mt-2">Mais eventos incríveis serão anunciados em breve. Fique de olho!</p></div></div>`;
                         return;
                     }
                     
-                    // 1. Renderiza o Carrossel de Destaques (Mês Atual e Próximo)
                     renderCarousel(allEvents); 
-
-                    // 2. Configura os filtros e renderiza a lista completa
                     setupFilters();
                     renderEvents('Todos'); 
-
-                    // 3. Inicializa o Acordeão do FAQ
-                    setupAccordion();
                 })
                 .catch(error => {
                     console.error('Erro ao buscar eventos:', error);
-                    eventsGrid.innerHTML = `<p class="text-red-500 text-center col-span-full">Erro ao carregar os eventos. Tente novamente mais tarde.</p>`;
+                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
+                    eventsGrid.innerHTML = `<p class="text-red-600 dark:text-red-500 text-center col-span-full">Erro ao carregar os eventos. Tente novamente mais tarde.</p>`;
                 });
         });
     </script>
 
 </body>
 </html>
+
