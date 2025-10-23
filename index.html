@@ -17,7 +17,8 @@
       gtag('config', 'G-4ZXGBNM724');
     </script>
 
-    <link rel="icon" href="https://raw.githubusercontent.com/Godofin/anderson-landing-page/refs/heads/main/unnamed-removebg-preview.png" type="image/png">
+    <!-- CORREÇÃO: URL do favicon também atualizada para o CDN -->
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/Godofin/anderson-landing-page@main/unnamed-removebg-preview.png" type="image/png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- MELHORIA: Configuração do Tailwind para usar 'class' no modo escuro -->
@@ -70,15 +71,29 @@
          #events-carousel-wrapper::-webkit-scrollbar {
             display: none;
         }
+        
+        /* MELHORIA: Adicionado blur ao fundo do carrossel para legibilidade */
+        .carousel-slide .group img {
+            filter: blur(2px);
+        }
+
 
         .accordion-content {
             transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
             overflow: hidden;
             max-height: 0;
             padding: 0 1.5rem;
+            /* MELHORIA: Garante que palavras longas quebrem e não estourem o container */
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
         .accordion-content.active {
-            max-height: 500px;
+             /* *** CORREÇÃO APLICADA AQUI ***
+                - O valor foi aumentado de 500px para 800px.
+                - Isso dá espaço suficiente para o texto longo sobre "Embarque"
+                - sem cortar o conteúdo.
+             */
+            max-height: 800px;
             padding-top: 1rem;
             padding-bottom: 1.5rem;
         }
@@ -128,7 +143,8 @@
     <header class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm dark:shadow-lg dark:shadow-black/20 border-b border-gray-200 dark:border-transparent">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center space-x-3">
-                <img src="https://raw.githubusercontent.com/Godofin/anderson-landing-page/refs/heads/main/unnamed-removebg-preview.png" alt="Logo Anderson Viagem e Turismo" class="h-14 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x50/111827/FBBF24?text=Logo';">
+                <!-- CORREÇÃO: URL do logo atualizada para o CDN e placeholder melhorado -->
+                <img src="https://cdn.jsdelivr.net/gh/Godofin/anderson-landing-page@main/unnamed-removebg-preview.png" alt="Logo Anderson Viagem e Turismo" class="h-14 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/150x56/111827/FBBF24?text=Anderson+Turismo';">
             </a>
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#destaques" class="text-gray-600 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition duration-300">Destaques</a>
@@ -214,9 +230,10 @@
 
                     <!-- Slider controls (Prev) -->
                     <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-                    <button id="prev-btn" type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-yellow-500/70 text-gray-800 dark:text-white group-hover:bg-white dark:group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-gray-400 dark:group-focus:ring-yellow-400 group-focus:outline-none transition">
-                            <svg class="w-4 h-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <!-- MELHORIA MOBILE: Botão e ícone menores no celular (px-2, w-8, h-8, w-3, h-3) -->
+                    <button id="prev-btn" type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-2 md:px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                        <span class="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-yellow-500/70 text-gray-800 dark:text-white group-hover:bg-white dark:group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-gray-400 dark:group-focus:ring-yellow-400 group-focus:outline-none transition">
+                            <svg class="w-3 h-3 md:w-4 md:h-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                             </svg>
                             <span class="sr-only">Previous</span>
@@ -224,9 +241,10 @@
                     </button>
                     <!-- Slider controls (Next) -->
                     <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-                    <button id="next-btn" type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-yellow-500/70 text-gray-800 dark:text-white group-hover:bg-white dark:group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-gray-400 dark:group-focus:ring-yellow-400 group-focus:outline-none transition">
-                            <svg class="w-4 h-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <!-- MELHORIA MOBILE: Botão e ícone menores no celular (px-2, w-8, h-8, w-3, h-3) -->
+                    <button id="next-btn" type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-2 md:px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                        <span class="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-yellow-500/70 text-gray-800 dark:text-white group-hover:bg-white dark:group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-gray-400 dark:group-focus:ring-yellow-400 group-focus:outline-none transition">
+                            <svg class="w-3 h-3 md:w-4 md:h-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                             </svg>
                             <span class="sr-only">Next</span>
@@ -250,6 +268,13 @@
                     <p class="text-gray-600 dark:text-gray-400 mt-2">Use o filtro para navegar pelas datas.</p>
                     <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
                 </div>
+
+                <!-- NOVO: Campo de Busca por Nome -->
+                <div class="mb-8 max-w-lg mx-auto">
+                    <label for="search-box" class="sr-only">Buscar por nome do evento</label>
+                    <input type="search" id="search-box" placeholder="Buscar por nome (ex: Linkin Park)" class="w-full px-5 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:focus:border-yellow-500 transition-all duration-300 shadow-sm">
+                </div>
+                <!-- FIM: Campo de Busca por Nome -->
 
                 <!-- Filtros para Desktop -->
                 <div id="filters-container" class="flex flex-wrap justify-center gap-3 mb-10">
@@ -439,6 +464,7 @@
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
             const headerWhatsAppLink = document.getElementById('header-whatsapp-link');
+            const searchBox = document.getElementById('search-box'); // NOVO: Pega o campo de busca
             
             // --- MELHORIA: Script do Botão de Tema (Atualizado para Switch) ---
             const themeToggleInput = document.getElementById('theme-toggle-input');
@@ -588,11 +614,12 @@
                         citiesArray = event.cities.split(',').map(city => city.trim());
                     }
                     
+                    // MELHORIA MOBILE: Ícone h-5 w-5 (era h-6) e tags (px-2 py-0.5 text-xs) menores
                     const citiesHTML = citiesArray.length > 0
                         ? `<div class="mt-4 flex flex-wrap gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-200 dark:text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-200 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                 <div class="flex flex-wrap gap-2">
-                                    ${citiesArray.map(city => `<span class="px-3 py-1 text-sm font-bold text-gray-900 bg-yellow-400/80 rounded-full">${city}</span>`).join('')}
+                                    ${citiesArray.map(city => `<span class="px-2 py-0.5 text-xs font-bold text-gray-900 bg-yellow-400/80 rounded-full">${city}</span>`).join('')}
                                 </div>
                             </div>` : '';
                     
@@ -603,14 +630,17 @@
                                 
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
 
-                                <div class="absolute inset-0 flex flex-col justify-end p-4 md:p-8">
+                                <!-- MELHORIA MOBILE: Padding inferior (pb-16) para não sobrepor os indicadores -->
+                                <div class="absolute inset-0 flex flex-col justify-end p-4 md:p-8 pb-16 md:pb-8">
                                     <span class="text-sm font-semibold text-red-400 mb-1 uppercase tracking-wider">Próxima Parada</span>
                                     
-                                    <h3 class="text-3xl md:text-5xl font-black text-yellow-400 leading-tight mb-2">${event.title}</h3>
+                                    <!-- MELHORIA MOBILE: Tamanho da fonte menor (text-2xl sm:text-3xl) -->
+                                    <h3 class="text-2xl sm:text-3xl md:text-5xl font-black text-yellow-400 leading-tight mb-2">${event.title}</h3>
                                     
-                                    <p class="text-lg md:text-2xl font-bold text-white mb-3 flex items-center">
-                                        <svg class="w-5 h-5 inline mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                        ${event.date}
+                                    <!-- MELHORIA MOBILE: Tamanho da fonte menor (text-base) -->
+                                    <p class="text-base md:text-2xl font-bold text-white mb-3 flex items-center flex-wrap">
+                                        <svg class="w-5 h-5 inline mr-2 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <span>${event.date}</span>
                                     </p>
 
                                     ${citiesHTML}
@@ -643,10 +673,11 @@
                 showSlide(0);
             };
 
-            const renderEvents = (filter = 'Todos') => {
+            const renderEvents = (filter = 'Todos', searchTerm = '') => {
                 eventsGrid.innerHTML = ''; 
 
-                const filteredEvents = filter === 'Todos'
+                // 1. Filtrar por data (como antes)
+                let filteredEvents = filter === 'Todos'
                     ? allEvents
                     : allEvents.filter(event => {
                         const eventDate = event.date_event;
@@ -656,9 +687,24 @@
                         const filterKey = `${monthName} ${year}`;
                         return filter === filterKey;
                     });
+                
+                // 2. Filtrar pelo termo de busca (NOVO)
+                if (searchTerm.length > 0) {
+                    const lowerSearchTerm = searchTerm.toLowerCase();
+                    filteredEvents = filteredEvents.filter(event => 
+                        event.title.toLowerCase().includes(lowerSearchTerm) ||
+                        (event.eventName && event.eventName.toLowerCase().includes(lowerSearchTerm))
+                    );
+                }
+
 
                 if (filteredEvents.length === 0) {
-                    eventsGrid.innerHTML = `<p class="text-gray-500 dark:text-gray-400 text-center col-span-full">Nenhum evento encontrado para ${filter.replace(' ', ' / ')}.</p>`;
+                    // Mensagem de "não encontrado" mais inteligente
+                    if (searchTerm.length > 0) {
+                        eventsGrid.innerHTML = `<p class="text-gray-500 dark:text-gray-400 text-center col-span-full">Nenhum evento encontrado para "${searchTerm}" em ${filter.replace(' ', ' / ')}.</p>`;
+                    } else {
+                        eventsGrid.innerHTML = `<p class="text-gray-500 dark:text-gray-400 text-center col-span-full">Nenhum evento encontrado para ${filter.replace(' ', ' / ')}.</a"p>`;
+                    }
                     return;
                 }
 
@@ -772,9 +818,15 @@
             };
 
             const handleFilterClick = (filterValue) => {
-                renderEvents(filterValue);
+                const searchTerm = searchBox.value.trim(); // Pega o valor da busca
+                renderEvents(filterValue, searchTerm); // Passa os dois filtros
                 
-                document.getElementById('proximas-viagens').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Scroll suave apenas se não for o filtro 'Todos' vindo do mobile (para não brigar com o fechar menu)
+                if (document.body.clientWidth < 768 && filterValue === 'Todos') {
+                   // não faz nada no mobile ao clicar em 'Todos' para não bugar o fechar menu
+                } else {
+                    document.getElementById('proximas-viagens').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
 
                 updateFilterStyles(filterValue);
             };
@@ -789,6 +841,15 @@
                 if(e.target.classList.contains('filter-btn-mobile')) {
                     handleFilterClick(e.target.dataset.filter);
                 }
+            });
+
+            // NOVO: Listener para o campo de busca
+            searchBox.addEventListener('input', () => {
+                const searchTerm = searchBox.value.trim();
+                // Descobrir qual filtro de data está ativo
+                const activeFilterBtn = document.querySelector('.filter-btn.active-filter');
+                const filterValue = activeFilterBtn ? activeFilterBtn.dataset.filter : 'Todos';
+                renderEvents(filterValue, searchTerm);
             });
 
             // Adiciona um indicador de carregamento
@@ -819,7 +880,7 @@
                     
                     renderCarousel(allEvents); 
                     setupFilters();
-                    renderEvents('Todos'); 
+                    renderEvents('Todos', ''); // Chamada inicial com searchTerm vazio
                 })
                 .catch(error => {
                     console.error('Erro ao buscar eventos:', error);
