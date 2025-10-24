@@ -88,11 +88,11 @@
             word-wrap: break-word;
         }
         .accordion-content.active {
-             /* *** CORREÇÃO APLICADA AQUI ***
-                - O valor foi aumentado de 500px para 800px.
-                - Isso dá espaço suficiente para o texto longo sobre "Embarque"
-                - sem cortar o conteúdo.
-             */
+           /* *** CORREÇÃO APLICADA AQUI ***
+             - O valor foi aumentado de 500px para 800px.
+             - Isso dá espaço suficiente para o texto longo sobre "Embarque"
+             - sem cortar o conteúdo.
+           */
             max-height: 800px;
             padding-top: 1rem;
             padding-bottom: 1.5rem;
@@ -856,7 +856,10 @@
             // MELHORIA: Classes de cor atualizadas para modo claro/escuro
             eventsGrid.innerHTML = `<div class="col-span-full text-center text-gray-500 dark:text-gray-400 flex flex-col items-center justify-center p-10"><svg class="animate-spin -ml-1 mr-3 h-10 w-10 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="mt-4 text-lg">Carregando eventos...</p></div>`;
 
-            fetch('https://anderson-fast-api.onrender.com/api/v1/events')
+            // *** ALTERAÇÃO FEITA AQUI ***
+            // A URL antiga 'https://anderson-fast-api.onrender.com/api/v1/events'
+            // foi trocada pela nova URL: 'https://fast-api-anderson.vercel.app/api/v1/events'
+            fetch('https://fast-api-anderson.vercel.app/api/v1/events')
                 .then(response => {
                     if (!response.ok) throw new Error('Não foi possível carregar os eventos da API.');
                     return response.json();
@@ -892,4 +895,3 @@
 
 </body>
 </html>
-
