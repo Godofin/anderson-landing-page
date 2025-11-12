@@ -189,7 +189,7 @@
         </nav>
     </header>
 
-    <!-- Menu Mobile --><div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full z-40 p-6 pt-24 overflow-y-auto">
+    <!-- Menu Mobile (Apenas Links e Contato) --><div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full z-40 p-6 pt-24 overflow-y-auto">
         <div class="container mx-auto">
              <a href="#destaques" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">Destaques</a>
              <a href="#proximas-viagens" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">Todas as Viagens</a>
@@ -197,15 +197,7 @@
             <a href="#sobre" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">Quem Somos</a>
             <a href="#contato" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400">Contato</a>
             <div class="border-t border-gray-200 dark:border-gray-700 my-6"></div>
-            <!-- FILTROS DE TIPO NO MOBILE --><h3 class="text-yellow-500 dark:text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar por Tipo:</h3>
-            <div id="mobile-type-filters-container" class="flex justify-center gap-2 mb-6">
-                <button data-type-filter="Todos" class="type-filter-btn-mobile text-sm text-white bg-yellow-500 py-2 px-4 rounded-full shadow-md">Todos</button>
-                <button data-type-filter="show" class="type-filter-btn-mobile text-sm text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border border-gray-300 dark:border-gray-600 py-2 px-4 rounded-full">Shows</button>
-                <button data-type-filter="eco" class="type-filter-btn-mobile text-sm text-gray-700 dark:text-gray-300 hover:text-emerald-500 dark:hover:text-emerald-400 border border-gray-300 dark:border-gray-600 py-2 px-4 rounded-full">Ecoturismo</button>
-            </div>
-            <!-- FILTROS DE DATA NO MOBILE --><h3 class="text-yellow-500 dark:text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar Viagens por Data:</h3>
-            <div id="mobile-filters-container" class="flex flex-col items-center gap-2">
-                <!-- Filtros para mobile serão injetados aqui --></div>
+            <p class="text-center text-gray-500 dark:text-gray-400 text-sm">Use os filtros na seção "Todas as Viagens" para refinar sua busca.</p>
         </div>
     </div>
 
@@ -274,12 +266,12 @@
                     <label for="search-box" class="sr-only">Buscar por nome do evento</label>
                     <input type="search" id="search-box" placeholder="Buscar por nome (ex: Canastra ou Linkin Park)" class="w-full px-5 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:focus:border-yellow-500 transition-all duration-300 shadow-sm">
                 </div>
-                <!-- FIM: Campo de Busca por Nome --><!-- Filtros de Tipo (Desktop) --><div id="type-filters-container" class="hidden md:flex flex-wrap justify-center gap-4 mb-8">
-                    <button data-type-filter="Todos" class="type-filter-btn active-type-filter font-bold py-2 px-6 rounded-lg transition-colors duration-300 bg-yellow-500 text-gray-900 shadow-md">Todos os Tipos</button>
-                    <button data-type-filter="show" class="type-filter-btn inactive-type-filter font-semibold py-2 px-6 rounded-lg transition-colors duration-300 bg-white dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-yellow-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-700">Shows & Eventos</button>
-                    <button data-type-filter="eco" class="type-filter-btn inactive-type-filter font-semibold py-2 px-6 rounded-lg transition-colors duration-300 bg-white dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-emerald-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-700">Ecoturismo & Natureza</button>
+                <!-- FIM: Campo de Busca por Nome --><!-- NOVO: Filtros de Tipo (Visíveis no Mobile e Desktop) --><div id="type-filters-container" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+                    <button data-type-filter="Todos" class="type-filter-btn active-type-filter font-bold py-2 px-6 rounded-full transition-colors duration-300 text-sm md:text-base">Todos os Tipos</button>
+                    <button data-type-filter="show" class="type-filter-btn inactive-type-filter font-semibold py-2 px-6 rounded-full transition-colors duration-300 text-sm md:text-base">Shows & Eventos</button>
+                    <button data-type-filter="eco" class="type-filter-btn inactive-type-filter font-semibold py-2 px-6 rounded-full transition-colors duration-300 text-sm md:text-base">Ecoturismo & Natureza</button>
                 </div>
-                <!-- FIM: Filtros de Tipo (Desktop) --><!-- Filtros por Data (Desktop) --><div id="filters-container" class="flex flex-wrap justify-center gap-3 mb-10">
+                <!-- FIM: Filtros de Tipo --><!-- Filtros por Data (Visíveis no Mobile e Desktop) --><div id="filters-container" class="flex flex-wrap justify-center gap-3 mb-10">
                     <!-- Botões de filtro de data serão injetados aqui --></div>
 
                 <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[300px]">
@@ -614,7 +606,6 @@
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileFiltersContainer = document.getElementById('mobile-filters-container');
-            const mobileTypeFiltersContainer = document.getElementById('mobile-type-filters-container');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
             const headerWhatsAppLink = document.getElementById('header-whatsapp-link');
@@ -659,15 +650,16 @@
             });
             // --- Fim Lógica do Tema ---
 
-            // --- Menu Mobile (Mantido) ---
+            // --- Menu Mobile (Ajustado para fechar links âncora) ---
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
             mobileMenu.addEventListener('click', (e) => {
-                if (e.target.classList.contains('mobile-link') || e.target.classList.contains('filter-btn-mobile') || e.target.classList.contains('type-filter-btn-mobile')) {
-                    // Não fechar o menu aqui se for clique em botão de filtro
-                    // A lógica de fechar deve estar em handleFilterChange ou em outro lugar, se o clique for um link de âncora
+                // Verifica se o clique foi em um link de navegação que aponta para uma seção da página
+                if (e.target.classList.contains('mobile-link')) {
+                    mobileMenu.classList.add('hidden');
                 }
+                // Filtros de tipo e data foram movidos para a página principal
             });
             // --- Fim Menu Mobile ---
 
@@ -834,7 +826,7 @@
             // --- Fim Carrossel ---
 
 
-            // --- Renderização e Filtros (Mantido) ---
+            // --- Renderização e Filtros (Movido e Ajustado) ---
             const renderEvents = (dateFilter = 'Todos', typeFilter = 'Todos', searchTerm = '') => {
                 eventsGrid.innerHTML = ''; 
 
@@ -926,7 +918,7 @@
                 eventsGrid.innerHTML = toursHTML;
             };
 
-            // --- Setup de Filtros de Data (Mantido) ---
+            // --- Setup de Filtros de Data (Atualizado) ---
             const setupDateFilters = () => {
                 const eventYearMonthsSet = new Set();
                 const eventYearMonthsList = [];
@@ -959,12 +951,12 @@
                     return a.monthIndex - b.monthIndex;
                 });
                 
-                filtersContainer.innerHTML = '';
-                mobileFiltersContainer.innerHTML = '';
-
+                filtersContainer.innerHTML = ''; // Limpa filtros de data
+                // mobileFiltersContainer.innerHTML = ''; // Não precisamos disso mais, pois mobile e desktop usam #filters-container
+                
+                // Botão "Todas as Datas"
                 const allButton = `<button data-filter="Todos" class="filter-btn active-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Todas as Datas</button>`;
                 filtersContainer.innerHTML += allButton;
-                mobileFiltersContainer.innerHTML += `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 py-2">Todas as Datas</button>`;
 
 
                 sortedYearMonths.forEach(item => {
@@ -972,7 +964,6 @@
                     const filterButton = `<button data-filter="${item.key}" class="filter-btn inactive-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">${buttonText}</button>`;
                     
                     filtersContainer.innerHTML += filterButton;
-                    mobileFiltersContainer.innerHTML += `<button data-filter="${item.key}" class="filter-btn-mobile text-lg text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 py-2">${buttonText}</button>`;
                 });
 
                 updateDateFilterStyles('Todos');
@@ -980,28 +971,29 @@
             
             // --- Funções de Estilo e Eventos de Filtro (Mantido) ---
             
-            // Atualiza estilos dos botões de TIPO (Desktop)
+            // Atualiza estilos dos botões de TIPO (Desktop e Mobile)
             const updateTypeFilterStyles = (typeFilterValue) => {
                  document.querySelectorAll('.type-filter-btn').forEach(btn => {
                     // Reset
                     btn.classList.remove('active-type-filter', 'bg-yellow-500', 'text-gray-900', 'shadow-md', 'bg-emerald-500');
-                    btn.classList.add('inactive-type-filter', 'bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-white', 'hover:bg-yellow-100', 'dark:hover:bg-gray-600', 'shadow-sm');
+                    btn.classList.add('inactive-type-filter', 'bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-white', 'hover:bg-yellow-100', 'dark:hover:bg-gray-600', 'shadow-sm', 'border', 'border-gray-300', 'dark:border-gray-700');
                     
                     if (btn.dataset.typeFilter === typeFilterValue) {
                         // Aplicar ativo
                         btn.classList.add('active-type-filter', 'text-gray-900', 'shadow-md');
+                        btn.classList.remove('inactive-type-filter', 'bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-white', 'hover:bg-yellow-100', 'dark:hover:bg-gray-600', 'shadow-sm', 'border', 'border-gray-300', 'dark:border-gray-700');
+                        
                         // Se for 'Todos' ou 'Show', usa amarelo. Se for 'Eco', usa esmeralda.
                         if (typeFilterValue === 'show' || typeFilterValue === 'Todos') {
                              btn.classList.add('bg-yellow-500');
                         } else if (typeFilterValue === 'eco') {
                              btn.classList.add('bg-emerald-500');
                         }
-                        btn.classList.remove('inactive-type-filter', 'bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-white', 'hover:bg-yellow-100', 'dark:hover:bg-gray-600', 'shadow-sm');
                     }
                 });
             };
 
-            // Atualiza estilos dos botões de DATA (Desktop)
+            // Atualiza estilos dos botões de DATA (Desktop e Mobile)
             const updateDateFilterStyles = (filterValue) => {
                 document.querySelectorAll('.filter-btn').forEach(btn => {
                     // Reset
@@ -1028,13 +1020,7 @@
                 updateDateFilterStyles(activeDateFilter);
                 updateTypeFilterStyles(activeTypeFilter);
                 
-                // Fechar o menu mobile após a aplicação de um filtro (se estiver aberto)
-                if (document.body.clientWidth < 768 && !mobileMenu.classList.contains('hidden')) {
-                     // Adiciona uma pequena pausa para que o filtro seja aplicado antes do scroll/fechamento
-                     setTimeout(() => {
-                         mobileMenu.classList.add('hidden');
-                     }, 100);
-                }
+                // [NÃO FORÇA O SCROLL]
             };
             
             // Event Listeners para Filtros de Data
@@ -1043,23 +1029,10 @@
                     handleFilterChange(e.target.dataset.filter, activeTypeFilter);
                 }
             });
-
-            mobileFiltersContainer.addEventListener('click', e => {
-                if(e.target.classList.contains('filter-btn-mobile')) {
-                    handleFilterChange(e.target.dataset.filter, activeTypeFilter);
-                }
-            });
             
             // Event Listeners para Filtros de Tipo
             typeFiltersContainer.addEventListener('click', e => {
                 if (e.target.classList.contains('type-filter-btn')) {
-                    handleFilterChange(activeDateFilter, e.target.dataset.typeFilter);
-                }
-            });
-
-            mobileTypeFiltersContainer.addEventListener('click', e => {
-                 if(e.target.classList.contains('type-filter-btn-mobile')) {
-                    // O filtro é aplicado na função handleFilterChange, e o menu é fechado lá.
                     handleFilterChange(activeDateFilter, e.target.dataset.typeFilter);
                 }
             });
