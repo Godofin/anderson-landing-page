@@ -1,44 +1,50 @@
 <!DOCTYPE html>
-<!-- MELHORIA: Removido lang daqui e adicionado 'class' para o script do tema -->
 <html lang="pt-BR" class="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anderson Viagem e Turismo - Excursões para Shows e Eventos</title>
-    <meta name="description" content="Garanta sua vaga nas melhores excursões para shows, festivais e eventos saindo de Araraquara e região. Viagens seguras, confortáveis e com a melhor galera!">
-    <meta name="keywords" content="excursão para shows, viagem para show, ônibus para show, Anderson Turismo, Linkin Park, shows em São Paulo, transporte para eventos, Araraquara">
+    <!-- Título será atualizado dinamicamente pelo JS --><title>Anderson Viagem e Turismo - Shows e Ecoturismo</title>
+    <!-- A Descrição é o segundo fator mais importante (Mantida) --><meta name="description" content="Garanta sua vaga nas melhores excursões para shows, festivais e ecoturismo saindo de Araraquara e região. Viagens seguras, confortáveis e com a melhor galera!">
+    <!-- Keywords serão atualizadas dinamicamente pelo JS --><meta id="meta-keywords" name="keywords" content="excursão para shows, ecoturismo, viagem para show, Anderson Turismo, transporte para eventos, Araraquara">
     <meta name="author" content="Anderson Viagem e Turismo">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4ZXGBNM724"></script>
+    
+    <!-- Google Tag Manager / Analytics (Mantido) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-4ZXGBNM724"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-4ZXGBNM724');
     </script>
 
-    <!-- CORREÇÃO: URL do favicon também atualizada para o CDN -->
     <link rel="icon" href="https://cdn.jsdelivr.net/gh/Godofin/anderson-landing-page@main/unnamed-removebg-preview.png" type="image/png">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- MELHORIA: Configuração do Tailwind para usar 'class' no modo escuro -->
-    <script>
+    <!-- Configuração do Tailwind para usar 'class' no modo escuro --><script>
         tailwind.config = {
-            darkMode: 'class'
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'emerald': { // Cor de destaque para Ecoturismo
+                            500: '#10B981',
+                            600: '#059669',
+                            400: '#34D399',
+                            100: '#D1FAE5',
+                            300: '#6EE7B7' // Adicionado para consistência de cor clara
+                        },
+                    },
+                }
+            }
         }
     </script>
     
-    <!-- MELHORIA: Script para evitar FOUC (Flash of Unstyled Content) do Tema -->
-    <script>
-        // No carregamento da página ou ao trocar de tema, melhor adicionar inline no `head` para evitar FOUC
-        // MELHORIA: Default é 'dark'. Só usa 'light' se estiver salvo no localStorage.
+    <!-- Script para evitar FOUC (Flash of Unstyled Content) do Tema --><script>
         if (localStorage.getItem('color-theme') === 'light') {
             document.documentElement.classList.remove('dark');
         } else {
             document.documentElement.classList.add('dark'); // Default to dark
         }
     </script>
-
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,17 +55,26 @@
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
         }
+        /* NOVO: Estilo dinâmico para o Hero Banner */
         .hero-bg {
-            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop');
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop'); /* Imagem default */
             background-size: cover;
             background-position: center;
+            transition: background-image 1.5s ease-in-out, transform 0.8s; /* Transição suave */
         }
+
         .btn-whatsapp {
             transition: all 0.3s ease;
         }
-        .btn-whatsapp:hover {
+        /* MELHORIA: Hover Show (Amarelo) */
+        .btn-whatsapp.show:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 20px -10px rgba(45, 212, 191, 0.4);
+            box-shadow: 0 10px 20px -10px rgba(251, 191, 36, 0.4); /* Amarelo */
+        }
+        /* MELHORIA: Hover Eco (Esmeralda) */
+        .btn-whatsapp.eco:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px -10px rgba(16, 185, 129, 0.4); /* Esmeralda */
         }
         
         #events-carousel-wrapper {
@@ -68,7 +83,7 @@
             display: flex;
             transition: transform 0.6s ease-in-out;
         }
-         #events-carousel-wrapper::-webkit-scrollbar {
+        #events-carousel-wrapper::-webkit-scrollbar {
             display: none;
         }
         
@@ -77,22 +92,16 @@
             filter: blur(2px);
         }
 
-
+        /* Classes para o Acordeão (mantidas) */
         .accordion-content {
             transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
             overflow: hidden;
             max-height: 0;
             padding: 0 1.5rem;
-            /* MELHORIA: Garante que palavras longas quebrem e não estourem o container */
             overflow-wrap: break-word;
             word-wrap: break-word;
         }
         .accordion-content.active {
-           /* *** CORREÇÃO APLICADA AQUI ***
-             - O valor foi aumentado de 500px para 800px.
-             - Isso dá espaço suficiente para o texto longo sobre "Embarque"
-             - sem cortar o conteúdo.
-           */
             max-height: 800px;
             padding-top: 1rem;
             padding-bottom: 1.5rem;
@@ -104,27 +113,25 @@
             transition: transform 0.3s;
         }
 
-        /* MELHORIA: CSS para o Switch de Tema */
-        /* Cor do 'track' quando 'checked' (Light Mode) */
+        /* CSS para o Switch de Tema (mantido) */
         #theme-toggle-input:checked + .theme-toggle-track {
-            background-color: #FDE68A; /* Amarelo claro */
+            background-color: #FDE68A;
         }
         .dark #theme-toggle-input:checked + .theme-toggle-track {
-             background-color: #FBBF24; /* Amarelo mais forte no dark */
+            background-color: #FBBF24;
         }
-        
-        /* Movimento do 'thumb' */
         #theme-toggle-input:checked ~ .theme-toggle-thumb {
             transform: translateX(20px);
         }
     </style>
 </head>
-<!-- MELHORIA: Classes de cor padrão (modo claro) + classes 'dark:' -->
 <body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300">
 
     <script>
         // Número de WhatsApp oficial
         const numeroWhatsApp = "5516988332631";
+        
+        // --- Dados e Funções de Suporte (Mantidos) ---
         
         // Função para gerar o link do WhatsApp
         function gerarLinkWhatsApp(evento) {
@@ -137,13 +144,20 @@
             1: "Janeiro", 2: "Fevereiro", 3: "Março", 4: "Abril", 5: "Maio", 6: "Junho",
             7: "Julho", 8: "Agosto", 9: "Setembro", 10: "Outubro", 11: "Novembro", 12: "Dezembro"
         };
+        
+        // Imagens para o Hero Banner Dinâmico (APENAS DUAS IMAGENS, COR DE TEXTO UNIFICADA)
+        const heroImages = [
+            // Imagem de Show (Mantida)
+            { url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop', title: 'shows', subtitle: 'Excursões para Shows e Festivais', textClass: 'text-yellow-400', bandeauBg: 'bg-black/50', bandeauText: 'text-yellow-300' }, 
+            // Imagem de Ecoturismo (Mantida)
+            { url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop', title: 'ecoturismo', subtitle: 'Aventuras na Natureza do Brasil', textClass: 'text-yellow-400', bandeauBg: 'bg-black/50', bandeauText: 'text-emerald-300' }, // Usando yellow-400
+        ];
+
     </script>
 
-    <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-    <header class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm dark:shadow-lg dark:shadow-black/20 border-b border-gray-200 dark:border-transparent">
+    <!-- Header (Navegação) --><header class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm dark:shadow-lg dark:shadow-black/20 border-b border-gray-200 dark:border-transparent">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center space-x-3">
-                <!-- CORREÇÃO: URL do logo atualizada para o CDN e placeholder melhorado -->
                 <img src="https://cdn.jsdelivr.net/gh/Godofin/anderson-landing-page@main/unnamed-removebg-preview.png" alt="Logo Anderson Viagem e Turismo" class="h-14 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/150x56/111827/FBBF24?text=Anderson+Turismo';">
             </a>
             <div class="hidden md:flex items-center space-x-8">
@@ -157,33 +171,25 @@
             <div class="flex items-center">
                 <a id="header-whatsapp-link" href="#" target="_blank" rel="noopener noreferrer" class="hidden md:inline-block bg-yellow-500 text-gray-900 font-bold py-2 px-5 rounded-lg hover:bg-yellow-400 transition duration-300">Fale Conosco</a>
                 
-                <!-- MELHORIA: Botão de Toggle de Tema (Estilo Switch) -->
-                <label for="theme-toggle-input" class="relative inline-flex items-center cursor-pointer ml-4">
-                  <input type="checkbox" id="theme-toggle-input" class="sr-only peer">
-                  <!-- O track (trilho) -->
-                  <div class="theme-toggle-track w-11 h-6 bg-gray-300 dark:bg-gray-700 rounded-full peer peer-focus:ring-2 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-500 transition-colors"></div>
-                  <!-- O thumb (círculo) -->
-                  <span class="theme-toggle-thumb absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-300 ease-in-out flex items-center justify-center">
-                    <!-- Ícone de Lua (Mostrado quando NÃO checado - Dark Mode) -->
-                    <svg id="theme-toggle-dark-icon" class="hidden w-3 h-3 text-gray-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                    <!-- Ícone de Sol (Mostrado quando CHECADO - Light Mode) - NOVO SVG -->
-                    <svg id="theme-toggle-light-icon" class="hidden w-3 h-3 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
-                        <path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z"></path>
-                    </svg>
-                  </span>
+                <!-- Toggle de Tema (Switch) --><label for="theme-toggle-input" class="relative inline-flex items-center cursor-pointer ml-4">
+                    <input type="checkbox" id="theme-toggle-input" class="sr-only peer">
+                    <div class="theme-toggle-track w-11 h-6 bg-gray-300 dark:bg-gray-700 rounded-full peer peer-focus:ring-2 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-500 transition-colors"></div>
+                    <span class="theme-toggle-thumb absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-300 ease-in-out flex items-center justify-center">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-3 h-3 text-gray-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-3 h-3 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                            <path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z"></path>
+                        </svg>
+                    </span>
                 </label>
 
-                <!-- Botão do Menu Hambúrguer -->
-                <button id="mobile-menu-button" class="md:hidden text-gray-900 dark:text-white focus:outline-none ml-2">
+                <!-- Botão do Menu Hambúrguer --><button id="mobile-menu-button" class="md:hidden text-gray-900 dark:text-white focus:outline-none ml-2">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </nav>
     </header>
 
-    <!-- Menu Mobile -->
-    <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full z-40 p-6 pt-24 overflow-y-auto">
+    <!-- Menu Mobile --><div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg fixed top-0 left-0 w-full h-full z-40 p-6 pt-24 overflow-y-auto">
         <div class="container mx-auto">
              <a href="#destaques" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">Destaques</a>
              <a href="#proximas-viagens" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">Todas as Viagens</a>
@@ -191,47 +197,49 @@
             <a href="#sobre" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">Quem Somos</a>
             <a href="#contato" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400">Contato</a>
             <div class="border-t border-gray-200 dark:border-gray-700 my-6"></div>
+            <h3 class="text-yellow-500 dark:text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar por Tipo:</h3>
+            <!-- Filtro de Tipo (Mobile) --><div id="mobile-type-filters-container" class="flex justify-center gap-2 mb-6">
+                <button data-type-filter="Todos" class="type-filter-btn-mobile text-sm text-white bg-yellow-500 py-2 px-4 rounded-full shadow-md">Todos</button>
+                <button data-type-filter="show" class="type-filter-btn-mobile text-sm text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border border-gray-300 dark:border-gray-600 py-2 px-4 rounded-full">Shows</button>
+                <button data-type-filter="eco" class="type-filter-btn-mobile text-sm text-gray-700 dark:text-gray-300 hover:text-emerald-500 dark:hover:text-emerald-400 border border-gray-300 dark:border-gray-600 py-2 px-4 rounded-full">Ecoturismo</button>
+            </div>
             <h3 class="text-yellow-500 dark:text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar Viagens por Data:</h3>
             <div id="mobile-filters-container" class="flex flex-col items-center gap-2">
-                <!-- Filtros para mobile serão injetados aqui -->
-            </div>
+                <!-- Filtros para mobile serão injetados aqui --></div>
         </div>
     </div>
 
 
     <main>
-        <!-- Hero - Imagem de fundo com overlay escuro funciona bem em ambos os modos -->
-        <section class="hero-bg min-h-[60vh] flex items-center justify-center text-center py-20">
-            <div class="container mx-auto px-6">
-                <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-wider leading-tight">Sua excursão oficial<br><span class="text-yellow-400">para os melhores shows</span></h1>
-                <p class="mt-4 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">Viaje com segurança, conforto e pontualidade. Deixe o transporte com a gente e foque no mais importante: curtir o seu evento!</p>
-                <p class="mt-6 text-lg font-semibold bg-black/50 inline-block px-4 py-2 rounded-lg text-yellow-300 animate-pulse">SAÍDAS DE ARARAQUARA E REGIÃO</p><br>
+        <!-- Hero - Imagem de fundo com overlay escuro funciona bem em ambos os modos --><!-- Elementos dinâmicos --><section id="hero-section" class="hero-bg min-h-[60vh] flex items-center justify-center text-center py-20 transition-all duration-1000">
+            <!-- Adicionado 'relative' para posicionar os indicadores dentro --><div class="container mx-auto px-6 relative"> 
+                <!-- Elementos dinâmicos --><!-- TÍTULO: COR ÚNICA YELLOW-400 --><h1 id="hero-title" class="text-4xl md:text-6xl font-black text-white uppercase tracking-wider leading-tight">
+                    Sua excursão oficial<br><span id="hero-title-span" class="text-yellow-400">para os melhores shows</span>
+                </h1>
+                <p id="hero-subtitle" class="mt-4 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">Viaje com segurança, conforto e pontualidade. Deixe o transporte com a gente e foque no mais importante: curtir o seu evento!</p>
                 
-                <a href="#proximas-viagens" class="mt-8 inline-block bg-yellow-500 text-gray-900 font-bold text-lg py-4 px-10 rounded-lg hover:bg-yellow-400 transition-all duration-300 shadow-lg shadow-yellow-500/40 transform hover:scale-105">Ver Próximas Excursões</a>
+                <!-- BANDEAU DE SAÍDAS DE ARARAQUARA (COR DINÂMICA) --><p id="hero-bandeau" class="mt-6 text-lg font-semibold bg-black/50 inline-block px-4 py-2 rounded-lg text-yellow-300 animate-pulse">SAÍDAS DE ARARAQUARA E REGIÃO</p><br>
+                
+                <!-- BOTÃO: COR ÚNICA YELLOW-500 --><a id="hero-button" href="#proximas-viagens" class="mt-8 inline-block bg-yellow-500 text-gray-900 font-bold text-lg py-4 px-10 rounded-lg hover:bg-yellow-400 transition-all duration-300 shadow-lg shadow-yellow-500/40 transform hover:scale-105">Ver Próximas Viagens</a>
+
+                <!-- NOVO: Indicadores de Carrossel do Hero --><div id="hero-indicators" class="absolute left-1/2 transform -translate-x-1/2 flex space-x-3 mt-8 md:mt-10">
+                    <!-- Dots will be generated by JS --></div>
             </div>
         </section>
 
-        <!-- CARROSSEL DE EVENTOS DE DESTAQUE -->
-        <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-        <section id="destaques" class="py-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700/50">
+        <!-- CARROSSEL DE EVENTOS DE DESTAQUE --><section id="destaques" class="py-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700/50">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-extrabold text-yellow-500 dark:text-yellow-400 mb-8 text-center">🔥 Destaques do Mês! 🔥</h2>
                 
                 <div id="carousel-container" class="relative max-w-4xl mx-auto overflow-hidden rounded-xl shadow-lg dark:shadow-2xl dark:shadow-black/40" data-carousel="static">
                     
                     <div id="events-carousel-wrapper" class="relative h-[450px] md:h-[550px] rounded-xl">
-                        <!-- Slides will be injected here via JS -->
-                    </div>
+                        <!-- Slides will be injected here via JS --></div>
 
-                    <!-- Slider indicators -->
-                    <div id="carousel-indicators" class="absolute z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse bottom-5 left-1/2">
-                        <!-- Indicators will be injected here via JS -->
-                    </div>
+                    <!-- Slider indicators --><div id="carousel-indicators" class="absolute z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse bottom-5 left-1/2">
+                        <!-- Indicators will be injected here via JS --></div>
 
-                    <!-- Slider controls (Prev) -->
-                    <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-                    <!-- MELHORIA MOBILE: Botão e ícone menores no celular (px-2, w-8, h-8, w-3, h-3) -->
-                    <button id="prev-btn" type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-2 md:px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                    <!-- Slider controls (Prev/Next) --><button id="prev-btn" type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-2 md:px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
                         <span class="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-yellow-500/70 text-gray-800 dark:text-white group-hover:bg-white dark:group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-gray-400 dark:group-focus:ring-yellow-400 group-focus:outline-none transition">
                             <svg class="w-3 h-3 md:w-4 md:h-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
@@ -239,9 +247,6 @@
                             <span class="sr-only">Previous</span>
                         </span>
                     </button>
-                    <!-- Slider controls (Next) -->
-                    <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-                    <!-- MELHORIA MOBILE: Botão e ícone menores no celular (px-2, w-8, h-8, w-3, h-3) -->
                     <button id="next-btn" type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-2 md:px-4 cursor-pointer group focus:outline-none" data-carousel-next>
                         <span class="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-yellow-500/70 text-gray-800 dark:text-white group-hover:bg-white dark:group-hover:bg-yellow-500 group-focus:ring-2 group-focus:ring-gray-400 dark:group-focus:ring-yellow-400 group-focus:outline-none transition">
                             <svg class="w-3 h-3 md:w-4 md:h-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -257,39 +262,32 @@
                 </div>
             </div>
         </section>
-        <!-- FIM CARROSSEL DE DESTAQUES -->
-
-
-        <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-        <section id="proximas-viagens" class="py-20 bg-gray-100 dark:bg-gray-800">
+        <!-- FIM CARROSSEL DE DESTAQUE --><section id="proximas-viagens" class="py-20 bg-gray-100 dark:bg-gray-800">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Todas as Viagens Agendadas</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Use o filtro para navegar pelas datas.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Use o filtro para navegar pelas datas e tipos de viagem.</p>
                     <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
                 </div>
 
-                <!-- NOVO: Campo de Busca por Nome -->
-                <div class="mb-8 max-w-lg mx-auto">
+                <!-- Campo de Busca por Nome --><div class="mb-8 max-w-lg mx-auto">
                     <label for="search-box" class="sr-only">Buscar por nome do evento</label>
-                    <input type="search" id="search-box" placeholder="Buscar por nome (ex: Linkin Park)" class="w-full px-5 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:focus:border-yellow-500 transition-all duration-300 shadow-sm">
+                    <input type="search" id="search-box" placeholder="Buscar por nome (ex: Canastra ou Linkin Park)" class="w-full px-5 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:focus:border-yellow-500 transition-all duration-300 shadow-sm">
                 </div>
-                <!-- FIM: Campo de Busca por Nome -->
-
-                <!-- Filtros para Desktop -->
-                <div id="filters-container" class="flex flex-wrap justify-center gap-3 mb-10">
-                    <!-- Botões de filtro serão injetados aqui -->
+                <!-- FIM: Campo de Busca por Nome --><!-- Filtros de Tipo (Desktop) --><div id="type-filters-container" class="hidden md:flex flex-wrap justify-center gap-4 mb-8">
+                    <button data-type-filter="Todos" class="type-filter-btn active-type-filter font-bold py-2 px-6 rounded-lg transition-colors duration-300 bg-yellow-500 text-gray-900 shadow-md">Todos os Tipos</button>
+                    <button data-type-filter="show" class="type-filter-btn inactive-type-filter font-semibold py-2 px-6 rounded-lg transition-colors duration-300 bg-white dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-yellow-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-700">Shows & Eventos</button>
+                    <button data-type-filter="eco" class="type-filter-btn inactive-type-filter font-semibold py-2 px-6 rounded-lg transition-colors duration-300 bg-white dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-emerald-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-700">Ecoturismo & Natureza</button>
                 </div>
+                <!-- FIM: Filtros de Tipo (Desktop) --><!-- Filtros por Data (Desktop) --><div id="filters-container" class="flex flex-wrap justify-center gap-3 mb-10">
+                    <!-- Botões de filtro de data serão injetados aqui --></div>
 
                 <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[300px]">
-                    <!-- Conteúdo será inserido pela API -->
-                </div>
+                    <!-- Conteúdo será inserido pelo JS --></div>
             </div>
         </section>
 
-        <!-- PERGUNTAS FREQUENTES (FAQ) -->
-        <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-        <section id="faq" class="py-20 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700/50">
+        <!-- PERGUNTAS FREQUENTES (FAQ) --><section id="faq" class="py-20 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700/50">
              <div class="container mx-auto px-6 max-w-3xl">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Dúvidas Frequentes (FAQ)</h2>
@@ -297,17 +295,15 @@
                     <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
                 </div>
 
-                <!-- Acordeão de Perguntas -->
-                <div id="faq-accordion" class="space-y-4">
-                    <!-- Grupo 1: O que inclui / Veículo -->
-                    <div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                <!-- Acordeão de Perguntas --><div id="faq-accordion" class="space-y-4">
+                    <!-- Grupo 1: O que inclui / Veículo --><div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
                         <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300" aria-expanded="false">
                             <span>O que a excursão inclui e qual veículo será usado?</span>
                             <svg class="arrow-icon w-6 h-6 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content">
                             <p class="text-gray-700 dark:text-gray-300">
-                                <strong>O que está incluso:</strong> Transporte de ida e volta e o serviço de um <strong class="text-yellow-600 dark:text-yellow-300">Guia Credenciado</strong> que dará todo o suporte durante a viagem e no local do evento. Somos uma empresa com <strong class="text-yellow-600 dark:text-yellow-300">CADASTUR e CNPJ ativo</strong>, atuando há 8 anos no segmento.
+                                <strong>O que está incluso:</strong> Transporte de ida e volta e o serviço de um <strong class="text-yellow-600 dark:text-yellow-300">Guia Credenciado</strong> que dará todo o suporte durante a viagem e no local do evento. Somos uma empresa com <strong class="text-600 dark:text-yellow-300">CADASTUR e CNPJ ativo</strong>, atuando há 8 anos no segmento.
                             </p>
                              <p class="text-gray-700 dark:text-gray-300 mt-4">
                                 <strong>Tipo de veículo:</strong> Pode ser <strong class="text-yellow-600 dark:text-yellow-300">Van, Micro-ônibus ou Ônibus</strong>, dependendo da lotação. Todos são veículos executivos e licenciados (ARTESP e ANTT).
@@ -315,21 +311,19 @@
                         </div>
                     </div>
 
-                    <!-- Grupo 2: Ingressos e Custos -->
-                    <div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                    <!-- Grupo 2: Ingressos e Custos --><div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
                         <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300" aria-expanded="false">
-                            <span>O ingresso do show/festival está incluso no preço?</span>
+                            <span>O ingresso ou taxa de entrada está incluso no preço?</span>
                             <svg class="arrow-icon w-6 h-6 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content">
                             <p class="text-gray-700 dark:text-gray-300">
-                                <strong class="text-red-600 dark:text-red-400">Não</strong>. O valor da excursão cobre <strong class="text-yellow-600 dark:text-yellow-300">apenas o transporte</strong> (viagem de bate e volta). O ingresso para o show ou festival deve ser adquirido separadamente por você.
+                                <strong class="text-red-600 dark:text-red-400">Geralmente, não</strong>. O valor da excursão cobre <strong class="text-yellow-600 dark:text-yellow-300">apenas o transporte</strong> (viagem de bate e volta) e guia. Ingressos para shows, festivais ou taxas de entrada em parques e atrações de ecoturismo devem ser adquiridos separadamente, a menos que especificado na descrição da viagem.
                             </p>
                         </div>
                     </div>
                     
-                    <!-- Grupo 3: Embarque e Desembarque -->
-                    <div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                    <!-- Grupo 3: Embarque e Desembarque --><div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
                         <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300" aria-expanded="false">
                             <span>Informações de Embarque, Tolerância e Horários de Retorno.</span>
                             <svg class="arrow-icon w-6 h-6 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -343,14 +337,14 @@
                             <p class="text-red-600 dark:text-red-400 font-bold mt-4">Tolerância:</p>
                             <p class="text-gray-700 dark:text-gray-300">Há uma <strong class="text-red-600 dark:text-red-400">tolerância máxima de 10 minutos</strong> no embarque. O transporte seguirá viagem pontualmente, por isso, programe-se para chegar com antecedência!</p>
                             
-                            <p class="text-gray-700 dark:text-gray-300 mt-4"><strong>Retorno:</strong> O retorno é programado para <strong class="text-yellow-600 dark:text-yellow-300">40 minutos após o término</strong> oficial do evento.</p>
+                            <p class="text-gray-700 dark:text-gray-300 mt-4"><strong>Retorno (Shows):</strong> O retorno é programado para <strong class="text-yellow-600 dark:text-yellow-300">40 minutos após o término</strong> oficial do evento.</p>
+                            <p class="text-gray-700 dark:text-gray-300 mt-1"><strong>Retorno (Eco):</strong> Os horários de retorno são sempre informados pelo guia na hora da partida, garantindo que o tempo de trilha ou atração seja cumprido.</p>
                             
                             <p class="text-gray-700 dark:text-gray-300 mt-4"><strong class="text-yellow-600 dark:text-yellow-400">Importante:</strong> Não alteramos pontos de embarque/desembarque ou rotas.</p>
                         </div>
                     </div>
                     
-                    <!-- Grupo 4: Reservas e Cancelamento -->
-                    <div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                    <!-- Grupo 4: Reservas e Cancelamento --><div class="accordion-item bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
                         <button class="accordion-header w-full flex justify-between items-center p-6 text-left font-bold text-lg text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-300" aria-expanded="false">
                             <span>Reservas, Desistências e Comprovantes.</span>
                             <svg class="arrow-icon w-6 h-6 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -366,45 +360,40 @@
                 </div>
             </div>
         </section>
-        <!-- FIM SEÇÃO FAQ -->
-
-
-        <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-        <section id="sobre" class="py-20 bg-gray-100 dark:bg-gray-800">
+        <!-- FIM SEÇÃO FAQ --><section id="sobre" class="py-20 bg-gray-100 dark:bg-gray-800">
             <div class="container mx-auto px-6 text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Por que viajar com a gente?</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Sua única preocupação é se divertir.</p>
-                    <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
+                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Por que viajar com a gente?</h2>
+                 <p class="text-gray-600 dark:text-gray-400 mt-2">Sua única preocupação é se divertir.</p>
+                 <div class="inline-block w-24 h-1 bg-yellow-500 rounded mt-4"></div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12 max-w-5xl mx-auto">
-                    <div class="feature-item">
+                    <!-- Feature 1: Segurança Total (Amarelo) --><div class="feature-item">
                         <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                         </div>
                         <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Segurança Total</h3>
                         <p class="text-gray-600 dark:text-gray-400 mt-2">Veículos novos, motoristas experientes e seguro de viagem para todos os passageiros.</p>
                     </div>
-                     <div class="feature-item">
+                     <!-- Feature 2: Conforto e Comodidade (Amarelo Original - RESTAURADO) --><div class="feature-item">
                         <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
                         </div>
                         <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Conforto e Comodidade</h3>
                         <p class="text-gray-600 dark:text-gray-400 mt-2">Ônibus e Vans com ar-condicionado, poltronas reclináveis. Deixamos você perto do evento.</p>
                     </div>
-                     <div class="feature-item">
+                     <!-- Feature 3: Pontualidade (Amarelo) --><div class="feature-item">
                         <div class="bg-yellow-500 text-gray-900 rounded-full h-20 w-20 flex items-center justify-center mx-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
                         <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Pontualidade</h3>
-                        <p class="text-gray-600 dark:text-gray-400 mt-2">Cumprimos rigorosamente nossos horários para você não perder um minuto do seu show.</p>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">Cumprimos rigorosamente nossos horários para você não perder um minuto do seu evento ou trilha.</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- MELHORIA: Classes de cor atualizadas para modo claro/escuro -->
-    <footer id="contato" class="bg-gray-200 dark:bg-black py-12">
+    <!-- Footer --><footer id="contato" class="bg-gray-200 dark:bg-black py-12">
         <div class="container mx-auto px-6 text-center text-gray-700 dark:text-gray-400">
             <p>Sua melhor escolha para viagens e eventos.</p>
             <p class="mt-2">Entre em contato e faça um orçamento!</p>
@@ -425,10 +414,11 @@
         </div>
     </footer>
 
-    <!-- SCRIPT COMPLETO E ATUALIZADO -->
-    <script>
-        let currentSlide = 0; 
-
+    <!-- SCRIPT COMPLETO E ATUALIZADO --><script>
+        let currentSlide = 0;
+        let activeDateFilter = 'Todos';
+        let activeTypeFilter = 'Todos'; 
+        
         // --- Lógica do Acordeão (FAQ) ---
         const setupAccordion = () => {
             document.querySelectorAll('.accordion-header').forEach(header => {
@@ -454,71 +444,232 @@
             });
         };
 
+        // --- Lógica do Hero Banner Dinâmico ---
+        let currentHeroIndex = 0;
+        let heroAutoSlideInterval; // Variável para controlar o timeout recursivo
+
+        const updateHeroIndicators = () => {
+            document.querySelectorAll('.hero-indicator').forEach((dot, index) => {
+                // Remove a cor de destaque e adiciona a cor neutra (com hover)
+                dot.classList.remove('bg-yellow-500');
+                dot.classList.add('bg-gray-400/50', 'hover:bg-yellow-500/80');
+
+                if (index === currentHeroIndex) {
+                    // Adiciona a cor de destaque ao ponto ativo (COR ÚNICA YELLOW-500)
+                    dot.classList.add('bg-yellow-500');
+                    dot.classList.remove('bg-gray-400/50', 'hover:bg-yellow-500/80');
+                }
+            });
+        };
+
+        const goToHeroSlide = (index) => {
+            // Lógica para navegação manual
+            currentHeroIndex = index;
+            // O scroll automático é desativado na lógica principal, mas se o usuário clicar
+            // em um indicador ou botão, o timer é resetado para evitar pulos indesejados.
+            if (heroAutoSlideInterval) {
+                clearTimeout(heroAutoSlideInterval); 
+            }
+            updateHeroBanner(true); // Chama a atualização forçada
+        }
+
+        const renderHeroIndicators = () => {
+            const indicatorsContainer = document.getElementById('hero-indicators');
+            if (!indicatorsContainer) return;
+            
+            indicatorsContainer.innerHTML = heroImages.map((_, index) => 
+                // data-index para navegação
+                `<button data-index="${index}" class="hero-indicator w-3 h-3 rounded-full transition-colors duration-300 bg-gray-400/50 hover:bg-yellow-500/80"></button>`
+            ).join('');
+
+            document.querySelectorAll('.hero-indicator').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    goToHeroSlide(parseInt(e.target.dataset.index));
+                });
+            });
+            updateHeroIndicators(); // Define o estado inicial
+        };
+
+
+        const updateHeroBanner = (manual = false) => {
+            const heroSection = document.getElementById('hero-section');
+            const heroTitle = document.getElementById('hero-title');
+            const heroTitleSpan = document.getElementById('hero-title-span');
+            const heroSubtitle = document.getElementById('hero-subtitle');
+            const heroBandeau = document.getElementById('hero-bandeau'); // Referência ao bandeau
+            const heroButton = document.getElementById('hero-button'); // NOVO: Referência ao botão
+
+            const nextImage = heroImages[currentHeroIndex];
+
+            // 1. Atualiza o background
+            const newBgStyle = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${nextImage.url}')`;
+            heroSection.style.backgroundImage = newBgStyle;
+            
+            // 2. Atualiza os textos do Hero
+            const isEco = nextImage.title === 'ecoturismo';
+
+            if (nextImage.title === 'shows') {
+                // Título: Texto base branco, span amarelo (Shows)
+                heroTitle.classList.remove('text-emerald-300');
+                heroTitle.classList.add('text-white');
+                heroTitle.innerHTML = `Sua excursão oficial<br><span id="hero-title-span" class="text-yellow-400">para os melhores shows</span>`;
+                heroSubtitle.textContent = "Viaje com segurança, conforto e pontualidade. Deixe o transporte com a gente e foque no mais importante: curtir o seu evento!";
+                heroBandeau.className = 'mt-6 text-lg font-semibold bg-black/50 inline-block px-4 py-2 rounded-lg text-yellow-300 animate-pulse'; // Amarelo para shows
+            } else if (isEco) {
+                // Título: Texto base ESMERALDA, span branco (Ecoturismo)
+                heroTitle.classList.remove('text-white');
+                heroTitle.classList.add('text-emerald-300'); // Aplica esmeralda ao título principal
+                heroTitle.innerHTML = `Natureza e Aventura<br><span id="hero-title-span" class="text-white">nas melhores paisagens</span>`;
+                heroSubtitle.textContent = "Viva a melhor experiência do Ecoturismo com segurança e sem preucupações.";
+                heroBandeau.className = 'mt-6 text-lg font-semibold bg-black/50 inline-block px-4 py-2 rounded-lg text-emerald-300 animate-pulse'; // Verde para ecoturismo
+            }
+
+            // 3. Define a classe de cor do span do título (para garantir que a cor destaque seja a correta)
+            // SHOWS: Amarelo | ECO: Branco (pois o 'Natureza e Aventura' é o destaque ESMERALDA)
+            document.getElementById('hero-title-span').className = isEco ? 'text-white' : 'text-yellow-400';
+            
+            // 4. Atualiza o botão
+            if (isEco) {
+                // VERDE: Aplica as classes do esmeralda para o botão do Hero no modo Ecoturismo
+                heroButton.classList.remove('bg-yellow-500', 'hover:bg-yellow-400', 'shadow-yellow-500/40');
+                heroButton.classList.add('bg-emerald-500', 'hover:bg-emerald-400', 'shadow-emerald-500/40');
+            } else {
+                 // AMARELO: Aplica as classes do amarelo para o botão do Hero no modo Shows
+                heroButton.classList.remove('bg-emerald-500', 'hover:bg-emerald-400', 'shadow-emerald-500/40');
+                heroButton.classList.add('bg-yellow-500', 'hover:bg-yellow-400', 'shadow-yellow-500/40');
+            }
+
+
+            // 5. Atualiza os indicadores
+            updateHeroIndicators();
+
+            // 6. Prepara para o próximo slide, SOMENTE se não for uma navegação manual
+            if (!manual) {
+                currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
+                // Recria o timeout de 10 segundos
+                heroAutoSlideInterval = setTimeout(updateHeroBanner, 10000); // 10000ms
+            }
+        };
+
+        const startHeroCycle = () => {
+            // Remove o auto-scroll (manter apenas manual)
+            // clearTimeout(heroAutoSlideInterval); // Removido para garantir que não haja auto-scroll
+            currentHeroIndex = 0; // Garante que comece no primeiro slide
+            renderHeroIndicators(); // Renderiza os pontos
+            updateHeroBanner(true); // Inicia no primeiro slide (manual = true para não iniciar o timer)
+        };
+        // --- Fim Hero Banner Dinâmico ---
+        
+        // --- NOVO: Função de Otimização de SEO (Title e Keywords) ---
+        const updateSeoTags = (tours) => {
+            const metaKeywords = document.getElementById('meta-keywords');
+            
+            // Pega os 5 primeiros eventos ativos e mapeia os títulos
+            const topTitles = tours
+                .slice(0, 5) // Limita aos 5 primeiros
+                .map(tour => tour.title.trim())
+                .filter(title => title.length > 0);
+            
+            // Termos base que são importantes para a região e o serviço
+            const baseKeywords = [
+                'excursão para shows', 
+                'ecoturismo', 
+                'viagem para show', 
+                'Anderson Turismo', 
+                'transporte para eventos', 
+                'Araraquara', 
+                'Serra da Canastra', 
+                'shows em São Paulo'
+            ];
+            
+            // Combina os títulos dos eventos com as palavras-chave base
+            const allKeywords = [...new Set([...topTitles, ...baseKeywords])];
+            
+            // 1. Atualiza Keywords (Importância Secundária)
+            if (metaKeywords) {
+                metaKeywords.content = allKeywords.join(', ');
+            }
+            
+            // 2. Atualiza o Título da Página (Importância Primária para SEO)
+            if (topTitles.length > 0) {
+                // Cria uma lista concisa dos 3-4 primeiros eventos para o título
+                const featuredTitles = topTitles.slice(0, 4).join(', ');
+                const newTitle = `Anderson Turismo | Próximas Viagens: ${featuredTitles}`;
+                document.title = newTitle;
+            } else {
+                 // Mantém o título genérico se não houver eventos
+                 document.title = "Anderson Viagem e Turismo - Shows e Ecoturismo";
+            }
+        };
+        // --- Fim Função de Otimização de SEO ---
+
 
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Variáveis DOM (Mantido) ---
             const eventsGrid = document.getElementById('events-grid');
             const filtersContainer = document.getElementById('filters-container');
+            const typeFiltersContainer = document.getElementById('type-filters-container');
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileFiltersContainer = document.getElementById('mobile-filters-container');
+            const mobileTypeFiltersContainer = document.getElementById('mobile-type-filters-container');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
             const headerWhatsAppLink = document.getElementById('header-whatsapp-link');
-            const searchBox = document.getElementById('search-box'); // NOVO: Pega o campo de busca
+            const searchBox = document.getElementById('search-box');
             
-            // --- MELHORIA: Script do Botão de Tema (Atualizado para Switch) ---
+            // --- Variáveis de Estado (Mantido) ---
+            let allTours = [];
+            let autoSlideInterval;
+
+            // --- Setup Inicial ---
+            if (headerWhatsAppLink) {
+                headerWhatsAppLink.href = gerarLinkWhatsApp('Geral');
+            }
+            setupAccordion();
+            startHeroCycle(); // Inicia o ciclo do banner
+
+            // --- Lógica do Tema (Mantida) ---
             const themeToggleInput = document.getElementById('theme-toggle-input');
             const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
             const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-            // Define o estado inicial do toggle e dos ícones
-            // (Default é 'dark'. 'checked' = light mode)
             if (localStorage.getItem('color-theme') === 'light') {
                 themeToggleInput.checked = true;
-                themeToggleLightIcon.classList.remove('hidden'); // Mostra Sol
-                themeToggleDarkIcon.classList.add('hidden');    // Esconde Lua
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
             } else {
                 themeToggleInput.checked = false;
-                themeToggleLightIcon.classList.add('hidden');     // Esconde Sol
-                themeToggleDarkIcon.classList.remove('hidden'); // Mostra Lua
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
             }
 
-            // Adiciona o listener para o evento 'change'
             themeToggleInput.addEventListener('change', function(e) {
-                // alterna ícones
                 themeToggleDarkIcon.classList.toggle('hidden');
                 themeToggleLightIcon.classList.toggle('hidden');
-
-                // Se o input está 'checked' (marcado), o tema é 'light'
                 if (e.target.checked) {
                     document.documentElement.classList.remove('dark');
                     localStorage.setItem('color-theme', 'light');
                 } else {
-                    // Se não, o tema é 'dark'
                     document.documentElement.classList.add('dark');
                     localStorage.setItem('color-theme', 'dark');
                 }
             });
-            // --- Fim do Script de Tema ---
+            // --- Fim Lógica do Tema ---
 
-
-            if (headerWhatsAppLink) {
-                headerWhatsAppLink.href = gerarLinkWhatsApp('Geral');
-            }
-            
-            setupAccordion();
-
-            let allEvents = [];
-
+            // --- Menu Mobile (Mantido) ---
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
             mobileMenu.addEventListener('click', (e) => {
-                if (e.target.classList.contains('mobile-link') || e.target.classList.contains('filter-btn-mobile')) {
+                if (e.target.classList.contains('mobile-link') || e.target.classList.contains('filter-btn-mobile') || e.target.classList.contains('type-filter-btn-mobile')) {
                     mobileMenu.classList.add('hidden');
                 }
             });
+            // --- Fim Menu Mobile ---
 
+
+            // --- Carrossel (Lógica mantida, sem auto-scroll na página) ---
             const getCurrentAndNextMonthKeys = () => {
                 const now = new Date();
                 const currentMonth = now.getMonth() + 1;
@@ -551,7 +702,6 @@
                 wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
 
                 indicators.forEach((indicator, index) => {
-                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
                     indicator.classList.remove('bg-yellow-500', 'dark:bg-yellow-500');
                     indicator.classList.add('bg-gray-400', 'dark:bg-gray-500', 'hover:bg-gray-500', 'dark:hover:bg-gray-400');
                     if (index === currentSlide) {
@@ -559,21 +709,21 @@
                         indicator.classList.add('bg-yellow-500', 'dark:bg-yellow-500');
                     }
                 });
+                
+                // [REMOCAO DE SCROLL AUTOMATICO 2/2] Removido o setInterval
+                // clearInterval(autoSlideInterval);
+                // autoSlideInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
             };
 
-
-            const renderCarousel = (events) => {
+            const renderCarousel = (tours) => {
                 const eventsCarouselWrapper = document.getElementById('events-carousel-wrapper');
                 const carouselIndicators = document.getElementById('carousel-indicators');
                 const emptyMessage = document.getElementById('carousel-empty-message');
-
-                eventsCarouselWrapper.innerHTML = '';
-                carouselIndicators.innerHTML = '';
-                currentSlide = 0;
-                
                 const [currentMonthKey, nextMonthKey] = getCurrentAndNextMonthKeys();
-                const highlightEvents = events.filter(event => {
-                    const eventDateStr = event.date_event;
+
+                // Filtrar eventos de destaque (mês atual ou próximo)
+                const highlightTours = tours.filter(tour => {
+                    const eventDateStr = tour.date_event;
                     if (!eventDateStr) return false;
 
                     try {
@@ -586,7 +736,11 @@
                     }
                 });
 
-                if (highlightEvents.length === 0) {
+                eventsCarouselWrapper.innerHTML = '';
+                carouselIndicators.innerHTML = '';
+                currentSlide = 0;
+                
+                if (highlightTours.length === 0) {
                     emptyMessage.classList.remove('hidden');
                     prevBtn.classList.add('hidden');
                     nextBtn.classList.add('hidden');
@@ -596,7 +750,7 @@
 
                 emptyMessage.classList.add('hidden');
                 
-                if (highlightEvents.length > 1) {
+                if (highlightTours.length > 1) {
                     prevBtn.classList.remove('hidden');
                     nextBtn.classList.remove('hidden');
                     carouselIndicators.classList.remove('hidden');
@@ -606,46 +760,49 @@
                     carouselIndicators.classList.add('hidden');
                 }
 
-                highlightEvents.forEach((event, index) => {
+                highlightTours.forEach((tour, index) => {
                     let citiesArray = [];
-                    if (Array.isArray(event.cities)) {
-                        citiesArray = event.cities;
-                    } else if (typeof event.cities === 'string' && event.cities.trim().length > 0) {
-                        citiesArray = event.cities.split(',').map(city => city.trim());
+                    if (Array.isArray(tour.cities)) {
+                        citiesArray = tour.cities;
+                    } else if (typeof tour.cities === 'string' && tour.cities.trim().length > 0) {
+                        citiesArray = tour.cities.split(',').map(city => city.trim());
                     }
                     
-                    // MELHORIA MOBILE: Ícone h-5 w-5 (era h-6) e tags (px-2 py-0.5 text-xs) menores
+                    // Define classes de cor baseadas no tipo
+                    const isEco = tour.type === 'eco';
+                    // RESTAURADO: Cores dos destaques do carrossel (titulo e icone)
+                    const dateTextColor = isEco ? 'text-emerald-400' : 'text-yellow-400';
+                    const cityBgColor = isEco ? 'bg-emerald-400/80' : 'bg-yellow-400/80';
+                    const cityTextColor = 'text-gray-900'; // Mantido para contraste
+
                     const citiesHTML = citiesArray.length > 0
                         ? `<div class="mt-4 flex flex-wrap gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-200 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                 <div class="flex flex-wrap gap-2">
-                                    ${citiesArray.map(city => `<span class="px-2 py-0.5 text-xs font-bold text-gray-900 bg-yellow-400/80 rounded-full">${city}</span>`).join('')}
+                                    ${citiesArray.map(city => `<span class="px-2 py-0.5 text-xs font-bold ${cityTextColor} ${cityBgColor} rounded-full">${city}</span>`).join('')}
                                 </div>
                             </div>` : '';
                     
                     eventsCarouselWrapper.innerHTML += `
                         <div class="carousel-slide min-w-full flex-shrink-0 flex items-center justify-center" data-carousel-item>
                             <div class="relative w-full h-full rounded-xl overflow-hidden group">
-                                <img src="${event.image}" alt="${event.alt}" class="w-full h-full object-cover absolute inset-0 transform group-hover:scale-105 transition duration-700" onerror="this.onerror=null;this.src='https://placehold.co/800x600/1F2937/FBBF24?text=DESTAQUE+${index+1}';">
+                                <img src="${tour.image}" alt="${tour.alt}" class="w-full h-full object-cover absolute inset-0 transform group-hover:scale-105 transition duration-700" onerror="this.onerror=null;this.src='https://placehold.co/800x600/1F2937/FBBF24?text=DESTAQUE+${index+1}';">
                                 
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
 
-                                <!-- MELHORIA MOBILE: Padding inferior (pb-16) para não sobrepor os indicadores -->
                                 <div class="absolute inset-0 flex flex-col justify-end p-4 md:p-8 pb-16 md:pb-8">
-                                    <span class="text-sm font-semibold text-red-400 mb-1 uppercase tracking-wider">Próxima Parada</span>
+                                    <span class="text-sm font-semibold text-red-400 mb-1 uppercase tracking-wider">${isEco ? 'Aventura Destaque' : 'Próxima Parada'}</span>
                                     
-                                    <!-- MELHORIA MOBILE: Tamanho da fonte menor (text-2xl sm:text-3xl) -->
-                                    <h3 class="text-2xl sm:text-3xl md:text-5xl font-black text-yellow-400 leading-tight mb-2">${event.title}</h3>
+                                    <h3 class="text-2xl sm:text-3xl md:text-5xl font-black ${dateTextColor} leading-tight mb-2">${tour.title}</h3>
                                     
-                                    <!-- MELHORIA MOBILE: Tamanho da fonte menor (text-base) -->
                                     <p class="text-base md:text-2xl font-bold text-white mb-3 flex items-center flex-wrap">
-                                        <svg class="w-5 h-5 inline mr-2 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                        <span>${event.date}</span>
+                                        <svg class="w-5 h-5 inline mr-2 ${dateTextColor} flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <span>${tour.date}</span>
                                     </p>
 
                                     ${citiesHTML}
                                     
-                                    <button onclick="window.open(gerarLinkWhatsApp('${event.eventName}'), '_blank')" class="btn-whatsapp mt-4 max-w-xs bg-green-500 text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center space-x-3 hover:bg-green-600 shadow-lg shadow-green-500/30 transition">
+                                    <button onclick="window.open(gerarLinkWhatsApp('${tour.eventName}'), '_blank')" class="btn-whatsapp ${isEco ? 'eco' : 'show'} mt-4 max-w-xs ${isEco ? 'bg-emerald-500 hover:bg-emerald-600' : 'bg-green-500 hover:bg-green-600'} text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center space-x-3 shadow-lg shadow-green-500/30 transition">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.003 2.011.564 3.963 1.632 5.686l.244.423-1.075 3.922 4.023-1.056.39.232z"/></svg>
                                         <span>Reservar Vaga</span>
                                     </button>
@@ -654,7 +811,6 @@
                         </div>
                     `;
                     
-                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
                     carouselIndicators.innerHTML += `
                         <button type="button" class="carousel-indicator w-3 h-3 rounded-full ${index === 0 ? 'bg-yellow-500' : 'bg-gray-400 dark:bg-gray-500 hover:bg-gray-500 dark:hover:bg-gray-400'}" aria-current="${index === 0}" aria-label="Slide ${index + 1}" data-carousel-slide-to="${index}"></button>
                     `;
@@ -671,89 +827,113 @@
                 });
 
                 showSlide(0);
+                
+                // [REMOCAO DE SCROLL AUTOMATICO 1/2] Removido o setInterval
+                // clearInterval(autoSlideInterval);
+                // autoSlideInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
             };
+            // --- Fim Carrossel ---
 
-            const renderEvents = (filter = 'Todos', searchTerm = '') => {
+
+            // --- Renderização e Filtros (Mantido) ---
+            const renderEvents = (dateFilter = 'Todos', typeFilter = 'Todos', searchTerm = '') => {
                 eventsGrid.innerHTML = ''; 
 
-                // 1. Filtrar por data (como antes)
-                let filteredEvents = filter === 'Todos'
-                    ? allEvents
-                    : allEvents.filter(event => {
-                        const eventDate = event.date_event;
+                let filteredTours = allTours;
+                const lowerSearchTerm = searchTerm.toLowerCase();
+                
+                // 1. Filtrar por Tipo
+                if (typeFilter !== 'Todos') {
+                    filteredTours = filteredTours.filter(tour => tour.type === typeFilter);
+                }
+
+                // 2. Filtrar por Data
+                if (dateFilter !== 'Todos') {
+                    filteredTours = filteredTours.filter(tour => {
+                        const eventDate = tour.date_event;
                         if (!eventDate) return false;
                         const [year, month] = eventDate.split('-');
                         const monthName = monthMap[parseInt(month)];
                         const filterKey = `${monthName} ${year}`;
-                        return filter === filterKey;
+                        return dateFilter === filterKey;
                     });
+                }
                 
-                // 2. Filtrar pelo termo de busca (NOVO)
+                // 3. Filtrar pelo termo de busca
                 if (searchTerm.length > 0) {
-                    const lowerSearchTerm = searchTerm.toLowerCase();
-                    filteredEvents = filteredEvents.filter(event => 
-                        event.title.toLowerCase().includes(lowerSearchTerm) ||
-                        (event.eventName && event.eventName.toLowerCase().includes(lowerSearchTerm))
+                    filteredTours = filteredTours.filter(tour => 
+                        tour.title.toLowerCase().includes(lowerSearchTerm) ||
+                        (tour.eventName && tour.eventName.toLowerCase().includes(lowerSearchTerm))
                     );
                 }
 
 
-                if (filteredEvents.length === 0) {
-                    // Mensagem de "não encontrado" mais inteligente
+                if (filteredTours.length === 0) {
+                    let message = `Nenhuma viagem encontrada.`;
                     if (searchTerm.length > 0) {
-                        eventsGrid.innerHTML = `<p class="text-gray-500 dark:text-gray-400 text-center col-span-full">Nenhum evento encontrado para "${searchTerm}" em ${filter.replace(' ', ' / ')}.</p>`;
-                    } else {
-                        eventsGrid.innerHTML = `<p class="text-gray-500 dark:text-gray-400 text-center col-span-full">Nenhum evento encontrado para ${filter.replace(' ', ' / ')}.</a"p>`;
+                        message += ` para "${searchTerm}"`;
                     }
+                    if (typeFilter !== 'Todos') {
+                        message += ` do tipo ${typeFilter === 'show' ? 'Shows' : 'Ecoturismo'}`;
+                    }
+                    eventsGrid.innerHTML = `<p class="text-gray-500 dark:text-gray-400 text-center col-span-full">${message}.</p>`;
                     return;
                 }
 
-                let eventsHTML = '';
-                filteredEvents.forEach(event => {
+                let toursHTML = '';
+                filteredTours.forEach(tour => {
                     let citiesArray = [];
-                    if (Array.isArray(event.cities)) {
-                        citiesArray = event.cities;
-                    } else if (typeof event.cities === 'string' && event.cities.trim().length > 0) {
-                        citiesArray = event.cities.split(',').map(city => city.trim());
+                    if (Array.isArray(tour.cities)) {
+                        citiesArray = tour.cities;
+                    } else if (typeof tour.cities === 'string' && tour.cities.trim().length > 0) {
+                        citiesArray = tour.cities.split(',').map(city => city.trim());
                     }
 
-                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
+                    // Define classes de cor baseadas no tipo
+                    const isEco = tour.type === 'eco';
+                    // RESTAURADO: Cores de Ecoturismo (verde) e Shows (amarelo/verde)
+                    const hoverMainColor = isEco ? 'hover:bg-emerald-600' : 'hover:bg-green-600';
+                    const titleColor = isEco ? 'text-emerald-600 dark:text-emerald-400' : 'text-yellow-600 dark:text-yellow-400';
+                    const tagBgColor = isEco ? 'bg-emerald-100 border-emerald-200 dark:bg-gray-700 dark:border-gray-600 text-emerald-800 dark:text-emerald-200' : 'bg-yellow-100 border-yellow-200 dark:bg-gray-700 dark:border-gray-600 text-yellow-800 dark:text-yellow-200';
+                    const buttonBgColor = isEco ? 'bg-emerald-500' : 'bg-green-500';
+
                     const citiesHTML = citiesArray.length > 0
                         ? `<div class="mt-4 flex flex-wrap gap-2 items-center">
                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 dark:text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                   <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                </svg>
                                <div class="flex flex-wrap gap-2">
-                                   ${citiesArray.map(city => `<kbd class="px-2 py-1 text-xs font-semibold text-yellow-800 bg-yellow-100 border border-yellow-200 dark:text-yellow-200 dark:bg-gray-700 dark:border-gray-600 rounded-md">${city}</kbd>`).join('')}
+                                    ${citiesArray.map(city => `<kbd class="px-2 py-1 text-xs font-semibold ${tagBgColor} rounded-md">${city}</kbd>`).join('')}
                                </div>
                            </div>` : '';
                     
-                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
-                    eventsHTML += `
+                    toursHTML += `
                         <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/30 flex flex-col transform hover:-translate-y-2 hover:shadow-xl dark:hover:shadow-lg dark:hover:shadow-yellow-500/20 transition-all duration-300 ease-in-out border border-gray-200 dark:border-transparent">
-                            <img src="${event.image}" alt="${event.alt}" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/111827/FBBF24?text=Show';">
+                            <img src="${tour.image}" alt="${tour.alt}" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/111827/FBBF24?text=${isEco ? 'Ecoturismo' : 'Show'}';">
                             <div class="p-6 flex flex-col flex-grow">
-                                <h3 class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">${event.title}</h3>
-                                <p class="text-gray-500 dark:text-gray-400 mt-1">${event.date}</p>
+                                <span class="uppercase text-xs font-bold ${titleColor.replace('text-', 'text-')} mb-1">${isEco ? 'Ecoturismo' : 'Show & Evento'}</span>
+                                <h3 class="text-2xl font-bold ${titleColor}">${tour.title}</h3>
+                                <p class="text-gray-500 dark:text-gray-400 mt-1">${tour.date}</p>
                                 ${citiesHTML}
-                                <p class="text-gray-700 dark:text-gray-300 mt-4 flex-grow">${event.description}</p>
-                                <button onclick="window.open(gerarLinkWhatsApp('${event.eventName}'), '_blank')" class="btn-whatsapp w-full mt-6 bg-green-500 text-white font-bold py-3 px-6 rounded-lg flex items-center justify-center space-x-2 hover:bg-green-600">
+                                <p class="text-gray-700 dark:text-gray-300 mt-4 flex-grow">${tour.description}</p>
+                                <button onclick="window.open(gerarLinkWhatsApp('${tour.eventName}'), '_blank')" class="btn-whatsapp ${isEco ? 'eco' : 'show'} w-full mt-6 ${buttonBgColor} text-white font-bold py-3 px-6 rounded-lg flex items-center justify-center space-x-2 ${hoverMainColor}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.003 2.011.564 3.963 1.632 5.686l.244.423-1.075 3.922 4.023-1.056.39.232z"/></svg>
-                                    <span>${event.buttonText}</span>
+                                    <span>Reservar Vaga</span>
                                 </button>
                             </div>
                         </div>`;
                 });
-                eventsGrid.innerHTML = eventsHTML;
+                eventsGrid.innerHTML = toursHTML;
             };
-            
-            const setupFilters = () => {
+
+            // --- Setup de Filtros de Data (Mantido) ---
+            const setupDateFilters = () => {
                 const eventYearMonthsSet = new Set();
                 const eventYearMonthsList = [];
                 
-                allEvents.forEach(event => {
-                    const eventDate = event.date_event; 
+                allTours.forEach(tour => {
+                    const eventDate = tour.date_event; 
                     if (eventDate) {
                         try {
                             const [year, month] = eventDate.split('-');
@@ -783,27 +963,47 @@
                 filtersContainer.innerHTML = '';
                 mobileFiltersContainer.innerHTML = '';
 
-                // MELHORIA: Classes de cor atualizadas para modo claro/escuro
-                const allButton = `<button data-filter="Todos" class="filter-btn active-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Todas as Viagens</button>`;
+                const allButton = `<button data-filter="Todos" class="filter-btn active-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">Todas as Datas</button>`;
                 filtersContainer.innerHTML += allButton;
-                mobileFiltersContainer.innerHTML += `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 py-2">Todas as Viagens</button>`;
+                mobileFiltersContainer.innerHTML += `<button data-filter="Todos" class="filter-btn-mobile text-lg text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 py-2">Todas as Datas</button>`;
 
 
                 sortedYearMonths.forEach(item => {
                     const buttonText = item.key.replace(' ', ' / ');
-                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
                     const filterButton = `<button data-filter="${item.key}" class="filter-btn inactive-filter font-semibold py-2 px-4 rounded-lg transition-colors duration-300">${buttonText}</button>`;
                     
                     filtersContainer.innerHTML += filterButton;
                     mobileFiltersContainer.innerHTML += `<button data-filter="${item.key}" class="filter-btn-mobile text-lg text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 py-2">${buttonText}</button>`;
                 });
 
-                // 4. Aplica o estilo inicial nos botões de desktop
-                updateFilterStyles('Todos');
+                updateDateFilterStyles('Todos');
+            };
+            
+            // --- Funções de Estilo e Eventos de Filtro (Mantido) ---
+            
+            // Atualiza estilos dos botões de TIPO (Desktop)
+            const updateTypeFilterStyles = (typeFilterValue) => {
+                 document.querySelectorAll('.type-filter-btn').forEach(btn => {
+                    // Reset
+                    btn.classList.remove('active-type-filter', 'bg-yellow-500', 'text-gray-900', 'shadow-md', 'bg-emerald-500');
+                    btn.classList.add('inactive-type-filter', 'bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-white', 'hover:bg-yellow-100', 'dark:hover:bg-gray-600', 'shadow-sm');
+                    
+                    if (btn.dataset.typeFilter === typeFilterValue) {
+                        // Aplicar ativo
+                        btn.classList.add('active-type-filter', 'text-gray-900', 'shadow-md');
+                        // Se for 'Todos' ou 'Show', usa amarelo. Se for 'Eco', usa esmeralda.
+                        if (typeFilterValue === 'show' || typeFilterValue === 'Todos') {
+                             btn.classList.add('bg-yellow-500');
+                        } else if (typeFilterValue === 'eco') {
+                             btn.classList.add('bg-emerald-500');
+                        }
+                        btn.classList.remove('inactive-type-filter', 'bg-white', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-white', 'hover:bg-yellow-100', 'dark:hover:bg-gray-600', 'shadow-sm');
+                    }
+                });
             };
 
-            // MELHORIA: Função separada para atualizar estilos de filtro
-            const updateFilterStyles = (filterValue) => {
+            // Atualiza estilos dos botões de DATA (Desktop)
+            const updateDateFilterStyles = (filterValue) => {
                 document.querySelectorAll('.filter-btn').forEach(btn => {
                     // Reset
                     btn.classList.remove('active-filter', 'bg-yellow-500', 'text-gray-900', 'shadow-md');
@@ -816,56 +1016,78 @@
                     }
                 });
             };
-
-            const handleFilterClick = (filterValue) => {
-                const searchTerm = searchBox.value.trim(); // Pega o valor da busca
-                renderEvents(filterValue, searchTerm); // Passa os dois filtros
+            
+            // Função central para lidar com filtros
+            const handleFilterChange = (newDateFilter, newTypeFilter) => {
+                activeDateFilter = newDateFilter;
+                activeTypeFilter = newTypeFilter;
                 
-                // Scroll suave apenas se não for o filtro 'Todos' vindo do mobile (para não brigar com o fechar menu)
-                if (document.body.clientWidth < 768 && filterValue === 'Todos') {
-                   // não faz nada no mobile ao clicar em 'Todos' para não bugar o fechar menu
-                } else {
-                    document.getElementById('proximas-viagens').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                const searchTerm = searchBox.value.trim();
+                renderEvents(activeDateFilter, activeTypeFilter, searchTerm);
+                
+                // Atualiza estilos
+                updateDateFilterStyles(activeDateFilter);
+                updateTypeFilterStyles(activeTypeFilter);
 
-                updateFilterStyles(filterValue);
+                // [REMOCAO DE SCROLL AUTOMATICO 2/2] Removido scroll
+                // if (document.body.clientWidth > 768 || activeDateFilter !== 'Todos' || activeTypeFilter !== 'Todos') {
+                //     document.getElementById('proximas-viagens').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // }
             };
-
+            
+            // Event Listeners para Filtros de Data
             filtersContainer.addEventListener('click', e => {
                 if (e.target.classList.contains('filter-btn')) {
-                    handleFilterClick(e.target.dataset.filter);
+                    handleFilterChange(e.target.dataset.filter, activeTypeFilter);
                 }
             });
 
             mobileFiltersContainer.addEventListener('click', e => {
                 if(e.target.classList.contains('filter-btn-mobile')) {
-                    handleFilterClick(e.target.dataset.filter);
+                    handleFilterChange(e.target.dataset.filter, activeTypeFilter);
+                }
+            });
+            
+            // Event Listeners para Filtros de Tipo
+            typeFiltersContainer.addEventListener('click', e => {
+                if (e.target.classList.contains('type-filter-btn')) {
+                    handleFilterChange(activeDateFilter, e.target.dataset.typeFilter);
                 }
             });
 
-            // NOVO: Listener para o campo de busca
+            mobileTypeFiltersContainer.addEventListener('click', e => {
+                 if(e.target.classList.contains('type-filter-btn-mobile')) {
+                    handleFilterChange(activeDateFilter, e.target.dataset.typeFilter);
+                }
+            });
+
+            // Listener para o campo de busca
             searchBox.addEventListener('input', () => {
                 const searchTerm = searchBox.value.trim();
-                // Descobrir qual filtro de data está ativo
-                const activeFilterBtn = document.querySelector('.filter-btn.active-filter');
-                const filterValue = activeFilterBtn ? activeFilterBtn.dataset.filter : 'Todos';
-                renderEvents(filterValue, searchTerm);
+                renderEvents(activeDateFilter, activeTypeFilter, searchTerm);
             });
 
             // Adiciona um indicador de carregamento
-            // MELHORIA: Classes de cor atualizadas para modo claro/escuro
             eventsGrid.innerHTML = `<div class="col-span-full text-center text-gray-500 dark:text-gray-400 flex flex-col items-center justify-center p-10"><svg class="animate-spin -ml-1 mr-3 h-10 w-10 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><p class="mt-4 text-lg">Carregando eventos...</p></div>`;
 
-            // *** ALTERAÇÃO FEITA AQUI ***
-            // A URL antiga 'https://anderson-fast-api.onrender.com/api/v1/events'
-            // foi trocada pela nova URL: 'https://fast-api-anderson.vercel.app/api/v1/events'
+            // Chama a API e processa os dados
             fetch('https://fast-api-anderson.vercel.app/api/v1/events')
                 .then(response => {
                     if (!response.ok) throw new Error('Não foi possível carregar os eventos da API.');
                     return response.json();
                 })
                 .then(events => {
-                    allEvents = events.sort((a, b) => {
+                    // Mapeia eventos da API e determina o tipo (show ou eco) com base no campo 'alt'
+                    allTours = events.map(event => {
+                        let type = 'show'; // Default para Shows/Eventos
+
+                        // Verifica o campo 'alt' para definir o tipo de evento
+                        if (event.alt && event.alt.toLowerCase().includes('ecoturismo/viagens')) {
+                            type = 'eco';
+                        }
+                        
+                        return { ...event, type };
+                    }).sort((a, b) => {
                         const dateA = new Date(a.date_event);
                         const dateB = new Date(b.date_event);
                         
@@ -874,21 +1096,22 @@
                         
                         return dateA - dateB;
                     });
+                    
+                    // NOVO: Chamada para atualizar tags de SEO
+                    updateSeoTags(allTours);
 
-                    if (allEvents.length === 0) {
-                        // MELHORIA: Classes de cor atualizadas para modo claro/escuro
-                        eventsGrid.innerHTML = `<div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col border-2 border-dashed border-gray-300 dark:border-gray-700 col-span-full md:col-span-2 lg:col-span-3 mx-auto max-w-md"><div class="p-6 flex flex-col flex-grow items-center justify-center text-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 dark:text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg><h3 class="text-2xl font-bold text-gray-500">Aguarde!</h3><p class="text-gray-600 dark:text-gray-500 mt-2">Mais eventos incríveis serão anunciados em breve. Fique de olho!</p></div></div>`;
+                    if (allTours.length === 0) {
+                        eventsGrid.innerHTML = `<div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col border-2 border-dashed border-gray-300 dark:border-gray-700 col-span-full md:col-span-2 lg:col-span-3 mx-auto max-w-md"><div class="p-6 flex flex-col flex-grow items-center justify-center text-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 dark:text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg><h3 class="text-2xl font-bold text-gray-500">Aguarde!</h3><p class="text-gray-600 dark:text-gray-500 mt-2">Mais viagens incríveis serão anunciadas em breve. Fique de olho!</p></div></div>`;
                         return;
                     }
                     
-                    renderCarousel(allEvents); 
-                    setupFilters();
-                    renderEvents('Todos', ''); // Chamada inicial com searchTerm vazio
+                    renderCarousel(allTours); 
+                    setupDateFilters();
+                    handleFilterChange('Todos', 'Todos'); // Chamada inicial
                 })
                 .catch(error => {
                     console.error('Erro ao buscar eventos:', error);
-                    // MELHORIA: Classes de cor atualizadas para modo claro/escuro
-                    eventsGrid.innerHTML = `<p class="text-red-600 dark:text-red-500 text-center col-span-full">Erro ao carregar os eventos. Tente novamente mais tarde.</p>`;
+                    eventsGrid.innerHTML = `<p class="text-red-600 dark:text-red-500 text-center col-span-full">Erro ao carregar as viagens. Tente novamente mais tarde.</p>`;
                 });
         });
     </script>
