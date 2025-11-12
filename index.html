@@ -197,13 +197,13 @@
             <a href="#sobre" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border-b border-gray-200 dark:border-gray-800">Quem Somos</a>
             <a href="#contato" class="mobile-link block py-3 text-lg text-center text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400">Contato</a>
             <div class="border-t border-gray-200 dark:border-gray-700 my-6"></div>
-            <h3 class="text-yellow-500 dark:text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar por Tipo:</h3>
-            <!-- Filtro de Tipo (Mobile) --><div id="mobile-type-filters-container" class="flex justify-center gap-2 mb-6">
+            <!-- FILTROS DE TIPO NO MOBILE --><h3 class="text-yellow-500 dark:text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar por Tipo:</h3>
+            <div id="mobile-type-filters-container" class="flex justify-center gap-2 mb-6">
                 <button data-type-filter="Todos" class="type-filter-btn-mobile text-sm text-white bg-yellow-500 py-2 px-4 rounded-full shadow-md">Todos</button>
                 <button data-type-filter="show" class="type-filter-btn-mobile text-sm text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 border border-gray-300 dark:border-gray-600 py-2 px-4 rounded-full">Shows</button>
                 <button data-type-filter="eco" class="type-filter-btn-mobile text-sm text-gray-700 dark:text-gray-300 hover:text-emerald-500 dark:hover:text-emerald-400 border border-gray-300 dark:border-gray-600 py-2 px-4 rounded-full">Ecoturismo</button>
             </div>
-            <h3 class="text-yellow-500 dark:text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar Viagens por Data:</h3>
+            <!-- FILTROS DE DATA NO MOBILE --><h3 class="text-yellow-500 dark:text-yellow-400 font-bold mb-4 text-center text-xl">Filtrar Viagens por Data:</h3>
             <div id="mobile-filters-container" class="flex flex-col items-center gap-2">
                 <!-- Filtros para mobile serão injetados aqui --></div>
         </div>
@@ -465,12 +465,11 @@
         const goToHeroSlide = (index) => {
             // Lógica para navegação manual
             currentHeroIndex = index;
-            // O scroll automático é desativado na lógica principal, mas se o usuário clicar
-            // em um indicador ou botão, o timer é resetado para evitar pulos indesejados.
+            // Se o timer estiver rodando, limpa ele
             if (heroAutoSlideInterval) {
                 clearTimeout(heroAutoSlideInterval); 
             }
-            updateHeroBanner(true); // Chama a atualização forçada
+            updateHeroBanner(false); // Não é manual = false, pois queremos que o ciclo continue após o clique
         }
 
         const renderHeroIndicators = () => {
@@ -491,7 +490,7 @@
         };
 
 
-        const updateHeroBanner = (manual = false) => {
+        const updateHeroBanner = (resetTimer = false) => {
             const heroSection = document.getElementById('hero-section');
             const heroTitle = document.getElementById('hero-title');
             const heroTitleSpan = document.getElementById('hero-title-span');
@@ -520,7 +519,7 @@
                 heroTitle.classList.remove('text-white');
                 heroTitle.classList.add('text-emerald-300'); // Aplica esmeralda ao título principal
                 heroTitle.innerHTML = `Natureza e Aventura<br><span id="hero-title-span" class="text-white">nas melhores paisagens</span>`;
-                heroSubtitle.textContent = "Viva a melhor experiência do Ecoturismo com segurança e sem preucupações.";
+                heroSubtitle.textContent = "Trilhas, cachoeiras e paisagens incríveis. Viva a experiência do Ecoturismo com a segurança e o suporte Anderson Turismo.";
                 heroBandeau.className = 'mt-6 text-lg font-semibold bg-black/50 inline-block px-4 py-2 rounded-lg text-emerald-300 animate-pulse'; // Verde para ecoturismo
             }
 
@@ -543,20 +542,23 @@
             // 5. Atualiza os indicadores
             updateHeroIndicators();
 
-            // 6. Prepara para o próximo slide, SOMENTE se não for uma navegação manual
-            if (!manual) {
-                currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
-                // Recria o timeout de 10 segundos
-                heroAutoSlideInterval = setTimeout(updateHeroBanner, 10000); // 10000ms
-            }
+            // 6. Configura o timer
+            // Limpa o timer anterior (garantindo que não haja dois rodando)
+            clearTimeout(heroAutoSlideInterval);
+
+            // Calcula o próximo índice
+            currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
+            
+            // Define o novo timeout de 5 segundos (5000ms)
+            heroAutoSlideInterval = setTimeout(updateHeroBanner, 5000); 
         };
 
         const startHeroCycle = () => {
-            // Remove o auto-scroll (manter apenas manual)
-            // clearTimeout(heroAutoSlideInterval); // Removido para garantir que não haja auto-scroll
             currentHeroIndex = 0; // Garante que comece no primeiro slide
             renderHeroIndicators(); // Renderiza os pontos
-            updateHeroBanner(true); // Inicia no primeiro slide (manual = true para não iniciar o timer)
+            
+            // Inicia a primeira chamada, que configura o ciclo automático
+            updateHeroBanner(); 
         };
         // --- Fim Hero Banner Dinâmico ---
         
@@ -663,7 +665,8 @@
             });
             mobileMenu.addEventListener('click', (e) => {
                 if (e.target.classList.contains('mobile-link') || e.target.classList.contains('filter-btn-mobile') || e.target.classList.contains('type-filter-btn-mobile')) {
-                    mobileMenu.classList.add('hidden');
+                    // Não fechar o menu aqui se for clique em botão de filtro
+                    // A lógica de fechar deve estar em handleFilterChange ou em outro lugar, se o clique for um link de âncora
                 }
             });
             // --- Fim Menu Mobile ---
@@ -710,9 +713,7 @@
                     }
                 });
                 
-                // [REMOCAO DE SCROLL AUTOMATICO 2/2] Removido o setInterval
-                // clearInterval(autoSlideInterval);
-                // autoSlideInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
+                // [NÃO TEM SCROLL AUTOMÁTICO AQUI]
             };
 
             const renderCarousel = (tours) => {
@@ -828,9 +829,7 @@
 
                 showSlide(0);
                 
-                // [REMOCAO DE SCROLL AUTOMATICO 1/2] Removido o setInterval
-                // clearInterval(autoSlideInterval);
-                // autoSlideInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
+                // [NÃO TEM SCROLL AUTOMÁTICO AQUI]
             };
             // --- Fim Carrossel ---
 
@@ -1028,11 +1027,14 @@
                 // Atualiza estilos
                 updateDateFilterStyles(activeDateFilter);
                 updateTypeFilterStyles(activeTypeFilter);
-
-                // [REMOCAO DE SCROLL AUTOMATICO 2/2] Removido scroll
-                // if (document.body.clientWidth > 768 || activeDateFilter !== 'Todos' || activeTypeFilter !== 'Todos') {
-                //     document.getElementById('proximas-viagens').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                // }
+                
+                // Fechar o menu mobile após a aplicação de um filtro (se estiver aberto)
+                if (document.body.clientWidth < 768 && !mobileMenu.classList.contains('hidden')) {
+                     // Adiciona uma pequena pausa para que o filtro seja aplicado antes do scroll/fechamento
+                     setTimeout(() => {
+                         mobileMenu.classList.add('hidden');
+                     }, 100);
+                }
             };
             
             // Event Listeners para Filtros de Data
@@ -1057,6 +1059,7 @@
 
             mobileTypeFiltersContainer.addEventListener('click', e => {
                  if(e.target.classList.contains('type-filter-btn-mobile')) {
+                    // O filtro é aplicado na função handleFilterChange, e o menu é fechado lá.
                     handleFilterChange(activeDateFilter, e.target.dataset.typeFilter);
                 }
             });
