@@ -1121,7 +1121,7 @@
 
             // Chama a API e processa os dados
             // ATUALIZADO PARA URL LOCAL
-            fetch('http://fast-api-anderson.vercel.app/api/v1/events')
+            fetch('https://fast-api-anderson.vercel.app/api/v1/events')
                 .then(response => {
                     if (!response.ok) throw new Error('Não foi possível carregar os eventos da API.');
                     return response.json();
