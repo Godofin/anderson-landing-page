@@ -863,7 +863,14 @@
                         : `window.open(gerarLinkWhatsApp('${tour.eventName}'), '_blank')`;
                     
                     const buttonText = tour.ecommerce_link ? "Comprar Agora" : "Reservar Vaga";
-                    
+
+                    const carouselSaibaMaisBtn = tour.saiba_mais_link
+                        ? `<a href="${tour.saiba_mais_link}" class="btn-whatsapp mt-3 max-w-xs bg-white/20 backdrop-blur-sm text-white font-bold py-3 px-8 rounded-lg flex items-center justify-center space-x-2 border-2 border-white/60 hover:bg-white/30 transition">
+                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>
+                               <span>Saiba Mais</span>
+                           </a>`
+                        : '';
+
                     eventsCarouselWrapper.innerHTML += `
                         <div class="carousel-slide min-w-full flex-shrink-0 flex items-center justify-center" data-carousel-item>
                             <div class="relative w-full h-full rounded-xl overflow-hidden group">
@@ -891,6 +898,7 @@
                                         </svg>
                                         <span>${buttonText}</span>
                                     </button>
+                                    ${carouselSaibaMaisBtn}
                                 </div>
                             </div>
                         </div>
@@ -999,7 +1007,14 @@
                         : `window.open(gerarLinkWhatsApp('${tour.eventName}'), '_blank')`;
 
                     const buttonText = tour.ecommerce_link ? "Comprar Agora" : "Reservar Vaga";
-                    
+
+                    const saibaMaisBtn = tour.saiba_mais_link
+                        ? `<a href="${tour.saiba_mais_link}" class="btn-whatsapp mt-3 w-full bg-white dark:bg-gray-800 text-yellow-600 dark:text-yellow-400 font-bold py-3 px-6 rounded-lg flex items-center justify-center space-x-2 border-2 border-yellow-400 hover:bg-yellow-50 dark:hover:bg-gray-700 shadow-sm transition">
+                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>
+                               <span>Saiba Mais</span>
+                           </a>`
+                        : '';
+
                     const isDestaque = tour.destaque === true;
                     const cardBorder = isDestaque ? 'border-2 border-yellow-400 dark:border-yellow-400' : 'border border-gray-200 dark:border-transparent';
                     const destaqueBadge = isDestaque ? `<span class="absolute top-3 left-3 z-10 bg-yellow-400 text-gray-900 text-xs font-black px-2 py-1 rounded-full shadow-md flex items-center gap-1">⭐ Destaque</span>` : '';
@@ -1022,6 +1037,7 @@
                                     </svg>
                                     <span>${buttonText}</span>
                                 </button>
+                                ${saibaMaisBtn}
                             </div>
                         </div>`;
                 });
