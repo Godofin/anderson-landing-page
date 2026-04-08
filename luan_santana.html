@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excursão Luan Santana Ribeirão Preto: Ida e Volta | Anderson Turismo</title>
+    <meta name="description" content="A melhor excursão ida e volta para o show do Luan Santana em Ribeirão Preto dia 19 de Setembro. Saídas garantidas de Araraquara e cidades da região. Viaje com conforto.">
+    <meta name="keywords" content="excursão ida e volta Luan Santana, excursão Luan Santana Ribeirão Preto, van show Luan Santana Araraquara, transporte ida e volta show sertanejo, Anderson Turismo, ônibus show Ribeirão Preto, viagem show Luan Santana interior SP">
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/Godofin/anderson-landing-page@main/unnamed-removebg-preview.png" type="image/png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'luan': { // Cor especial âmbar/dourado para o tema do Luan Santana
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            900: '#78350f',
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Script Tema -->
+    <script>
+        if (localStorage.getItem('color-theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark'); // Padrão escuro combina melhor com shows
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Efeito dourado no hover dos botões */
+        .btn-luan {
+            transition: all 0.3s ease;
+        }
+        .btn-luan:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px -10px rgba(245, 158, 11, 0.6);
+        }
+        
+        /* Switch de Tema */
+        #theme-toggle-input:checked + .theme-toggle-track {
+            background-color: #FDE68A;
+        }
+        .dark #theme-toggle-input:checked + .theme-toggle-track {
+            background-color: #FBBF24;
+        }
+        #theme-toggle-input:checked ~ .theme-toggle-thumb {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-white transition-colors duration-300">
+
+    <script>
+        const numeroWhatsApp = "5516988332631";
+        
+        function reservarLuan(data) {
+            const mensagem = encodeURIComponent(`🤠 Olá! Gostaria de reservar minha vaga na excursão para o show do *Luan Santana* em *Ribeirão Preto* no dia *${data}*. Pode me passar os detalhes?`);
+            window.open(`https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensagem}`, '_blank');
+        }
+    </script>
+
+    <!-- Header Menor para Subpágina -->
+    <header class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200 dark:border-luan-900/50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <!-- Seta de voltar -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 dark:text-gray-300 group-hover:text-luan-500 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <img src="https://raw.githubusercontent.com/Godofin/anderson-landing-page/refs/heads/main/bg_fundo_preto.png" alt="Logo Anderson Turismo" class="h-16 w-auto hidden sm:block">
+                <span class="font-bold text-gray-700 dark:text-gray-200 hidden sm:block">Voltar ao Início</span>
+            </a>
+            
+            <div class="flex items-center space-x-4">
+                <a href="#reservar" class="bg-luan-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-luan-500 transition duration-300 shadow-lg shadow-luan-600/30">
+                    Garantir Vaga
+                </a>
+                
+                <!-- Toggle de Tema -->
+                <label for="theme-toggle-input" class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="theme-toggle-input" class="sr-only peer">
+                    <div class="theme-toggle-track w-11 h-6 bg-gray-300 dark:bg-gray-700 rounded-full peer peer-focus:ring-2 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-500 transition-colors"></div>
+                    <span class="theme-toggle-thumb absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-300 ease-in-out flex items-center justify-center">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-3 h-3 text-gray-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-3 h-3 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z"></path></svg>
+                    </span>
+                </label>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative h-[70vh] md:h-[80vh] flex items-center justify-center overflow-hidden">
+            <!-- Fundo de Imagem (Show Sertanejo/Palco) -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://billboard-com-br.s3.amazonaws.com/wp-content/uploads/2025/12/15114956/luan-santana-3.jpg" alt="Excursão ida e volta show Luan Santana Ribeirão Preto" class="w-full h-full object-cover">
+                <!-- Overlay degradê para garantir leitura -->
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-black/50"></div>
+            </div>
+
+            <!-- Conteúdo do Hero -->
+            <div class="relative z-10 container mx-auto px-6 text-center">
+                <span class="inline-block py-1 px-3 rounded-full bg-luan-600/80 text-white font-bold text-sm tracking-widest uppercase mb-4 backdrop-blur-sm border border-luan-400/50">
+                    Excursão Oficial
+                </span>
+                <h1 class="text-5xl md:text-7xl font-black text-white uppercase tracking-wider leading-tight drop-shadow-2xl">
+                    Luan Santana <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-luan-400 to-yellow-200">Em Ribeirão Preto</span>
+                </h1>
+                <p class="mt-6 text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto font-medium drop-shadow-lg">
+                    A turnê que está parando o Brasil! Garanta seu lugar na nossa excursão ida e volta saindo de Araraquara e cidades da região.
+                </p>
+                
+                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#reservar" class="btn-luan bg-luan-600 text-white font-bold text-lg py-4 px-10 rounded-xl flex items-center justify-center gap-2">
+                        Ver Excursão (19 de Set)
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOVO: Sobre a Banda / O Retorno -->
+        <section class="py-20 bg-luan-900 dark:bg-gray-950 relative overflow-hidden border-t border-luan-800/50">
+            <!-- Efeito de fundo abstrato -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
+                <div class="absolute -top-32 -right-32 w-[500px] h-[500px] bg-luan-500/20 rounded-full blur-[100px]"></div>
+                <div class="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-gray-950 to-transparent"></div>
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10 max-w-6xl">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <!-- Texto sobre o Artista -->
+                    <div>
+                        <span class="text-yellow-400 font-bold tracking-widest uppercase text-sm mb-2 block flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                            O Maior Astro do Sertanejo Pop
+                        </span>
+                        <h2 class="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">Uma Noite Inesquecível em Ribeirão Preto</h2>
+                        
+                        <div class="space-y-4 text-gray-300 text-lg">
+                            <p>
+                                Comandando multidões por onde passa, <strong>Luan Santana</strong> desembarca em Ribeirão Preto para um show grandioso. Trazendo no repertório os maiores sucessos de sua carreira, além dos novos hits que não saem do topo das paradas.
+                            </p>
+                            <p>
+                                Prepare-se para um espetáculo audiovisual com a estrutura digna dos maiores festivais. Cante junto os clássicos românticos e as músicas que embalam o Brasil em um clima único e emocionante. A festa está garantida, e nós te levamos até lá com total segurança!
+                            </p>
+                        </div>
+
+                        <!-- Stats Box -->
+                        <div class="mt-10 grid grid-cols-2 gap-6 bg-gray-900/50 p-6 rounded-2xl border border-gray-800/50 backdrop-blur-sm">
+                            <div class="border-l-4 border-luan-500 pl-4">
+                                <span class="block text-3xl font-black text-white mb-1">+2 Bilhões</span>
+                                <span class="text-xs md:text-sm text-gray-400 uppercase tracking-wide font-semibold">Streams e Visualizações</span>
+                            </div>
+                            <div class="border-l-4 border-yellow-500 pl-4">
+                                <span class="block text-3xl font-black text-white mb-1">Top 1</span>
+                                <span class="text-xs md:text-sm text-gray-400 uppercase tracking-wide font-semibold">Nas Paradas do Brasil</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Imagem/Composição Visual -->
+                    <div class="relative mt-8 lg:mt-0">
+                        <!-- Brilho atrás da imagem -->
+                        <div class="absolute inset-0 bg-gradient-to-tr from-luan-600 to-yellow-500 rounded-2xl transform rotate-3 scale-105 opacity-30 blur-xl"></div>
+                        
+                        <!-- Imagem do artista (Placeholder estilizado) -->
+                        <img src="https://luansantana-q2ingressos.com/capas/41488.webp" alt="Luan Santana Show" class="relative rounded-2xl shadow-2xl object-cover h-[450px] w-full border border-gray-800 z-10" onerror="this.src='https://placehold.co/800x600/d97706/ffffff?text=Luan+Santana'">
+                        
+                        <!-- Badge flutuante (Animada) -->
+                        <div class="absolute -bottom-6 -left-4 md:-left-8 bg-gray-900 border-2 border-luan-500 p-4 rounded-xl shadow-2xl flex items-center gap-4 z-20 animate-[bounce_3s_infinite]">
+                            <div class="bg-luan-500 p-3 rounded-full text-white shadow-lg shadow-luan-500/50">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" /></svg>
+                            </div>
+                            <div>
+                                <p class="text-white font-black text-lg">Única Apresentação</p>
+                                <p class="text-yellow-400 text-sm font-bold uppercase tracking-wider">Lote Virando</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Informações do Evento e Preços do Ingresso -->
+        <section class="py-16 bg-white dark:bg-gray-900">
+            <div class="container mx-auto px-6 max-w-6xl">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <!-- Detalhes do Show -->
+                    <div>
+                        <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-6 border-l-4 border-luan-500 pl-4">Informações do Show</h2>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-luan-100 dark:bg-luan-900/30 p-3 rounded-lg text-luan-600 dark:text-luan-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Data do Evento</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 text-lg">19 de Setembro (Sábado)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="bg-luan-100 dark:bg-luan-900/30 p-3 rounded-lg text-luan-600 dark:text-luan-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Local</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 text-lg">Ribeirão Preto, SP</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700/50 rounded-lg mt-6">
+                                <p class="text-sm text-yellow-800 dark:text-yellow-200 font-medium">
+                                    <span class="font-bold">Aviso Importante:</span> A Anderson Viagem e Turismo comercializa <strong>APENAS O TRANSPORTE (Excursão)</strong>. Os ingressos para o show devem ser adquiridos nos canais e ticketeiras oficiais do evento.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabela de Setores Genérica (Exemplo de Sertanejo) -->
+                    <div class="bg-gray-50 dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700">
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Referência de Setores (Oficial)</h3>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b-2 border-gray-200 dark:border-gray-700">
+                                        <th class="py-3 px-4 text-gray-500 dark:text-gray-400 font-bold">Setor</th>
+                                        <th class="py-3 px-4 text-gray-500 dark:text-gray-400 font-bold">Inteira</th>
+                                        <th class="py-3 px-4 text-gray-500 dark:text-gray-400 font-bold">Meia/Solidário</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750 transition">
+                                        <td class="py-3 px-4 flex items-center gap-3">
+                                            <span class="w-4 h-4 rounded-sm bg-[#10B981] shadow-sm"></span>
+                                            <span class="font-semibold text-gray-800 dark:text-gray-200">Pista</span>
+                                        </td>
+                                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">R$ 140,00</td>
+                                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">R$ 70,00</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-750 transition">
+                                        <td class="py-3 px-4 flex items-center gap-3">
+                                            <span class="w-4 h-4 rounded-sm bg-[#F59E0B] shadow-sm"></span>
+                                            <span class="font-semibold text-gray-800 dark:text-gray-200">Área VIP</span>
+                                        </td>
+                                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">R$ 260,00</td>
+                                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">R$ 130,00</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-750 transition">
+                                        <td class="py-3 px-4 flex items-center gap-3">
+                                            <span class="w-4 h-4 rounded-sm bg-[#8B5CF6] shadow-sm"></span>
+                                            <span class="font-semibold text-gray-800 dark:text-gray-200">Camarote / Premium</span>
+                                        </td>
+                                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">R$ 450,00</td>
+                                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">R$ 225,00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-xs text-gray-500 mt-4 text-center">* Preços de referência sujeitos a virada de lote pelos organizadores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Reserva da Excursão -->
+        <section id="reservar" class="py-20 bg-gray-100 dark:bg-gray-950">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-4xl font-black text-gray-900 dark:text-white mb-4">Garanta sua Vaga!</h2>
+                    <p class="text-gray-600 dark:text-gray-400 text-lg">Bate-volta de Araraquara e região com segurança, conforto e a melhor galera. Reserve hoje seu assento para a grande noite.</p>
+                </div>
+
+                <!-- Card Único Centralizado -->
+                <div class="max-w-md mx-auto">
+                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden border-2 border-luan-500 relative flex flex-col hover:-translate-y-2 transition-transform duration-300 transform scale-105 z-10">
+                        <div class="absolute top-0 right-0 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-bl-lg shadow-sm">
+                            Vagas Limitadas
+                        </div>
+                        <div class="bg-gradient-to-r from-luan-600 to-luan-800 p-6 text-center">
+                            <h3 class="text-3xl font-black text-white">19 de Setembro</h3>
+                            <p class="text-luan-200 text-sm uppercase tracking-wide font-bold mt-1">Sábado • Ribeirão Preto</p>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow text-center">
+                            
+                            <ul class="text-left space-y-4 mb-8 text-gray-600 dark:text-gray-300 flex-grow mt-4">
+                                <li class="flex items-center gap-3"><svg class="w-6 h-6 text-luan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span class="font-medium">Transporte Ida e Volta</span></li>
+                                <li class="flex items-center gap-3"><svg class="w-6 h-6 text-luan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span class="font-medium">Veículo Executivo Premium</span></li>
+                                <li class="flex items-center gap-3"><svg class="w-6 h-6 text-luan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span class="font-medium">Guia Credenciado Cadastur</span></li>
+                                <li class="flex items-center gap-3 text-luan-600 dark:text-luan-400 font-bold bg-luan-50 dark:bg-luan-900/20 p-2 rounded-lg border border-luan-100 dark:border-luan-800"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Pontualidade Garantida</li>
+                            </ul>
+                            
+                            <button onclick="reservarLuan('19 de Setembro')" class="w-full bg-luan-600 hover:bg-luan-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-luan-500/40 transition duration-300 flex items-center justify-center gap-2 btn-luan text-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" /></svg>
+                                Consultar pelo WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">* Valores cobrados são apenas para a excursão de ida e volta. Ingressos do show não inclusos. Sujeito à lotação do veículo.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Padrão -->
+    <footer class="bg-gray-200 dark:bg-black py-12">
+        <div class="container mx-auto px-6 text-center text-gray-700 dark:text-gray-400">
+            <p>Sua melhor escolha para viagens e eventos em Araraquara e Região.</p>
+            <p class="mt-2">Entre em contato e faça um orçamento!</p>
+            <div class="mt-4">
+                <a href="#" onclick="window.open(`https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=Olá!`, '_blank')" class="font-bold text-luan-600 dark:text-luan-400 hover:text-luan-500 dark:hover:text-luan-300 text-lg transition">
+                    WhatsApp: (16) 98833-2631
+                </a>
+            </div>
+            <div class="mt-6 border-t border-gray-300 dark:border-gray-800 pt-6">
+                <p>&copy; 2026 Anderson Viagem e Turismo. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script Tema Toggle Manual -->
+    <script>
+        const themeToggleInput = document.getElementById('theme-toggle-input');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (localStorage.getItem('color-theme') === 'light') {
+            themeToggleInput.checked = true;
+            themeToggleLightIcon.classList.remove('hidden');
+            themeToggleDarkIcon.classList.add('hidden');
+        } else {
+            themeToggleInput.checked = false;
+            themeToggleLightIcon.classList.add('hidden');
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        themeToggleInput.addEventListener('change', function(e) {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+            if (e.target.checked) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
