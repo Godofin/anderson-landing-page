@@ -601,42 +601,58 @@
         // --- NOVO: Função de Otimização de SEO (Title e Keywords) ---
         const updateSeoTags = (tours) => {
             const metaKeywords = document.getElementById('meta-keywords');
-            
-            // Pega os 5 primeiros eventos ativos e mapeia os títulos
-            const topTitles = tours
-                .slice(0, 5) // Limita aos 5 primeiros
+
+            // Separa destaques dos demais
+            const destaquesTours = tours.filter(t => t.destaque === true);
+            const outrosTours = tours.filter(t => t.destaque !== true);
+
+            // Destaques primeiro, depois os demais (até 5 eventos no total para keywords)
+            const orderedTours = [...destaquesTours, ...outrosTours].slice(0, 5);
+
+            // Gera frases específicas por evento: "Excursão para X saindo de Cidade1, Cidade2"
+            const eventPhrases = orderedTours
+                .filter(tour => tour.title)
+                .map(tour => {
+                    const cities = Array.isArray(tour.cities) ? tour.cities : [];
+                    const cityList = cities.length > 0 ? cities.join(', ') : 'Araraquara';
+                    return `Excursão para ${tour.title.trim()} saindo de ${cityList}`;
+                });
+
+            // Títulos simples para complementar
+            const topTitles = orderedTours
                 .map(tour => tour.title.trim())
                 .filter(title => title.length > 0);
-            
+
             // Termos base que são importantes para a região e o serviço
             const baseKeywords = [
-                'excursão para shows', 
-                'ecoturismo', 
-                'viagem para show', 
-                'Anderson Turismo', 
-                'transporte para eventos', 
-                'Araraquara', 
-                'Serra da Canastra', 
+                'excursão para shows',
+                'ecoturismo',
+                'viagem para show',
+                'Anderson Turismo',
+                'transporte para eventos',
+                'Araraquara',
+                'Serra da Canastra',
                 'shows em São Paulo'
             ];
-            
-            // Combina os títulos dos eventos com as palavras-chave base
-            const allKeywords = [...new Set([...topTitles, ...baseKeywords])];
-            
-            // 1. Atualiza Keywords (Importância Secundária)
+
+            // Frases de evento primeiro, depois títulos simples e termos base
+            const allKeywords = [...new Set([...eventPhrases, ...topTitles, ...baseKeywords])];
+
+            // 1. Atualiza Keywords
             if (metaKeywords) {
                 metaKeywords.content = allKeywords.join(', ');
             }
-            
-            // 2. Atualiza o Título da Página (Importância Primária para SEO)
-            if (topTitles.length > 0) {
-                // Cria uma lista concisa dos 3-4 primeiros eventos para o título
+
+            // 2. Atualiza o Título da Página
+            if (destaquesTours.length > 0) {
+                // Com destaques: título focado neles (até 2), depois complementa com outros
+                const destaqueTitles = destaquesTours.slice(0, 2).map(t => t.title.trim()).join(' | ');
+                document.title = `Anderson Turismo | ⭐ Em Destaque: ${destaqueTitles}`;
+            } else if (topTitles.length > 0) {
                 const featuredTitles = topTitles.slice(0, 4).join(', ');
-                const newTitle = `Anderson Turismo | Próximas Viagens: ${featuredTitles}`;
-                document.title = newTitle;
+                document.title = `Anderson Turismo | Próximas Viagens: ${featuredTitles}`;
             } else {
-                 // Mantém o título genérico se não houver eventos
-                 document.title = "Anderson Viagem e Turismo - Shows e Ecoturismo";
+                document.title = "Anderson Viagem e Turismo - Shows e Ecoturismo";
             }
         };
         // --- Fim Função de Otimização de SEO ---
@@ -758,22 +774,38 @@
                 const emptyMessage = document.getElementById('carousel-empty-message');
                 const [currentMonthKey, nextMonthKey] = getCurrentAndNextMonthKeys();
 
-                // 1. Tenta filtrar eventos de destaque (mês atual ou próximo)
-                let highlightTours = tours.filter(tour => {
-                    const eventDateStr = tour.date_event;
-                    if (!eventDateStr) return false;
+                // 1. Separa os eventos em destaque e os demais
+                const destaques = tours.filter(tour => tour.destaque === true);
+                const restantes = tours.filter(tour => tour.destaque !== true);
 
-                    try {
-                        const [year, month] = eventDateStr.split('-');
-                        const monthName = monthMap[parseInt(month, 10)];
-                        const eventKey = `${monthName} ${year}`;
-                        return eventKey === currentMonthKey || eventKey === nextMonthKey;
-                    } catch (e) {
-                        return false;
-                    }
-                });
+                // 2. Monta a lista do carrossel: destaques primeiro, depois os demais por prioridade
+                let highlightTours;
+                if (destaques.length > 0) {
+                    // Há destaques: coloca-os primeiro, depois os restantes do mês atual/próximo como complemento
+                    const complemento = restantes.filter(tour => {
+                        const eventDateStr = tour.date_event;
+                        if (!eventDateStr) return false;
+                        try {
+                            const [year, month] = eventDateStr.split('-');
+                            const eventKey = `${monthMap[parseInt(month, 10)]} ${year}`;
+                            return eventKey === currentMonthKey || eventKey === nextMonthKey;
+                        } catch (e) { return false; }
+                    });
+                    highlightTours = [...destaques, ...complemento];
+                } else {
+                    // Sem destaques: comportamento original — mês atual/próximo
+                    highlightTours = restantes.filter(tour => {
+                        const eventDateStr = tour.date_event;
+                        if (!eventDateStr) return false;
+                        try {
+                            const [year, month] = eventDateStr.split('-');
+                            const eventKey = `${monthMap[parseInt(month, 10)]} ${year}`;
+                            return eventKey === currentMonthKey || eventKey === nextMonthKey;
+                        } catch (e) { return false; }
+                    });
+                }
 
-                // 2. Lógica de Fallback: Se não houver destaques no mês, pega os 5 primeiros da lista geral (já ordenados)
+                // 3. Fallback final: se ainda não houver nada, pega os 5 primeiros da lista geral
                 if (highlightTours.length === 0 && tours.length > 0) {
                     highlightTours = tours.slice(0, 5);
                 }
@@ -968,8 +1000,13 @@
 
                     const buttonText = tour.ecommerce_link ? "Comprar Agora" : "Reservar Vaga";
                     
+                    const isDestaque = tour.destaque === true;
+                    const cardBorder = isDestaque ? 'border-2 border-yellow-400 dark:border-yellow-400' : 'border border-gray-200 dark:border-transparent';
+                    const destaqueBadge = isDestaque ? `<span class="absolute top-3 left-3 z-10 bg-yellow-400 text-gray-900 text-xs font-black px-2 py-1 rounded-full shadow-md flex items-center gap-1">⭐ Destaque</span>` : '';
+
                     toursHTML += `
-                        <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/30 flex flex-col transform hover:-translate-y-2 hover:shadow-xl dark:hover:shadow-lg dark:hover:shadow-yellow-500/20 transition-all duration-300 ease-in-out border border-gray-200 dark:border-transparent">
+                        <div class="relative bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg dark:shadow-2xl dark:shadow-black/30 flex flex-col transform hover:-translate-y-2 hover:shadow-xl dark:hover:shadow-lg dark:hover:shadow-yellow-500/20 transition-all duration-300 ease-in-out ${cardBorder}">
+                            ${destaqueBadge}
                             <img src="${tour.image}" alt="${tour.alt}" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/111827/FBBF24?text=${isEco ? 'Ecoturismo' : 'Show'}';">
                             <div class="p-6 flex flex-col flex-grow">
                                 <span class="uppercase text-xs font-bold ${titleColor.replace('text-', 'text-')} mb-1">${isEco ? 'Ecoturismo' : 'Show & Evento'}</span>
