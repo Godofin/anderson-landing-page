@@ -17,6 +17,10 @@
     // Todas as datas passaram: a página troca as chamadas de reserva por "ver agenda"
     if (dates.length && !upcoming.length) body.classList.add('is-past');
 
+    // O título final troca de texto quando a viagem já passou (só um título no HTML)
+    const closing = document.getElementById('contato-title');
+    if (closing && closing.dataset.pastText && body.classList.contains('is-past')) closing.textContent = closing.dataset.pastText;
+
     const eta = document.querySelector('[data-eta]');
     if (eta) {
         if (!upcoming.length) {

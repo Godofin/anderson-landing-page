@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.andersonviagemeturismo.com.br/sitemap.xml

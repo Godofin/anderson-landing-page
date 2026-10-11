@@ -5,7 +5,13 @@ Uso (na raiz do repositório):
 
 Para criar uma página nova: copie um bloco de EVENTOS, ajuste os campos e rode o script.
 O arquivo sai como <slug>.html, ao lado do index.html.
+
+O script também gera robots.txt, sitemap.xml, os dados estruturados (JSON-LD) e os links de
+"Excursões abertas" da home. Páginas encerradas (todas as datas no passado, ou encerrado=True)
+saem com noindex e ficam fora do sitemap. Rode de novo depois de cada mudança de data.
 """
+import json
+import re
 from datetime import date
 from html import escape
 from pathlib import Path
@@ -18,12 +24,43 @@ DIAS_SEMANA = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 
 
 UNSPLASH = 'https://images.unsplash.com/photo-{id}?w={w}&q=70&auto=format&fit=crop'
 
+SITE = 'https://www.andersonviagemeturismo.com.br'
+HOJE = date.today()
+
+AGENCIA = {
+    '@type': 'TravelAgency',
+    '@id': f'{SITE}/#agencia',
+    'name': 'Anderson Viagem e Turismo',
+    'url': f'{SITE}/',
+    'logo': f'{SITE}/assets/logo-claro.png',
+    'image': f'{SITE}/assets/img/og.jpg',
+    'description': 'Excursões de ida e volta para shows e festivais saindo de Araraquara, São Carlos, Ibaté, Rio Claro e Limeira, com guia credenciado e seguro viagem.',
+    'telephone': '+55-16-98833-2631',
+    'address': {
+        '@type': 'PostalAddress',
+        'streetAddress': 'Av. Guanabara, 87, Jardim Brasil (Vila Xavier)',
+        'addressLocality': 'Araraquara',
+        'addressRegion': 'SP',
+        'postalCode': '14811-108',
+        'addressCountry': 'BR',
+    },
+    'areaServed': [{'@type': 'City', 'name': c} for c in ['Araraquara', 'São Carlos', 'Ibaté', 'Rio Claro', 'Limeira']],
+    'openingHoursSpecification': [{
+        '@type': 'OpeningHoursSpecification',
+        'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        'opens': '13:00',
+        'closes': '19:00',
+    }],
+    'sameAs': ['https://www.instagram.com/andersonviagemeturismo/'],
+}
+
 EVENTOS = [
     {
         'slug': 'bts',
         'event_id': 57,
-        'titulo_pagina': 'Excursão BTS 2026: Ida e Volta de Araraquara e Cidades | Anderson Turismo',
-        'descricao': 'A melhor excursão ida e volta para o show do BTS no MorumBIS (2026). Saídas garantidas de Araraquara e cidades da região. Viaje com conforto e segurança com a Anderson Viagem e Turismo.',
+        'titulo_pagina': 'Excursão BTS 2026 saindo de Araraquara | Anderson Turismo',
+        'descricao': 'Excursão ida e volta para o BTS no MorumBIS (28, 30 e 31 de outubro) saindo de Araraquara, São Carlos e região. Guia credenciado e Cadastur.',
+        'nome_link': 'Excursão BTS no MorumBIS',
         'keywords': 'excursão ida e volta BTS, excursão BTS Araraquara, van show BTS Araraquara e cidades, transporte ida e volta show BTS, caravana BTS interior SP, Anderson Turismo, ônibus show MorumBIS, viagem show BTS São Carlos Matão',
         'assunto_whatsapp': 'BTS World Tour Arirang (2026)',
         'nome_curto': 'BTS',
@@ -63,8 +100,9 @@ EVENTOS = [
     {
         'slug': 'luan_santana',
         'event_id': 32,
-        'titulo_pagina': 'Excursão Luan Santana Ribeirão Preto: Ida e Volta | Anderson Turismo',
-        'descricao': 'A melhor excursão ida e volta para o show do Luan Santana em Ribeirão Preto dia 19 de Setembro. Saídas garantidas de Araraquara e cidades da região. Viaje com conforto.',
+        'titulo_pagina': 'Excursão Luan Santana em Ribeirão Preto | Anderson Turismo',
+        'descricao': 'Excursão ida e volta para o show do Luan Santana em Ribeirão Preto, dia 19 de setembro, saindo de Araraquara e São Carlos.',
+        'nome_link': 'Excursão Luan Santana',
         'keywords': 'excursão Luan Santana, excursão Luan Santana Ribeirão Preto, van show Luan Santana Araraquara, transporte ida e volta show Luan Santana, Anderson Turismo',
         'assunto_whatsapp': 'Luan Santana em Ribeirão Preto',
         'nome_curto': 'Luan',
@@ -99,8 +137,9 @@ EVENTOS = [
     {
         'slug': 'korn',
         'event_id': None,
-        'titulo_pagina': 'Excursão Korn São Paulo: Ida e Volta | Anderson Turismo',
-        'descricao': 'A melhor excursão ida e volta para o show do Korn em São Paulo. Saídas garantidas de Araraquara e cidades da região. Viaje com a galera do rock em total segurança.',
+        'titulo_pagina': 'Excursão Korn em São Paulo | Anderson Turismo',
+        'descricao': 'Excursão ida e volta para o show do Korn em São Paulo, saindo de Araraquara e região. Transporte executivo com guia credenciado.',
+        'nome_link': 'Excursão Korn',
         'keywords': 'excursão Korn, excursão Korn São Paulo, van show Korn Araraquara, transporte ida e volta show Korn, excursão rock interior SP, Anderson Turismo',
         'assunto_whatsapp': 'Korn em São Paulo',
         'nome_curto': 'Korn',
@@ -137,9 +176,11 @@ EVENTOS = [
         # Festival vendido em combos (transporte + ingresso), sem data publicada na página
         'slug': 'joao_rock',
         'event_id': None,
-        'titulo_pagina': 'Excursão João Rock: Ida e Volta | Anderson Turismo',
-        'descricao': 'A melhor excursão ida e volta para o festival João Rock em Ribeirão Preto. Saídas de Araraquara e região. Viaje com conforto e segurança para o maior encontro da música nacional.',
+        'titulo_pagina': 'Excursão João Rock em Ribeirão Preto | Anderson Turismo',
+        'descricao': 'Excursão para o festival João Rock em Ribeirão Preto, saindo de Araraquara e São Carlos. Combos com transporte e ingresso.',
+        'nome_link': 'Excursão João Rock',
         'keywords': 'excursão João Rock, excursão Ribeirão Preto, van João Rock Araraquara, transporte ida e volta festival, Anderson Turismo, ônibus João Rock interior SP',
+        'encerrado': True,  # festival de 2026 já aconteceu; tire esta linha quando houver nova data
         'assunto_whatsapp': 'João Rock 2026',
         'nome_curto': 'João Rock',
         'chamada_final': 'Bora pro João Rock?',
@@ -230,12 +271,53 @@ def data_extenso(d):
 WA_ICON = '<i class="ph-fill ph-whatsapp-logo" aria-hidden="true"></i>'
 
 
+def encerrado(ev):
+    if ev.get('encerrado'):
+        return True
+    return bool(ev['datas']) and all(d['dia'] < HOJE for d in ev['datas'])
+
+
+def jsonld(*nodes):
+    corpo = json.dumps({'@context': 'https://schema.org', '@graph': list(nodes)}, ensure_ascii=False, indent=2)
+    return '<script type="application/ld+json">\n' + corpo.replace('</', '<\\/') + '\n    </script>'
+
+
+def jsonld_evento(ev):
+    url = f"{SITE}/{ev['slug']}.html"
+    viagem = {
+        '@type': 'TouristTrip',
+        '@id': f'{url}#excursao',
+        'name': ev['titulo_pagina'].split(' | ')[0],
+        'description': ev['descricao'],
+        'url': url,
+        'image': ev['hero_img'],
+        'touristType': 'Fãs de shows e festivais',
+        'provider': {'@id': AGENCIA['@id']},
+    }
+    migalhas = {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': 'Início', 'item': f'{SITE}/'},
+            {'@type': 'ListItem', 'position': 2, 'name': ev['titulo_pagina'].split(' | ')[0], 'item': url},
+        ],
+    }
+    return jsonld(AGENCIA, viagem, migalhas)
+
+
+def jsonld_home():
+    site = {'@type': 'WebSite', '@id': f'{SITE}/#site', 'url': f'{SITE}/', 'name': 'Anderson Viagem e Turismo',
+            'inLanguage': 'pt-BR', 'publisher': {'@id': AGENCIA['@id']}}
+    return jsonld(AGENCIA, site)
+
+
 def pagina(ev):
     multi = len(ev['datas']) > 1
     assunto = ev['assunto_whatsapp']
     hero_w, hero_h = ev['hero_wh']
     sobre_w, sobre_h = ev['sobre_wh']
     datas_iso = ','.join(d['dia'].isoformat() for d in ev['datas'])
+    url_pagina = f"{SITE}/{ev['slug']}.html"
+    robots = 'noindex, follow' if encerrado(ev) else 'index, follow, max-image-preview:large'
 
     cards = []
     tem_destaque = any(d.get('destaque') for d in ev['datas'])
@@ -359,14 +441,25 @@ def pagina(ev):
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>{e(ev['titulo_pagina'])}</title>
     <meta name="description" content="{e(ev['descricao'])}">
-    <meta name="keywords" content="{e(ev['keywords'])}">
+    <meta name="robots" content="{robots}">
+    <link rel="canonical" href="{e(url_pagina)}">
     <meta name="author" content="Anderson Viagem e Turismo">
     <meta name="theme-color" content="#0F1217" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#EEF0F3" media="(prefers-color-scheme: light)">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Anderson Viagem e Turismo">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:url" content="{e(url_pagina)}">
     <meta property="og:title" content="{e(ev['titulo_pagina'])}">
     <meta property="og:description" content="{e(ev['descricao'])}">
     <meta property="og:image" content="{e(ev['hero_img'])}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{e(ev['titulo_pagina'])}">
+    <meta name="twitter:description" content="{e(ev['descricao'])}">
+    <meta name="twitter:image" content="{e(ev['hero_img'])}">
     <link rel="icon" href="assets/favicon.png" type="image/png">
+
+    {jsonld_evento(ev)}
 
     <!-- Página gerada por tools/gerar_eventos.py. Edite os dados lá e rode o script de novo. -->
 
@@ -398,14 +491,14 @@ def pagina(ev):
 
     <header class="topbar">
         <div class="wrap topbar-inner">
-            <a class="logo" href="index.html" aria-label="Anderson Viagem e Turismo, página inicial" translate="no">
+            <a class="logo" href="/" aria-label="Anderson Viagem e Turismo, página inicial" translate="no">
                 <img class="logo-dark" src="assets/logo-escuro.png" alt="Anderson Viagem e Turismo" width="120" height="58">
                 <img class="logo-light" src="assets/logo-claro.png" alt="Anderson Viagem e Turismo" width="120" height="58">
             </a>
             <nav class="nav" aria-label="Principal">
-                <a class="back" href="index.html#agenda"><i class="ph ph-arrow-left" aria-hidden="true"></i>Todas as viagens</a>
-                <a href="index.html#como-funciona">Como funciona</a>
-                <a href="index.html#duvidas">Dúvidas</a>
+                <a class="back" href="/#agenda"><i class="ph ph-arrow-left" aria-hidden="true"></i>Todas as viagens</a>
+                <a href="/#como-funciona">Como funciona</a>
+                <a href="/#duvidas">Dúvidas</a>
                 <a href="#contato">Contato</a>
             </nav>
             <div class="top-actions">
@@ -423,9 +516,9 @@ def pagina(ev):
             </div>
         </div>
         <nav class="wrap mobile-nav" id="mobile-nav" aria-label="Menu" hidden>
-            <a href="index.html#agenda">Todas as viagens</a>
-            <a href="index.html#como-funciona">Como funciona</a>
-            <a href="index.html#duvidas">Dúvidas</a>
+            <a href="/#agenda">Todas as viagens</a>
+            <a href="/#como-funciona">Como funciona</a>
+            <a href="/#duvidas">Dúvidas</a>
             <a href="#contato">Contato</a>
             <a class="btn btn-wa" data-wa="{e(assunto)}" href="#" target="_blank" rel="noopener noreferrer">{WA_ICON}Chamar no WhatsApp</a>
         </nav>
@@ -435,15 +528,14 @@ def pagina(ev):
         <section class="ev-hero" aria-labelledby="ev-title">
             <div class="wrap ev-hero-grid">
                 <div class="ev-hero-copy">
-                    <p class="eyebrow rise">Excursão saindo de Araraquara e região</p>
-                    <h1 id="ev-title" class="rise"><span>{e(ev['h1'][0])}</span><span class="hl">{e(ev['h1'][1])}</span></h1>
+                    <h1 id="ev-title" class="rise"><span class="eyebrow">Excursão saindo de Araraquara e região</span> <span>{e(ev['h1'][0])}</span> <span class="hl">{e(ev['h1'][1])}</span></h1>
                     <p class="lede rise">{e(ev['lede'])}</p>
                     <div class="cta-row rise" data-open-only>
                         <a class="btn btn-primary" href="#datas">{cta_hero}<i class="ph ph-arrow-down" aria-hidden="true"></i></a>
                         <a class="btn btn-wa" data-wa="{e(assunto)}" href="#" target="_blank" rel="noopener noreferrer">{WA_ICON}Reservar vaga</a>
                     </div>
                     <div class="cta-row" data-past-only>
-                        <a class="btn btn-primary" href="index.html#agenda">Ver agenda<i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+                        <a class="btn btn-primary" href="/#agenda">Ver agenda<i class="ph ph-arrow-right" aria-hidden="true"></i></a>
                         <a class="btn btn-wa" data-wa="" href="#" target="_blank" rel="noopener noreferrer">{WA_ICON}Chamar no WhatsApp</a>
                     </div>
                 </div>
@@ -458,7 +550,7 @@ def pagina(ev):
                 <dl class="ev-facts">{fatos_html}</dl>
                 <div class="notice" data-past-only>
                     <p><i class="ph ph-calendar-x" aria-hidden="true"></i><span>Essa excursão já aconteceu. As próximas saídas estão na agenda.</span></p>
-                    <a class="btn btn-ghost" href="index.html#agenda">Ver agenda</a>
+                    <a class="btn btn-ghost" href="/#agenda">Ver agenda</a>
                 </div>
             </div>
         </section>
@@ -498,18 +590,18 @@ def pagina(ev):
                 </div>
                 <ul class="rules">{regras_html}</ul>
                 <div class="rules-foot">
-                    <a class="btn btn-ghost" href="index.html#duvidas">Ver todas as dúvidas<i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+                    <a class="btn btn-ghost" href="/#duvidas">Ver todas as dúvidas<i class="ph ph-arrow-right" aria-hidden="true"></i></a>
                 </div>
             </div>
         </section>
 
         <section class="closing" id="contato" aria-labelledby="contato-title">
             <div class="media">
-                <img src="{UNSPLASH.format(id='1429962714451-bb934ecdc4ec', w=1920)}" width="1920" height="1280" loading="lazy" decoding="async" alt="Fãs fazendo coração com as mãos durante um show">
+                <img src="assets/img/closing-1920.jpg" srcset="assets/img/closing-800.jpg 800w, assets/img/closing-1920.jpg 1920w" sizes="100vw" width="1920" height="1280" loading="lazy" decoding="async" alt="Fãs fazendo coração com as mãos durante um show">
             </div>
             <div class="wrap">
                 <div class="closing-inner">
-                    <h2 id="contato-title"><span data-open-only>{e(chamada_final)}</span><span data-past-only>Bora pro próximo show?</span></h2>
+                    <h2 id="contato-title" data-past-text="Bora pro próximo show?">{e(chamada_final)}</h2>
                     <p>Chame a gente para reservar sua vaga ou tirar qualquer dúvida sobre a viagem.</p>
                     <div class="phone-row">
                         <span class="phone" id="phone">(16)&nbsp;98833-2631</span>
@@ -537,9 +629,13 @@ def pagina(ev):
                 <p><a href="https://www.instagram.com/andersonviagemeturismo/" target="_blank" rel="noopener noreferrer">@andersonviagemeturismo</a></p>
             </div>
             <div>
-                <h4>Base</h4>
-                <p>Araraquara, SP</p>
-                <p>Saídas por todo o centro do estado</p>
+                <h4>Onde estamos</h4>
+                <address>
+                    <p>Av. Guanabara, 87</p>
+                    <p>Jardim Brasil (Vila Xavier)</p>
+                    <p>Araraquara, SP, 14811-108</p>
+                    <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Anderson+Viagem+e+Turismo+Av.+Guanabara+87+Araraquara+SP" target="_blank" rel="noopener noreferrer">Ver no mapa</a></p>
+                </address>
             </div>
         </div>
         <div class="legal">
@@ -559,8 +655,37 @@ def pagina(ev):
 '''
 
 
-if __name__ == '__main__':
+def trocar_marcadores(texto, nome, novo):
+    padrao = re.compile(rf'(<!--seo:{nome}-->).*?(<!--/seo:{nome}-->)', re.S)
+    assert padrao.search(texto), f'marcador seo:{nome} não encontrado no index.html'
+    return padrao.sub(lambda m: f'{m.group(1)}{novo}{m.group(2)}', texto)
+
+
+def gerar_site():
+    abertas = []
     for ev in EVENTOS:
         destino = ROOT / f"{ev['slug']}.html"
         destino.write_text(pagina(ev), encoding='utf-8')
-        print(f'gerado: {destino.name}')
+        estado = 'noindex (encerrada)' if encerrado(ev) else 'indexável'
+        print(f"gerado: {destino.name:<20} {estado} | título {len(ev['titulo_pagina'])} | descrição {len(ev['descricao'])}")
+        if not encerrado(ev):
+            abertas.append(ev)
+
+    home = ROOT / 'index.html'
+    html = home.read_text(encoding='utf-8')
+    html = trocar_marcadores(html, 'jsonld', '\n    ' + jsonld_home() + '\n    ')
+    links = ''.join(f'\n                <p><a href="{ev["slug"]}.html">{e(ev["nome_link"])}</a></p>' for ev in abertas)
+    html = trocar_marcadores(html, 'links', links + ('\n                ' if links else ''))
+    home.write_text(html, encoding='utf-8')
+
+    urls = [f'{SITE}/'] + [f"{SITE}/{ev['slug']}.html" for ev in abertas]
+    corpo = ''.join(f'  <url>\n    <loc>{u}</loc>\n    <lastmod>{HOJE.isoformat()}</lastmod>\n  </url>\n' for u in urls)
+    (ROOT / 'sitemap.xml').write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + corpo + '</urlset>\n',
+        encoding='utf-8')
+    (ROOT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n', encoding='utf-8')
+    print(f'sitemap.xml com {len(urls)} URLs, robots.txt e index.html atualizados')
+
+
+if __name__ == '__main__':
+    gerar_site()

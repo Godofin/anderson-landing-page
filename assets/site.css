@@ -681,3 +681,9 @@ body:not(.is-past) [data-past-only] { display: none !important; }
 @media (max-width: 640px) { .dates:has(> :nth-child(4)) { grid-template-columns: minmax(0, 1fr); } }
 .dates:has(> :nth-child(4)) .date-card.pkg .day { font-size: 2rem; }
 @media (min-width: 1101px) { .dates:has(> :nth-child(4)) .date-card.pkg .day { min-height: 1.9em; } }
+
+/* ---------- SEO: palavras de busca dentro do H1, endereço no rodapé ---------- */
+.hero h1 .eyebrow, .ev-hero h1 .eyebrow { line-height: 1.5; margin: 0 0 var(--s3); font-size: .78rem; text-wrap: balance; }
+.ev-hero h1 .eyebrow { color: var(--accent-text); }
+.footer-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+.footer-grid address { font-style: normal; display: grid; gap: 2px; }
