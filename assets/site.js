@@ -22,6 +22,16 @@
 
     window.Site = { WHATSAPP, PHONE_TEXT, esc, tidy, safeUrl, waLink, today };
 
+    // Anos de empresa: fundada em 12/10/2017. A cada 12/10 soma mais um, sozinho.
+    // O piso de 9 vale só na véspera do aniversário de 9 anos (11/10/2026); depois o cálculo já dá 9.
+    const anosDeEmpresa = () => {
+        const agora = new Date();
+        const jaFezAniversario = agora.getMonth() > 9 || (agora.getMonth() === 9 && agora.getDate() >= 12);
+        return Math.max(9, agora.getFullYear() - 2017 - (jaFezAniversario ? 0 : 1));
+    };
+    document.querySelectorAll('[data-anos]').forEach((el) => { el.textContent = anosDeEmpresa(); });
+    window.Site.anosDeEmpresa = anosDeEmpresa;
+
     // Links de WhatsApp: data-wa="" abre conversa geral; data-wa="Evento" já cita o evento
     document.querySelectorAll('[data-wa]').forEach((a) => { a.href = waLink(a.dataset.wa); });
     document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });

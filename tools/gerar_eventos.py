@@ -243,7 +243,7 @@ EVENTOS = [
 
 REGRAS_PADRAO = [
     ('ph-clock', 'Tolerância de 10 minutos', 'Chegue com antecedência. O transporte sai no horário combinado, sem esperar.'),
-    ('ph-bus', 'Volta 40 minutos após o show', 'A saída de volta é no mesmo ponto onde você desceu, 40 minutos após o fim oficial.'),
+    ('ph-bus', 'Volta 45 minutos após o show', 'A saída de volta é no mesmo ponto onde você desceu, 45 minutos após o fim oficial.'),
     ('ph-calendar-check', 'Show adiado, excursão mantida', 'A viagem acontece na nova data do show. Adiamento não gera reembolso.'),
 ]
 
