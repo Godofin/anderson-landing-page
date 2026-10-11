@@ -368,7 +368,7 @@ def pagina(ev):
         fatos = [
             ('Datas' if multi else 'Data', resumo_datas(ev['datas']), 'amber'),
             ('Local do show', ev['local'], None),
-            ('Embarque em', 'Araraquara e região', 'cities'),
+            ('Embarque em', 'Araraquara, São Carlos e região', 'cities'),
             ('Faltam', '-', 'eta'),
         ]
     attrs = {'amber': ' class="amber"', 'small': ' class="small"', 'cities': ' class="small" data-cities', 'eta': ' class="amber" data-eta', None: ''}
@@ -528,7 +528,7 @@ def pagina(ev):
         <section class="ev-hero" aria-labelledby="ev-title">
             <div class="wrap ev-hero-grid">
                 <div class="ev-hero-copy">
-                    <h1 id="ev-title" class="rise"><span class="eyebrow">Excursão saindo de Araraquara e região</span> <span>{e(ev['h1'][0])}</span> <span class="hl">{e(ev['h1'][1])}</span></h1>
+                    <h1 id="ev-title" class="rise"><span class="eyebrow">Excursão saindo de Araraquara, São Carlos e região</span> <span>{e(ev['h1'][0])}</span> <span class="hl">{e(ev['h1'][1])}</span></h1>
                     <p class="lede rise">{e(ev['lede'])}</p>
                     <div class="cta-row rise" data-open-only>
                         <a class="btn btn-primary" href="#datas">{cta_hero}<i class="ph ph-arrow-down" aria-hidden="true"></i></a>
