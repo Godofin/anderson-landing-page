@@ -266,7 +266,7 @@ a.board-row:hover { background: var(--board-cell); }
 .creds li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s1) var(--s3); align-items: start; }
 .creds .ph { grid-row: span 2; font-size: 1.6rem; color: var(--accent-text); margin-top: 2px; }
 .creds strong { font-weight: 700; line-height: 1.3; }
-.creds span { color: var(--muted); font-size: .9rem; line-height: 1.4; }
+.creds li > span { color: var(--muted); font-size: .9rem; line-height: 1.4; }
 @media (max-width: 1000px) { .creds ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .creds ul { grid-template-columns: minmax(0, 1fr); } }
 
