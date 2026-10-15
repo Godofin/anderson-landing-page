@@ -23,7 +23,8 @@ Cabeçalho de cada artigo (entre linhas "---"):
     imagem_foco: 50% 20%                             (opcional; parte da foto que fica em foco nos cartões)
     imagem_alt: descrição da imagem
     og_imagem: /assets/img/blog/exemplo-og.jpg   (1200x630, uma por artigo; para redes sociais)
-    autor: Equipe Anderson Turismo  (opcional)
+    autor: Guilherme Lavezzo        (opcional; é o padrão se faltar)
+    autor_url: https://www.guilhermelavezzo.com.br/   (opcional; link do autor)
     resumo:                         (opcional; vira a caixa "Resumo rápido", no topo)
       - primeiro ponto
       - segundo ponto
@@ -52,6 +53,8 @@ POSTS = ROOT / 'tools' / 'blog' / 'posts'
 SAIDA = ROOT / 'blog'
 NOME_BLOG = 'Blog Anderson Viagem e Turismo'
 OG_PADRAO = '/assets/img/og.jpg'
+AUTOR_PADRAO = 'Guilherme Lavezzo'
+AUTOR_URL_PADRAO = 'https://www.guilhermelavezzo.com.br/'
 e = escape
 
 
@@ -339,7 +342,7 @@ RODAPE = f'''
         </div>
         <div class="legal">
             <p>© <span data-year>2026</span> <span translate="no">Anderson Viagem e Turismo</span>. Todos os direitos reservados.</p>
-            <p>Desenvolvido por <a href="https://godofin.github.io/portfolio-lavezzo/" target="_blank" rel="noopener noreferrer">Guilherme Lavezzo</a></p>
+            <p>Desenvolvido por <a href="https://www.guilhermelavezzo.com.br/" target="_blank" rel="noopener noreferrer">Guilherme Lavezzo</a></p>
         </div>
     </footer>
 
@@ -428,7 +431,14 @@ def pagina_post(p, todos):
     srcset = f"{card} 800w, {p['imagem']} 1600w"
     tamanhos = '(max-width: 960px) 100vw, 940px'
     credito = f'<figcaption class="post-credito">{e(p["imagem_credito"])}</figcaption>' if p.get('imagem_credito') else ''
-    autor = p.get('autor') or 'Equipe Anderson Viagem e Turismo'
+    autor = p.get('autor') or AUTOR_PADRAO
+    autor_url = p.get('autor_url') or (AUTOR_URL_PADRAO if autor == AUTOR_PADRAO else '')
+    pessoa = bool(autor_url) or not autor.lower().startswith('equipe')
+    autor_no = {'@type': 'Person' if pessoa else 'Organization', 'name': autor}
+    if autor_url:
+        autor_no['url'] = autor_url
+    autor_html = (f'<a href="{e(autor_url)}" target="_blank" rel="noopener noreferrer author">{e(autor)}</a>'
+                  if autor_url else e(autor))
     artigo = {
         '@type': 'BlogPosting',
         '@id': f"{p['url']}#artigo",
@@ -439,7 +449,7 @@ def pagina_post(p, todos):
         'dateModified': p['atualizado'].isoformat(),
         'inLanguage': 'pt-BR',
         'wordCount': p['palavras'],
-        'author': {'@type': 'Organization', 'name': autor, 'url': f'{SITE}/'},
+        'author': autor_no,
         'publisher': {'@type': 'Organization', '@id': AGENCIA['@id'], 'name': 'Anderson Viagem e Turismo',
                       'logo': {'@type': 'ImageObject', 'url': f'{SITE}/assets/logo-claro.png'}},
         'mainEntityOfPage': p['url'],
@@ -492,7 +502,7 @@ def pagina_post(p, todos):
                 <p class="post-cat">{e(p['categoria'])}</p>
                 <h1>{e(p['titulo'])}</h1>
                 <p class="lede">{e(p['descricao'])}</p>
-                <p class="post-meta"><time datetime="{p['data'].isoformat()}">{data_extenso(p['data'])}</time>{atualizado}<span aria-hidden="true">·</span>{p['minutos']} min de leitura<span aria-hidden="true">·</span>Por {e(autor)}</p>
+                <p class="post-meta"><time datetime="{p['data'].isoformat()}">{data_extenso(p['data'])}</time>{atualizado}<span aria-hidden="true">·</span>{p['minutos']} min de leitura<span aria-hidden="true">·</span>Por {autor_html}</p>
             </header>
             <figure class="post-cover wrap">
                 <img src="{e(p['imagem'])}" srcset="{e(srcset)}" sizes="{tamanhos}" alt="{e(p['imagem_alt'])}" width="1600" height="1000" fetchpriority="high" decoding="async">

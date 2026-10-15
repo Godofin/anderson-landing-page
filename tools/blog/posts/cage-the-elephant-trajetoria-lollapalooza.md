@@ -11,7 +11,8 @@ imagem_card: /assets/img/blog/cage-the-elephant-capa-800.webp
 og_imagem: /assets/img/blog/cage-the-elephant-og.jpg
 imagem_foco: 50% 40%
 imagem_alt: Matt Shultz, vocalista do Cage The Elephant, cantando no meio da plateia durante um show
-autor: Equipe Anderson Viagem e Turismo
+autor: Guilherme Lavezzo
+autor_url: https://www.guilhermelavezzo.com.br/
 resumo:
   - Origem e consolidação: formada em Bowling Green, Kentucky, a banda precisou se mudar para a Inglaterra para conquistar projeção global com o hit "Ain't No Rest for the Wicked".
   - Conexão com o Lollapalooza: o Cage The Elephant se tornou um clássico do festival no Brasil com passagens marcantes em 2012 e 2017, famosas pela presença de palco imprevisível de Matt Shultz.

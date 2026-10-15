@@ -11,7 +11,8 @@ og_imagem: /assets/img/blog/charli-xcx-og.jpg
 imagem_foco: 50% 0%
 imagem_alt: Charli xcx cantando de óculos escuros, deitada na beira do palco, no Glastonbury 2025
 imagem_credito: Foto: Joseph Okpako/WireImage
-autor: Equipe Anderson Viagem e Turismo
+autor: Guilherme Lavezzo
+autor_url: https://www.guilhermelavezzo.com.br/
 resumo:
   - Construção e ruptura sonora: após emplacar sucessos comerciais no início dos anos 2010, Charli quebrou as fórmulas do mainstream ao mergulhar no hyperpop com a gravadora experimental PC Music.
   - Presença no Brasil: suas passagens pelo país (incluindo o Lollapalooza 2015 em formato Pocket/side-show e a energia caótica de festivais em São Paulo) consolidaram uma das bases de fãs mais apaixonadas do mundo.

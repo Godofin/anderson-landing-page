@@ -90,3 +90,6 @@
 
 /* Rodapé nas páginas do blog: título de nível 3 (vem depois de um H2) com o mesmo visual do restante do site */
 .footer-grid h3 { margin: 0 0 var(--s2); font: 700 .95rem/1.6 var(--font-body); text-transform: none; }
+
+.post-meta a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.post-meta a:hover { color: var(--accent-text); }
