@@ -499,6 +499,7 @@ def pagina(ev):
                 <a class="back" href="/#agenda"><i class="ph ph-arrow-left" aria-hidden="true"></i>Todas as viagens</a>
                 <a href="/#como-funciona">Como funciona</a>
                 <a href="/#duvidas">Dúvidas</a>
+                <a href="/blog/">Blog</a>
                 <a href="#contato">Contato</a>
             </nav>
             <div class="top-actions">
@@ -519,6 +520,7 @@ def pagina(ev):
             <a href="/#agenda">Todas as viagens</a>
             <a href="/#como-funciona">Como funciona</a>
             <a href="/#duvidas">Dúvidas</a>
+            <a href="/blog/">Blog</a>
             <a href="#contato">Contato</a>
             <a class="btn btn-wa" data-wa="{e(assunto)}" href="#" target="_blank" rel="noopener noreferrer">{WA_ICON}Chamar no WhatsApp</a>
         </nav>
@@ -678,8 +680,13 @@ def gerar_site():
     html = trocar_marcadores(html, 'links', links + ('\n                ' if links else ''))
     home.write_text(html, encoding='utf-8')
 
-    urls = [f'{SITE}/'] + [f"{SITE}/{ev['slug']}.html" for ev in abertas]
-    corpo = ''.join(f'  <url>\n    <loc>{u}</loc>\n    <lastmod>{HOJE.isoformat()}</lastmod>\n  </url>\n' for u in urls)
+    urls = [(f'{SITE}/', HOJE)] + [(f"{SITE}/{ev['slug']}.html", HOJE) for ev in abertas]
+    try:  # o blog tem as próprias datas (última atualização de cada artigo)
+        from gerar_blog import urls_do_blog
+        urls += urls_do_blog()
+    except ImportError:
+        pass
+    corpo = ''.join(f'  <url>\n    <loc>{u}</loc>\n    <lastmod>{d.isoformat()}</lastmod>\n  </url>\n' for u, d in urls)
     (ROOT / 'sitemap.xml').write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + corpo + '</urlset>\n',
         encoding='utf-8')

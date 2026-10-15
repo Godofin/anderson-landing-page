@@ -143,6 +143,7 @@
                 <a href="#agenda">Agenda</a>
                 <a href="#como-funciona">Como funciona</a>
                 <a href="#duvidas">Dúvidas</a>
+                <a href="/blog/">Blog</a>
                 <a href="#contato">Contato</a>
             </nav>
             <div class="top-actions">
@@ -165,6 +166,7 @@
             <a href="#agenda">Agenda</a>
             <a href="#como-funciona">Como funciona</a>
             <a href="#duvidas">Dúvidas</a>
+            <a href="/blog/">Blog</a>
             <a href="#contato">Contato</a>
             <a class="btn btn-wa" data-wa="" href="#" target="_blank" rel="noopener noreferrer">
                 <i class="ph-fill ph-whatsapp-logo" aria-hidden="true"></i>Chamar no WhatsApp
@@ -209,6 +211,9 @@
                         <li class="board-row"><span class="cell dim">-- ---</span><span class="cell dim">··········</span><span class="cell dim from">--------</span><span class="cell dim eta">--</span></li>
                         <li class="board-row"><span class="cell dim">-- ---</span><span class="cell dim">··········</span><span class="cell dim from">--------</span><span class="cell dim eta">--</span></li>
                     </ol>
+                    <div class="board-ticker" aria-hidden="true">
+                        <div class="ticker-track" id="ticker-track"></div>
+                    </div>
                     <div class="board-foot">
                         <span id="board-cities"><strong>Embarque em</strong> Araraquara, São Carlos, Ibaté, Rio Claro, Limeira e Itupeva</span>
                         <a href="#agenda">Ver agenda<i class="ph ph-arrow-right" aria-hidden="true"></i></a>
@@ -381,6 +386,40 @@
                 </div>
             </div>
         </section>
+
+        <!--blog:inicio-->
+        <section class="section home-blog" id="blog" aria-labelledby="blog-home-title">
+            <div class="wrap">
+                <h2 class="hb-title" id="blog-home-title"><a href="/blog/">Direto do blog<i class="ph ph-arrow-right" aria-hidden="true"></i></a></h2>
+                <div class="hb-grid" data-n="2">
+                <article class="hb-card is-main">
+                    <a class="hb-media" href="/blog/cage-the-elephant-trajetoria-lollapalooza/" tabindex="-1" aria-hidden="true">
+                        <img src="/assets/img/blog/cage-the-elephant-capa-800.webp" alt="" width="800" height="500" loading="lazy" decoding="async" style="object-position: 50% 40%">
+                        <span class="hb-chip">Artistas</span>
+                    </a>
+                    <div class="hb-body">
+                        <p class="hb-meta"><time datetime="2026-10-14">14 de out de 2026</time><span aria-hidden="true">·</span>6 min de leitura</p>
+                        <h3><a href="/blog/cage-the-elephant-trajetoria-lollapalooza/">Cage The Elephant: Trajetória, Energia Caótica e o Legado no Lollapalooza</a></h3>
+                        <p class="hb-desc">Conheça a trajetória do Cage The Elephant, suas passagens marcantes pelo Lollapalooza Brasil, os maiores sucessos e o que esperar do show.</p>
+                        <span class="hb-more" aria-hidden="true">Ler artigo<i class="ph ph-arrow-right"></i></span>
+                    </div>
+                </article>
+                <article class="hb-card">
+                    <a class="hb-media" href="/blog/charli-xcx-hyperpop-fenomeno-cultural-festivais/" tabindex="-1" aria-hidden="true">
+                        <img src="/assets/img/blog/charli-xcx-capa-800.webp" alt="" width="800" height="500" loading="lazy" decoding="async" style="object-position: 50% 0%">
+                        <span class="hb-chip">Artistas</span>
+                    </a>
+                    <div class="hb-body">
+                        <p class="hb-meta"><time datetime="2026-10-15">15 de out de 2026</time><span aria-hidden="true">·</span>5 min de leitura</p>
+                        <h3><a href="/blog/charli-xcx-hyperpop-fenomeno-cultural-festivais/">Da Vanguarda do Hyperpop ao Fenômeno Cultural: Charli xcx e a Nova Era nos Festivais</a></h3>
+                        <p class="hb-desc">Da vanguarda do hyperpop ao fenômeno Brat: conheça a trajetória de Charli xcx, sua relação com o Brasil e as músicas essenciais da carreira.</p>
+                        <span class="hb-more" aria-hidden="true">Ler artigo<i class="ph ph-arrow-right"></i></span>
+                    </div>
+                </article>
+                </div>
+            </div>
+        </section>
+        <!--/blog:inicio-->
 
         <section class="closing" id="contato" aria-labelledby="contato-title">
             <div class="media">
@@ -618,6 +657,19 @@
             }).join('');
             rows.querySelectorAll('[data-flap]').forEach((el, i) => flap(el, el.dataset.flap, Math.floor(i / 4) * 140 + (i % 4) * 40));
         };
+
+
+        // Letreiro com os avisos que já estão no site
+        const TICKER = [
+            'Tolerância máxima de 10 minutos no embarque',
+            'A volta sai 45 minutos após o fim oficial do show',
+            'Guia credenciado na viagem e no local do evento',
+            'Não alteramos pontos de embarque, desembarque ou rotas',
+            'Empresa com Cadastur e CNPJ ativo',
+            'Embarque perto de casa, desça perto do palco',
+        ];
+        const tickerHTML = TICKER.map((m) => `<span>${esc(m)}</span>`).join('');
+        $('#ticker-track').innerHTML = `<div class="ticker-set">${tickerHTML}</div><div class="ticker-set" data-copy>${tickerHTML}</div>`;
 
         const renderCities = (trips) => {
             const count = new Map();

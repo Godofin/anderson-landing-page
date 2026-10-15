@@ -1,0 +1,92 @@
+/* Blog da Anderson Viagem e Turismo: usa os tokens e componentes de site.css. */
+
+/* ---------- Trilha de navegação ---------- */
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); font-size: .85rem; color: var(--muted); margin-bottom: var(--s5); }
+.crumbs a { color: var(--muted); text-decoration: none; }
+.crumbs a:hover { color: var(--fg); text-decoration: underline; }
+.crumbs span[aria-current] { color: var(--fg); }
+
+/* ---------- Página inicial do blog (os cartões estão em site.css) ---------- */
+.blog-hero { padding-block: clamp(40px, 6vw, 72px) clamp(24px, 4vw, 40px); }
+.blog-hero h1 { font-size: clamp(2.75rem, 7vw, 5rem); font-weight: 900; }
+.blog-hero h1 .hl { color: var(--accent-text); }
+.blog-hero .lede { margin: var(--s4) 0 0; max-width: 56ch; color: var(--muted); font-size: 1.15rem; }
+.blog-lista { padding-bottom: clamp(56px, 8vw, 96px); }
+.blog-vazio { color: var(--muted); }
+.post-card.is-first { grid-column: 1 / -1; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); grid-template-rows: auto; }
+.post-card.is-first .post-card-media { aspect-ratio: auto; min-height: 280px; border-bottom: 0; border-right: 1px solid var(--hb-line, var(--line)); }
+.post-card.is-first .post-card-body { justify-content: center; padding: var(--s6); }
+.post-card.is-first h2 { font-size: clamp(2.2rem, 4.2vw, 3.4rem); }
+.post-card.is-first .post-card-desc { font-size: 1.08rem; }
+@media (max-width: 680px) {
+    .post-card.is-first { grid-template-columns: minmax(0, 1fr); }
+    .post-card.is-first .post-card-media { aspect-ratio: 16 / 10; min-height: 0; border-right: 0; border-bottom: 1px solid var(--hb-line, var(--line)); }
+    .post-card.is-first .post-card-body { padding: var(--s5); }
+}
+
+/* ---------- Artigo ---------- */
+.post-head { padding-block: clamp(32px, 5vw, 56px) var(--s5); max-width: 940px; }
+.post-head h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 900; margin-top: var(--s3); }
+.post-head .lede { margin: var(--s4) 0 var(--s4); color: var(--muted); font-size: 1.2rem; max-width: 60ch; }
+.post-cover { margin-block: 0 var(--s7); max-width: 940px; }
+.post-cover img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--r-frame); background: var(--surface-2); }
+.post-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s6); max-width: 940px; padding-bottom: clamp(48px, 7vw, 88px); }
+.toc { border: 1px solid var(--line); border-radius: var(--r-frame); padding: var(--s4) var(--s5); background: var(--surface); align-self: start; }
+.toc-titulo { margin: 0 0 var(--s3); font: 700 .78rem/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.toc ol { margin: 0; padding-left: 1.2em; display: grid; gap: var(--s2); font-size: .95rem; }
+.toc a { text-decoration: none; color: var(--fg); }
+.toc a:hover { color: var(--accent-text); text-decoration: underline; }
+@media (min-width: 1100px) {
+    .post-layout { max-width: 1180px; grid-template-columns: 240px minmax(0, 700px); gap: var(--s8); }
+    .post-head, .post-cover { max-width: 1180px; }
+    .toc { position: sticky; top: 96px; }
+}
+
+.prose { font-size: 1.1rem; line-height: 1.75; min-width: 0; }
+.prose > * { margin: 0; }
+.prose > * + * { margin-top: var(--s5); }
+.prose h2 { font-size: clamp(2rem, 4vw, 2.7rem); margin-top: var(--s8); }
+.prose h2 + * { margin-top: var(--s4); }
+.prose h3 { font-family: var(--font-body); text-transform: none; font-size: 1.3rem; font-weight: 700; line-height: 1.25; margin-top: var(--s6); }
+.prose h3 + * { margin-top: var(--s3); }
+.prose a { color: var(--accent-text); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.prose a:hover { text-decoration-thickness: 2px; }
+.prose strong { font-weight: 700; }
+.prose ul, .prose ol { padding-left: 1.4em; display: grid; gap: var(--s2); }
+.prose li::marker { color: var(--accent-text); }
+.prose blockquote { margin-inline: 0; padding: var(--s2) var(--s5); border-left: 3px solid var(--accent); color: var(--muted); font-size: 1.12rem; }
+.prose blockquote p { margin: 0; }
+.prose img { border-radius: var(--r-frame); height: auto; }
+.prose hr { border: 0; border-top: 1px solid var(--line); margin-block: var(--s7); }
+.tabela { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-frame); }
+.prose table { width: 100%; border-collapse: collapse; font-size: .96rem; line-height: 1.5; min-width: 520px; }
+.prose th, .prose td { text-align: left; vertical-align: top; padding: var(--s3) var(--s4); border-bottom: 1px solid var(--line); }
+.prose thead th { font: 700 .78rem/1.2 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); background: var(--surface); }
+.prose tbody tr:last-child td { border-bottom: 0; }
+.prose details { border-bottom: 1px solid var(--line); padding-block: var(--s3); }
+
+.resumo { border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: var(--r-frame); padding: var(--s4) var(--s5); background: var(--surface); margin-bottom: var(--s6); }
+.resumo-titulo { font: 700 .78rem/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-text); margin: 0 0 var(--s3); }
+.resumo ul { font-size: 1.02rem; line-height: 1.6; }
+
+/* ---------- Continue lendo e chamada final ---------- */
+.relacionados { padding-block: 0 clamp(56px, 8vw, 96px); }
+.relacionados h2 { font-size: clamp(2rem, 4vw, 2.7rem); margin-bottom: var(--s6); }
+.blog-cta { padding-block: 0 clamp(64px, 9vw, 112px); }
+.blog-cta-box {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s5) var(--s7);
+    padding: clamp(24px, 4vw, 48px); border: 1px solid var(--line); border-radius: var(--r-frame); background: var(--surface);
+}
+.blog-cta-box h2 { font-size: clamp(2rem, 4vw, 3rem); }
+.blog-cta-box p { margin: var(--s3) 0 0; color: var(--muted); max-width: 52ch; }
+.blog-cta .cta-row { display: flex; flex-wrap: wrap; gap: var(--s3); }
+
+/* ---------- Figuras dentro do texto e crédito da capa ---------- */
+.post-credito { margin-top: var(--s2); font-size: .8rem; color: var(--muted); }
+.prose figure { margin: var(--s6) 0; }
+.prose figure img { width: 100%; height: auto; border-radius: var(--r-frame); background: var(--surface-2); }
+.prose figure.retrato img { width: auto; max-width: min(100%, 340px); max-height: 460px; margin-inline: auto; }
+.prose figcaption { margin-top: var(--s2); text-align: center; font-size: .85rem; color: var(--muted); }
+
+/* Rodapé nas páginas do blog: título de nível 3 (vem depois de um H2) com o mesmo visual do restante do site */
+.footer-grid h3 { margin: 0 0 var(--s2); font: 700 .95rem/1.6 var(--font-body); text-transform: none; }
