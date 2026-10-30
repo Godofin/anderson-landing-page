@@ -46,7 +46,7 @@ from html import escape
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from gerar_eventos import AGENCIA, MESES, SITE, WA_ICON, jsonld  # noqa: E402
+from gerar_eventos import AGENCIA, GA_BLOCO, MESES, SITE, WA_ICON, css_fontes_inline, jsonld  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 POSTS = ROOT / 'tools' / 'blog' / 'posts'
@@ -233,14 +233,7 @@ def cabecalho_pagina(titulo_pagina, descricao, url, imagem_og, tipo, extra_meta,
 
     <!-- Página gerada por tools/gerar_blog.py. Edite o Markdown em tools/blog/posts e rode o script de novo. -->
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4ZXGBNM724"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){{dataLayer.push(arguments);}}
-        gtag('js', new Date());
-        gtag('config', 'G-4ZXGBNM724');
-    </script>
+    {GA_BLOCO}
 
     <script>
         try {{
@@ -251,8 +244,8 @@ def cabecalho_pagina(titulo_pagina, descricao, url, imagem_og, tipo, extra_meta,
 
     <link rel="preload" href="/assets/fonts/big-shoulders-display-latin-1.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/assets/fonts/instrument-sans-latin-3.woff2" as="font" type="font/woff2" crossorigin>{preload}
-    <link rel="stylesheet" href="/assets/fonts.css">
-    <link rel="stylesheet" href="/assets/icons/phosphor.css">
+    {css_fontes_inline()}
+    <link rel="stylesheet" href="/assets/icons/phosphor-site.css">
     <link rel="stylesheet" href="/assets/site.css">
     <link rel="stylesheet" href="/assets/blog.css">
 </head>
@@ -265,8 +258,8 @@ TOPO = f'''<body>
     <header class="topbar">
         <div class="wrap topbar-inner">
             <a class="logo" href="/" aria-label="Anderson Viagem e Turismo, página inicial" translate="no">
-                <img class="logo-dark" src="/assets/logo-escuro.png" alt="Anderson Viagem e Turismo" width="120" height="58">
-                <img class="logo-light" src="/assets/logo-claro.png" alt="Anderson Viagem e Turismo" width="120" height="58">
+                <img class="logo-dark" src="/assets/logo-escuro-360.webp" alt="Anderson Viagem e Turismo" width="120" height="58">
+                <img class="logo-light" src="/assets/logo-claro-360.webp" alt="Anderson Viagem e Turismo" width="120" height="58">
             </a>
             <nav class="nav" aria-label="Principal">
                 <a href="/#agenda">Agenda</a>

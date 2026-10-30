@@ -270,6 +270,32 @@ def data_extenso(d):
 
 WA_ICON = '<i class="ph-fill ph-whatsapp-logo" aria-hidden="true"></i>'
 
+# Google Analytics: o script do Google só é baixado depois que a página termina de carregar
+GA_BLOCO = """<!-- Google Analytics (carrega depois da página, para não atrasar a primeira exibição) -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-4ZXGBNM724');
+        window.addEventListener('load', function () {
+            var carregar = function () {
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-4ZXGBNM724';
+                document.head.appendChild(s);
+            };
+            if ('requestIdleCallback' in window) requestIdleCallback(carregar, { timeout: 3000 });
+            else setTimeout(carregar, 1500);
+        });
+    </script>"""
+
+
+def css_fontes_inline():
+    """CSS das fontes dentro da própria página (assets/fonts.css), para tirar uma requisição do caminho crítico."""
+    css = re.sub(r'/\*.*?\*/', '', (ROOT / 'assets' / 'fonts.css').read_text(encoding='utf-8'), flags=re.S)
+    css = re.sub(r'\s+', ' ', css).replace('url(fonts/', 'url(/assets/fonts/').strip()
+    return f'<style>{css}</style>'
+
 
 def encerrado(ev):
     if ev.get('encerrado'):
@@ -463,14 +489,7 @@ def pagina(ev):
 
     <!-- Página gerada por tools/gerar_eventos.py. Edite os dados lá e rode o script de novo. -->
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4ZXGBNM724"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){{dataLayer.push(arguments);}}
-        gtag('js', new Date());
-        gtag('config', 'G-4ZXGBNM724');
-    </script>
+    {GA_BLOCO}
 
     <script>
         try {{
@@ -482,8 +501,8 @@ def pagina(ev):
     <link rel="preload" href="assets/fonts/big-shoulders-display-latin-1.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/instrument-sans-latin-3.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" as="image" href="{e(ev['hero_img'])}" fetchpriority="high">
-    <link rel="stylesheet" href="assets/fonts.css">
-    <link rel="stylesheet" href="assets/icons/phosphor.css">
+    {css_fontes_inline()}
+    <link rel="stylesheet" href="assets/icons/phosphor-site.css">
     <link rel="stylesheet" href="assets/site.css">
 </head>
 <body data-dates="{datas_iso}"{f' data-event-id="{ev["event_id"]}"' if ev['event_id'] else ''}>
@@ -492,8 +511,8 @@ def pagina(ev):
     <header class="topbar">
         <div class="wrap topbar-inner">
             <a class="logo" href="/" aria-label="Anderson Viagem e Turismo, página inicial" translate="no">
-                <img class="logo-dark" src="assets/logo-escuro.png" alt="Anderson Viagem e Turismo" width="120" height="58">
-                <img class="logo-light" src="assets/logo-claro.png" alt="Anderson Viagem e Turismo" width="120" height="58">
+                <img class="logo-dark" src="assets/logo-escuro-360.webp" alt="Anderson Viagem e Turismo" width="120" height="58">
+                <img class="logo-light" src="assets/logo-claro-360.webp" alt="Anderson Viagem e Turismo" width="120" height="58">
             </a>
             <nav class="nav" aria-label="Principal">
                 <a class="back" href="/#agenda"><i class="ph ph-arrow-left" aria-hidden="true"></i>Todas as viagens</a>
@@ -599,7 +618,7 @@ def pagina(ev):
 
         <section class="closing" id="contato" aria-labelledby="contato-title">
             <div class="media">
-                <img src="assets/img/closing-1920.jpg" srcset="assets/img/closing-800.jpg 800w, assets/img/closing-1920.jpg 1920w" sizes="100vw" width="1920" height="1280" loading="lazy" decoding="async" alt="Fãs fazendo coração com as mãos durante um show">
+                <img src="assets/img/closing-1920.webp" srcset="assets/img/closing-800.webp 800w, assets/img/closing-1920.webp 1920w" sizes="100vw" width="1920" height="1280" loading="lazy" decoding="async" alt="Fãs fazendo coração com as mãos durante um show">
             </div>
             <div class="wrap">
                 <div class="closing-inner">
@@ -675,6 +694,8 @@ def gerar_site():
 
     home = ROOT / 'index.html'
     html = home.read_text(encoding='utf-8')
+    html = trocar_marcadores(html, 'fontes', css_fontes_inline())
+    html = trocar_marcadores(html, 'ga', '\n    ' + GA_BLOCO + '\n    ')
     html = trocar_marcadores(html, 'jsonld', '\n    ' + jsonld_home() + '\n    ')
     links = ''.join(f'\n                <p><a href="{ev["slug"]}.html">{e(ev["nome_link"])}</a></p>' for ev in abertas)
     html = trocar_marcadores(html, 'links', links + ('\n                ' if links else ''))

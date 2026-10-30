@@ -146,13 +146,22 @@
 
     <!-- Página gerada por tools/gerar_blog.py. Edite o Markdown em tools/blog/posts e rode o script de novo. -->
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4ZXGBNM724"></script>
+    <!-- Google Analytics (carrega depois da página, para não atrasar a primeira exibição) -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-4ZXGBNM724');
+        window.addEventListener('load', function () {
+            var carregar = function () {
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-4ZXGBNM724';
+                document.head.appendChild(s);
+            };
+            if ('requestIdleCallback' in window) requestIdleCallback(carregar, { timeout: 3000 });
+            else setTimeout(carregar, 1500);
+        });
     </script>
 
     <script>
@@ -164,8 +173,8 @@
 
     <link rel="preload" href="/assets/fonts/big-shoulders-display-latin-1.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/assets/fonts/instrument-sans-latin-3.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="/assets/fonts.css">
-    <link rel="stylesheet" href="/assets/icons/phosphor.css">
+    <style>@font-face { font-family: 'Big Shoulders Display'; font-style: normal; font-weight: 800; font-display: swap; src: url(/assets/fonts/big-shoulders-display-latin-ext-0.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; } @font-face { font-family: 'Big Shoulders Display'; font-style: normal; font-weight: 800; font-display: swap; src: url(/assets/fonts/big-shoulders-display-latin-1.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } @font-face { font-family: 'Big Shoulders Display'; font-style: normal; font-weight: 900; font-display: swap; src: url(/assets/fonts/big-shoulders-display-latin-ext-0.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; } @font-face { font-family: 'Big Shoulders Display'; font-style: normal; font-weight: 900; font-display: swap; src: url(/assets/fonts/big-shoulders-display-latin-1.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } @font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 400; font-stretch: 100%; font-display: swap; src: url(/assets/fonts/instrument-sans-latin-ext-2.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; } @font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 400; font-stretch: 100%; font-display: swap; src: url(/assets/fonts/instrument-sans-latin-3.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } @font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 500; font-stretch: 100%; font-display: swap; src: url(/assets/fonts/instrument-sans-latin-ext-2.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; } @font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 500; font-stretch: 100%; font-display: swap; src: url(/assets/fonts/instrument-sans-latin-3.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } @font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 600; font-stretch: 100%; font-display: swap; src: url(/assets/fonts/instrument-sans-latin-ext-2.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; } @font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 600; font-stretch: 100%; font-display: swap; src: url(/assets/fonts/instrument-sans-latin-3.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } @font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 700; font-stretch: 100%; font-display: swap; src: url(/assets/fonts/instrument-sans-latin-ext-2.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; } @font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 700; font-stretch: 100%; font-display: swap; src: url(/assets/fonts/instrument-sans-latin-3.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/fonts/jetbrains-mono-latin-ext-4.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; } @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url(/assets/fonts/jetbrains-mono-latin-5.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url(/assets/fonts/jetbrains-mono-latin-ext-4.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; } @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url(/assets/fonts/jetbrains-mono-latin-5.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }</style>
+    <link rel="stylesheet" href="/assets/icons/phosphor-site.css">
     <link rel="stylesheet" href="/assets/site.css">
     <link rel="stylesheet" href="/assets/blog.css">
 </head>
@@ -175,8 +184,8 @@
     <header class="topbar">
         <div class="wrap topbar-inner">
             <a class="logo" href="/" aria-label="Anderson Viagem e Turismo, página inicial" translate="no">
-                <img class="logo-dark" src="/assets/logo-escuro.png" alt="Anderson Viagem e Turismo" width="120" height="58">
-                <img class="logo-light" src="/assets/logo-claro.png" alt="Anderson Viagem e Turismo" width="120" height="58">
+                <img class="logo-dark" src="/assets/logo-escuro-360.webp" alt="Anderson Viagem e Turismo" width="120" height="58">
+                <img class="logo-light" src="/assets/logo-claro-360.webp" alt="Anderson Viagem e Turismo" width="120" height="58">
             </a>
             <nav class="nav" aria-label="Principal">
                 <a href="/#agenda">Agenda</a>

@@ -12,6 +12,12 @@
             return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : '';
         } catch (e) { return ''; }
     };
+    // Imagens guardadas no GitHub (github.com/.../blob/main/foto.webp?raw=true) passam por um redirecionamento
+    // para raw.githubusercontent.com. Usamos o endereço final direto e poupamos uma viagem por imagem.
+    const directImage = (u) => {
+        const m = /^https:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/(.+?)(?:\?raw=true)?$/.exec(u || '');
+        return m ? `https://raw.githubusercontent.com/${m[1]}/${m[2]}/${m[3]}/${m[4]}` : u;
+    };
     const waLink = (topic) => {
         const text = topic
             ? `Olá! Tenho interesse na excursão para o evento "${topic}". Gostaria de mais informações.`
@@ -20,7 +26,7 @@
     };
     const today = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
 
-    window.Site = { WHATSAPP, PHONE_TEXT, esc, tidy, safeUrl, waLink, today };
+    window.Site = { WHATSAPP, PHONE_TEXT, esc, tidy, safeUrl, directImage, waLink, today };
 
     // Anos de empresa: fundada em 12/10/2017. A cada 12/10 soma mais um, sozinho.
     // O piso de 9 vale só na véspera do aniversário de 9 anos (11/10/2026); depois o cálculo já dá 9.
